@@ -1,0 +1,5 @@
+Powershell:
+
+& "C:\Users\lorde\AppData\Local\Programs\Python\Python313\python.exe" -m auto_py_to_exe
+
+No motor WebView2, o executável (splitbox.exe) final precisa encontrar a WebView2Loader.dll exatamente ao lado dele. No Auto-py-to-exe, ao adicionar o arquivo individual da DLL, certifique-se de que o caminho de destino seja apenas um ponto . ou vazio, para que ela não fique escondida dentro de uma subpasta.

@@ -1,0 +1,443 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE>Libs</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice 4.1.3  (Win32)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="0;0">
+	<SCRIPT SRC="js/jquery.min.js"></SCRIPT>
+	<SCRIPT>
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "DxWnd.html?" + sTopicUrl;
+			}
+		});
+	
+	</SCRIPT>
+	<STYLE TYPE="text/css">
+	<!--
+		P { margin-bottom: 0cm; border: none; padding: 0cm; color: #000000; font-family: "Arial", "Helvetica", sans-serif; font-size: 10pt; font-style: normal; font-weight: normal; text-align: left; text-decoration: none }
+		TD P { margin-bottom: 0cm; border: none; padding: 0cm; color: #000000; font-family: "Arial", "Helvetica", sans-serif; font-size: 10pt; font-style: normal; font-weight: normal; text-align: left; text-decoration: none }
+		P.rvps2 { font-family: "Arial", "Helvetica", sans-serif; font-size: 10pt; font-style: normal; font-weight: normal }
+		H3 { color: #000000 }
+		H3.cjk { font-family: "SimSun" }
+		H3.ctl { font-family: "Mangal" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR" STYLE="border: none; padding: 0cm">
+<DIV ID="topic_content" DIR="LTR">
+	<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm"><IMG SRC="lib/dxwnd_configuration_libs.png" NAME="grafiikka4" ALIGN=BOTTOM BORDER=0></P>
+
+	<HR>
+	<H3 CLASS="western">MM (multimedia)</H3>
+	<TABLE WIDTH=100% BORDER=1 CELLPADDING=2 CELLSPACING=2>
+		<TR VALIGN=TOP>
+			<TD WIDTH=172>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Remap MCI
+				coordinates</P>
+			</TD>
+			<TD WIDTH=111>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">REMAPMCI</P>
+			</TD>
+			<TD WIDTH=1254>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Finds and
+				scales the movie coordinates that may be embedded in the
+				MciSendString command string. It may fix movie sizes when they
+				are played using the MciSendString WinMM call.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=172>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">No movies</P>
+			</TD>
+			<TD WIDTH=111>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">NOMOVIES</P>
+			</TD>
+			<TD WIDTH=1254>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Skips movies
+				whenever possible - that is, when performed through explicit
+				movie handling calls.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=172>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Stretch
+				ActiveMovie window</P>
+			</TD>
+			<TD WIDTH=111>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">STRETCHMOVIES</P>
+			</TD>
+			<TD WIDTH=1254>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Several
+				window classes are devoted to play multimedia. This flag
+				detects the known multimedia windows and stretches their size to
+				cover the full main window area.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=172>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Fix movies
+				color depth</P>
+			</TD>
+			<TD WIDTH=111>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">FIXMOVIECOLOR</P>
+			</TD>
+			<TD WIDTH=1254>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Fixes the
+				color depth of VfW (Video for Windows) movies by forcing their
+				value to the color depth of the virtual desktop.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=172>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Bypass MCI
+				calls</P>
+			</TD>
+			<TD WIDTH=111>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">BYPASSMCI</P>
+			</TD>
+			<TD WIDTH=1254>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Several games
+				perform MCI operations (e.g., to check for a CD-ROM) that are not
+				essential and may cause errors. This flag bypasses MCI calls when
+				possible and returns a positive result.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=172>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Fix PCM audio</P>
+			</TD>
+			<TD WIDTH=111>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">FIXAUDIOPCM</P>
+			</TD>
+			<TD WIDTH=1254>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">To support
+				stereo PCM audio by downgrading the audio channels to 1 (mono).
+				Fixes &quot;Capcom Arcade Hits Vol 1&quot; audio problems.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=172>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Fix
+				Smack/Bink loop</P>
+			</TD>
+			<TD WIDTH=111>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">FIXSMACKLOOP</P>
+			</TD>
+			<TD WIDTH=1254>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Fixes a
+				Smack/Bink loop by inserting ProcessMessage and blit operations
+				between frames. During the playback of Smack movies (which
+				typically have a .smk extension), the screen may not get updated,
+				which is detected by the OS and killed as a non-responsive
+				program. The intro movies in the game &quot;Galapagos&quot;
+				benefit from this flag.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=172>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Bypass ActiveMovie Window</P>
+			</TD>
+			<TD WIDTH=111>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">BYPASSACTIVEMOVIE</P>
+			</TD>
+			<TD WIDTH=1254>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">The ActiveMovie window
+				is not remapped to the main window.</P>
+			</TD>
+		</TR>
+	</TABLE>
+	
+	<HR>
+	<H3 CLASS="western">Additional libraries hook</H3>
+	<TABLE WIDTH=100% BORDER=1 CELLPADDING=2 CELLSPACING=2>
+		<TR VALIGN=TOP>
+			<TD WIDTH=180>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Hook Glide
+				libs</P>
+			</TD>
+			<TD WIDTH=140>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">HOOKGLIDE</P>
+			</TD>
+			<TD WIDTH=1000>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Enables Glide
+				API hooking.</P>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">NOTE: DxWnd 
+				does not have a built-in Glide wrapper, but nGlide seems to work 
+				quite well with DxWnd.</P>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">TIP: If you are using
+				nGlide, also try changing the DirectX Version Hook to DirectX9.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=180>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">No Glide libs</P>
+			</TD>
+			<TD WIDTH=140>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">SUPPRESSGLIDE</P>
+			</TD>
+			<TD WIDTH=1000>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+				Pretends that there is no Glide support, even when emulated by the Glide wrappers.
+				In detail, the target program will get an error when trying to link the Glide
+				libraries such as "Glide.dll", "Glide2x.dll" or "Glide3x.dll".</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=180>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Hook WinG32</P>
+			</TD>
+			<TD WIDTH=140>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">HOOKWING32</P>
+			</TD>
+			<TD WIDTH=1000>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Hooks the WinG32 library.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=110>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Hook Smackw32</P>
+			</TD>
+			<TD WIDTH=156>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">HOOKSMACKW32</P>
+			</TD>
+			<TD WIDTH=1271>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Hooks
+				Smackw32 to avoid tight looping, allowing debugging, tracing, and
+				future expansions. When this flag is active, the SmackOpen call
+				activates a thread that ensures that all frames are refreshed to
+				the screen (similar to the &quot;Auto Primary Surface Blit&quot;
+				option in <A HREF="DirectX.html">DirectDraw
+				Surface Handling</A>).</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=110>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Hook Binkw32</P>
+			</TD>
+			<TD WIDTH=156>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">HOOKBINKW32</P>
+			</TD>
+			<TD WIDTH=1271>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Same as above
+				but for Binkw32 videos.</P>
+			</TD>
+		</TR>
+	</TABLE>	
+		
+		
+	<HR>
+	<H3 CLASS="western">DirectShow</H3>
+	<TABLE WIDTH=100% BORDER=1 CELLPADDING=2 CELLSPACING=2>
+		<TR VALIGN=TOP>
+			<TD WIDTH=110>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Hook DirectShow</P>
+			</TD>
+			<TD WIDTH=156>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">HOOKDIRECTSHOW</P>
+			</TD>
+			<TD WIDTH=1271>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Hooks some
+				DirectShow classes and methods to ensure better compatibility with videos.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=110>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Scale DirectShow</P>
+			</TD>
+			<TD WIDTH=156>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">SCALEDIRECTSHOW</P>
+			</TD>
+			<TD WIDTH=1271>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Performs scaling of the screen coordinates
+				to match the window size.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=110>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Ignore add. filter</P>
+			</TD>
+			<TD WIDTH=156>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">IGNOREADDFILTER</P>
+			</TD>
+			<TD WIDTH=1271>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">bypasses the AddFilter method
+				returning an error. This flag should be used whenever the program tries to use
+				some troublesome filter while the standard ones would provide a better result.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=110>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Suppress IVMR classes</P>
+			</TD>
+			<TD WIDTH=156>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">SUPPRESSIVMR</P>
+			</TD>
+			<TD WIDTH=1271>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">DirectShow can render using base filters (based on GDI)
+				or IVMR classes (based on DirectDraw or Direct3D). Pretending that the IVMR classes are not available (
+				returning a E_NOINTERFACE error ) can be a way to switch to base filter and get a better compatibility.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=110>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Ignore graph errors</P>
+			</TD>
+			<TD WIDTH=156>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">IGNOREGRAPHERRORS</P>
+			</TD>
+			<TD WIDTH=1271>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Force a positive return code
+				for DirectShow graph building methods so that some operations could be 
+				terminated though perhaps in a incomplete way. This can hopefully
+				skip operations like showing an intro video and let the program continue
+				afterwards.				
+				</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=110>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Suppress LAV filters</P>
+			</TD>
+			<TD WIDTH=156>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">NOLAVFILTERS</P>
+			</TD>
+			<TD WIDTH=1271>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Pretends that LAV filters
+				are not supported in the current environment. In some cases this makes the program to select alternate 
+				filters that in the DxWnd scenario can give better or more compatible results.				
+				</P>
+			</TD>
+		</TR>
+	</TABLE>	
+	
+	<DIV ID="topic_footer" DIR="LTR">
+		<P STYLE="margin-bottom: 0.5cm"><BR><BR>
+		</P>
+	</DIV>
+
+	<HR>
+	<H3 CLASS="western">Kernel32 (heap)</H3>
+	<TABLE WIDTH=100% BORDER=1 CELLPADDING=2 CELLSPACING=2>
+		<TR VALIGN=TOP>
+			<TD WIDTH=190>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Fix
+				GlobalUnlock</P>
+			</TD>
+			<TD WIDTH=173>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">FIXGLOBALUNLOCK</P>
+			</TD>
+			<TD WIDTH=1170>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Fixes a
+				reported problem of the 16-bit GlobalUnock() API's 32-bit port.
+				In some cases, it never returns the expected value, causing game
+				crashes or endless loops.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=190>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Virtual Heap
+				(Win95/98 compat.)</P>
+			</TD>
+			<TD WIDTH=148>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">VIRTUALHEAP</P>
+			</TD>
+			<TD WIDTH=1191>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Remaps memory requests
+				from heap to malloc requests for any additional heap but the default process heap. 
+				It is needed for some &quot;Wing Commander&quot; games to work.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=198>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Virtual Process Heap</P>
+			</TD>
+			<TD WIDTH=148>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">VIRTUALPROCHEAP</P>
+			</TD>
+			<TD WIDTH=1191>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Also forces the malloc replacement
+				for the process heap despite the fact that it is not possible
+				to intercept its creation. Requires the VIRTUALHEAP flag to be set.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=198>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">NO BAADFOOD</P>
+			</TD>
+			<TD WIDTH=148>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">NOBAADFOOD</P>
+			</TD>
+			<TD WIDTH=1191>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Avoids
+				virtual heap initialization to 0xBAADFOOD value, setting it to 0x0
+				instead. It is needed to run &quot;Independence Day&quot;.</P>
+			</TD>
+		</TR>		<TR VALIGN=TOP>
+			<TD WIDTH=110>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Heap leak</P>
+			</TD>
+			<TD WIDTH=156>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">HEAPLEAK</P>
+			</TD>
+			<TD WIDTH=1271>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Bypasses all HeapFree calls. 
+				It helps eliminating exceptions while freeing heap block when the heap is corrupted, 
+				but at the cost of a systematic memory leakage since memory blocks will never be 
+				freed until the process is terminated.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=110>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Safe heap</P>
+			</TD>
+			<TD WIDTH=156>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">SAFEHEAP</P>
+			</TD>
+			<TD WIDTH=1271>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">A tentative fix for heap operations. 
+				Each heap allocation is wrapped with begin/end markers and a length field so that it becomes 
+				possible to check for heap integrity and skip operations that may lead to exceptions. 
+				Unfortunately, it is not possible to wrap all memory segments (some are pre-allocated 
+				before DxWnd hook) so in some cases, the integrity checks inevitably fail. 
+				In any case, it seems to give some benefit. It must be used with early hooking only.
+				</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=110>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Emulate Win9X heap</P>
+			</TD>
+			<TD WIDTH=156>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">EMULATEWIN9XHEAP</P>
+			</TD>
+			<TD WIDTH=1271>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Emulates the behavior of the Microsoft shim: "EmulateHeap".</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=110>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Heap pad allocation</P>
+			</TD>
+			<TD WIDTH=156>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">HEAPPADALLOCATION</P>
+			</TD>
+			<TD WIDTH=1271>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Similar to the Microsoft shim with the same name. 
+				Every heap allocation is increased by a fixed size so that bugged programs have less chances to corrupt 
+				the heap at the cost of some extra memory usage.</P>
+			</TD>
+		</TR>
+
+	</TABLE>	
+
+
+</DIV>
+</BODY>
+</HTML>

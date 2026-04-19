@@ -1,0 +1,3 @@
+Some Antivirus raised suspicions about two silly programs that simply analyze the content of CD disks.
+To avoid problems in the package distribution, again these programs were hidden into a compressed archive named cdtools.rar.
+The content is accessible by using the password "cdtools", of course.

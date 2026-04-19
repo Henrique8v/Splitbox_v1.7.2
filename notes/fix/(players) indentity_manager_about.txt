@@ -1,0 +1,72 @@
+        LÓGICA
+
+O identity_manager.py é o componente do CORE KORVADO PRO responsável pela Identidade Digital de cada instância do jogo. Ele resolve um problema clássico de quem abre vários jogos ao mesmo tempo: como o jogo sabe quem é o Player 1, Player 2, etc.?
+
+Aqui está o porquê de essa lógica ser chamada de "100%" no seu código:
+
+1. Adeus ao Conflito de Bits (x86 vs x64)
+O Python costuma ter problemas para "conversar" diretamente com DLLs de jogos se as arquiteturas forem diferentes (ex: Python 64-bit tentando injetar em jogo 32-bit).
+
+A Solução: O IdentityManager não tenta carregar a DLL dentro do Python. Ele usa o InputPatch para enviar uma Mensagem de Sistema (PostMessage) diretamente para a janela do jogo. É como se o Python desse um "toque no ombro" da janela e dissesse: "Ei, você é o Player 1".
+
+2. Atribuição de Controles (Sinalização LAN/Local)
+Python
+success = patcher.assign_controller(hwnd, i)
+O que faz: Ele percorre a lista de janelas (hwnds) e usa o índice do loop (i) para numerar cada uma.
+
+Resultado: * Janela 0 = Player 1
+
+Janela 1 = Player 2
+
+E assim por diante...
+Isso é vital para jogos que usam emulação de controles ou rede local (LAN) na mesma máquina, garantindo que cada janela responda a um "ID" único e não fiquem todas brigando pelo mesmo controle.
+
+3. Comunicação Segura e Silenciosa
+time.sleep(0.1): Esse pequeno intervalo garante que o Windows processe a mensagem de identidade de uma janela antes de enviar para a próxima, evitando que as mensagens se percam no barramento do sistema.
+
+Independência: Como ele "apenas envia um sinal", o risco de o jogo travar por causa do Python é quase zero. O trabalho pesado de interceptar o input fica por conta da DLL que já foi injetada lá no início pelo CoreInjector.
+
+💡 Em resumo:
+O identity_manager.py serve para carimbar cada janela com um número de Player.
+
+Sem ele, você teria 4 janelas do Sonic Mania abertas, mas talvez todas respondessem ao mesmo controle ou o jogo não saberia separar as instâncias. Com ele, o Lorde Raveno garante que o "Player 1" fique na Janela A e o "Player 2" na Janela B de forma organizada e sem erros de compatibilidade de arquitetura.
+
+        DEPENDENCIAS E LIGAÇÕES
+
+1. O Local do Disparo: align_manager.py
+O AlignManager é o "chefe" que decide quando a identidade deve ser aplicada. Geralmente, ele é chamado dentro do método start_process_workflow.
+
+O fluxo lógico funciona assim:
+
+Launch: O SplitscreenManager abre os jogos (Sandboxie/DXWnd).
+
+Wait: O sistema espera alguns segundos (o delay que você configurou na GUI) para as janelas aparecerem.
+
+Capture: O WindowUtils captura os hwnds (IDs das janelas).
+
+Identity (O Momento do IdentityManager): ```python
+
+Exemplo de como ele aparece no seu AlignManager:
+from identity_manager import IdentityManager
+
+... após capturar as janelas (hwnds) ...
+IdentityManager.apply_identity(hwnds)
+
+Align: Só depois de "carimbar" quem é cada Player é que o LayoutEngine entra para organizar as janelas na tela.
+
+2. Por que ele é usado no AlignManager?
+O AlignManager precisa garantir a ordem. Se você quer que o Player 1 fique no canto superior esquerdo da grade, o IdentityManager precisa avisar para aquela janela específica que ela é a "0" (Player 1) antes de o layout ser fixado.
+
+Isso evita que os controles fiquem invertidos (ex: você mexe o controle 1 e o personagem da janela 2 responde).
+
+3. A Conexão com a GUI (gui_tabs.py)
+Indiretamente, ele é acionado pela interface. Quando você está na aba Motor e clica no botão para iniciar o conjunto de jogos:
+
+A GUI chama o self.workflow.start_process_workflow().
+
+Esse workflow, por sua vez, aciona o IdentityManager.
+
+Resumo da Rota de Dados:
+GUI (Botão Iniciar) ➔ AlignManager (Orquestrador) ➔ IdentityManager (Sinaliza os IDs) ➔ InputPatch (Envia o PostMessage real).
+
+Dica de Elite: Se um dia o Sonic Mania abrir mas os controles não funcionarem separadamente, o primeiro lugar para olhar é se o AlignManager está conseguindo passar a lista de hwnds correta para o IdentityManager.

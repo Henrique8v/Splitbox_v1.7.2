@@ -1,0 +1,9 @@
+Mudança: Mapeamento das funcionalidades para os novos arquivos de Mixin.
+
+Funcionalidade	Local do Código (Módulo/Mixin)	Status
+Gerenciamento de Rede (ZeroTier)	network_mixin.py / gui_network.py	✅
+Persistência de ID de Rede	network_settings.json	✅
+Gestão de Lista de Executáveis	list_mixin.py	✅
+Lançamento Sandboxie/DXWnd	tools_mixin.py	✅
+Dashboard Modular (Dashboard Lean)	splitscreen_gui.py	✅
+Limpeza de Sistema (Cleanup)	list_mixin.py (via manager)	✅

@@ -1,0 +1,151 @@
+# O Local do Disparo: align_manager.py
+# O AlignManager é o "chefe" que decide quando a identidade deve ser aplicada. Geralmente, ele é chamado dentro do método start_process_workflow.
+
+# O fluxo lógico funciona assim:
+
+   # Launch: O SplitscreenManager abre os jogos (Sandboxie/DXWnd).
+   # Wait: O sistema espera alguns segundos (o delay que você configurou na GUI) para as janelas aparecerem.
+   # Capture: O WindowUtils captura os hwnds (IDs das janelas).
+   # Identity (O Momento do IdentityManager): ```python
+   # Exemplo de como ele aparece no seu AlignManager:
+from identity_manager import IdentityManager
+   # ... após capturar as janelas (hwnds) ...
+   # IdentityManager.apply_identity(hwnds)
+   # Align: Só depois de "carimbar" quem é cada Player é que o LayoutEngine entra para organizar as janelas na tela.
+
+# gui_tabs.py: indiretamente, ele é acionado pela interface. Quando você está na aba Motor e clica no botão para iniciar o conjunto de jogos:
+
+   # A GUI chama o self.workflow.start_process_workflow().
+   # Esse workflow, por sua vez, aciona o IdentityManager
+   # Esquema: GUI (Botão Iniciar) ➔ AlignManager (Orquestrador) ➔ IdentityManager (Sinaliza os IDs) ➔ InputPatch (Envia o PostMessage real).
+
+indentity_manager.py
+
+import time
+from input_patch import InputPatch # Importa a lógica de mensagens (Lógica 100%)
+
+class IdentityManager:
+    """Gerencia a identidade LAN via mensagens, sem carregar DLLs no Python."""
+    
+    @staticmethod
+    def apply_identity(hwnds, bridge=None):
+        """
+        Tarefa 100%: Envia IDs via PostMessage (Windows) para evitar erros de Bits.
+        """
+        patcher = InputPatch()
+        
+        for i, hwnd in enumerate(hwnds):
+            try:
+                # Lógica 100%: O Python NÃO procura mais a DLL. 
+                # Ele apenas envia um sinal para a janela do jogo.
+                success = patcher.assign_controller(hwnd, i)
+                
+                if success:
+                    print(f" [IDENTITY] Player {i+1} sinalizado para Janela {hwnd}")
+                
+                time.sleep(0.1)
+            except Exception as e:
+                print(f" [ERRO] Falha ao sinalizar identidade: {e}")
+
+align_manager.py
+
+import threading
+import time
+import os 
+
+class AlignManager:
+
+    def start_process_workflow(self, executables, use_sandbox, mode, clean_ui):
+        """Workflow: Limpeza -> Lançamento Híbrido (DXW ou Sistema)."""
+        #... codigo
+
+        # Captura configurações e estados da UI
+        try:
+            #... codigo
+        except:
+            #... codigo
+
+        def run():
+            self.is_busy = True
+            try:
+                # 1. Limpa o motor antes de começar
+                self.manager.cleanup()
+                
+                # 2. Loop de Lançamento Inteligente (SBIE ou DXW)
+                for exe in executables:
+                    if use_dxw:
+                        print(f" [MOTOR] Lançando via DXWnd: {os.path.basename(exe)}")
+                        self.manager.launch_game_with_dxw(exe, dx_path)
+                    else:
+                        print(f" [MOTOR] Lançando via Sistema (SBIE: {use_sandbox}): {os.path.basename(exe)}")
+                        self.manager.launch_game(exe, use_sandbox=use_sandbox)
+                    
+                    time.sleep(l_delay) # Delay entre cada lançamento
+                
+                print(" [MOTOR] Lançamento concluído. Iniciando Identidade e Alinhamento...")
+
+                # --- LÓGICA DE IDENTIDADE (100% INTEGRADA) ---
+                from window_utils import WindowUtils
+                from identity_manager import IdentityManager
+
+                # 3. Captura os HWNDs reais (DNA das janelas)
+                hwnds = WindowUtils.get_managed_hwnds(self.manager.pids, self.manager.pids_to_paths_map)
+
+                if hwnds:
+                    # 4. Carimba Player 1, 2, 3... via PostMessage
+                    IdentityManager.apply_identity(hwnds)
+                    
+                    # 5. Aplica o layout (Grade, Vertical, etc.)
+                    self.manager.apply_layout(mode, clean_ui)
+                    print(f" [OK] {len(hwnds)} instâncias alinhadas e identificadas.")
+                else:
+                    print(" [AVISO] Nenhuma janela detectada para alinhar.")
+
+            except Exception as e:
+                print(f" [ERRO WORKFLOW] {e}")
+            finally:
+                self.is_busy = False
+
+        threading.Thread(target=run, daemon=True).start()
+
+   # O que foi adicionado na "Lógica 100%":
+   # Sincronização Pós-Lançamento: O código agora não apenas "abre" os jogos. Ele espera o último delay, varre o sistema em busca das janelas (get_managed_hwnds) e só então procede.
+   # Identidade Automática: A chamada ao IdentityManager.apply_identity(hwnds) garante que cada instância do jogo (mesmo no Sandboxie) receba seu ID de controle antes de ser fixada na tela.
+   # Alinhamento Final: O self.manager.apply_layout foi movido para dentro do fluxo automático. Assim, assim que você clicar em "LANÇAR SELECIONADO", o CORE KORVADO PRO faz tudo sozinho: abre, identifica e organiza.
+
+gui_tabs.py
+
+1. O Gatilho de Disparo (events.start_single_exe)
+No trecho do botão principal de lançamento:
+
+Python
+# LÓGICA 100%: Único botão de disparo (Baseado na seleção dos Checkboxes)
+ctk.CTkButton(btn_f, text="LANÇAR SELECIONADO", ...
+              command=lambda: events.start_single_exe(master)).pack(...)
+Por que aqui? Quando você clica nesse botão, a classe events (do gui_events.py) inicia o processo. Internamente, esse evento chama o AlignManager, que por sua vez utiliza o IdentityManager para carimbar o ID do player assim que a janela do jogo nasce.
+
+2. O Comando de Alinhamento (master.workflow.quick_align_workflow)
+Na seção da coluna ALINHAMENTO:
+
+Python
+# Mapeamento para garantir que o comando interno entenda "grade" como "grid"
+for label, mode in [("GRADE", "grid"), ("VERTICAL", "vertical"), ("HORIZONTAL", "horizontal")]:
+    ctk.CTkButton(
+        c2, text=label, height=28, 
+        command=lambda m=mode: master.workflow.quick_align_workflow(m, master.clean_ui_var.get())
+    ).pack(fill="x", pady=2, padx=10)
+A Conexão: O master.workflow é uma instância do AlignManager. Sempre que você clica em GRADE, VERTICAL ou HORIZONTAL, o sistema re-executa o fluxo de alinhamento.
+
+A Variável Crítica: O AlignManager costuma chamar o IdentityManager.apply_identity() logo antes ou durante o reposicionamento das janelas para garantir que, se uma nova janela abriu, ela receba seu ID de controle imediatamente.
+
+3. As Variáveis de Estado (Checkbox de Modo Janela)
+Embora não chamem o código diretamente, estas variáveis definem como o IdentityManager vai atuar:
+
+Python
+variable=master.use_sandbox_var  # Define se o ID vai para uma janela isolada
+variable=master.clean_ui_var      # Define se o ID será aplicado em janela sem borda
+variable=master.use_dxw_var      # Define se o ID passará pelo hook do DXWnd
+Resumo:
+Neste arquivo, você não verá IdentityManager.apply_identity(), mas verá o "Botão de Chamada" (LANÇAR SELECIONADO) e os "Botões de Re-alinhamento" (GRADE, VERTICAL, etc.). Eles são os interruptores que, ao serem pressionados, fazem o AlignManager disparar a lógica de identidade lá no fundo do motor.
+
+O gui_tabs.py é apenas o painel de controle; o IdentityManager é o relé que esse painel aciona.

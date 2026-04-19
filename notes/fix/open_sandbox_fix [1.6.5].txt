@@ -1,0 +1,204 @@
+splitscreen_manager.py
+
+class SplitscreenManager:
+
+def launch_game(self, exe_path, use_sandbox=False):
+        """Foco: Injeção e Disparo com CWD corrigido."""
+        if not exe_path or not os.path.exists(exe_path): return
+        
+        # 1. Injeção (Obrigatória)
+        self.injector.injetar(exe_path)
+        
+        if exe_path not in self.pids_to_paths_map:
+            self.pids_to_paths_map.append(exe_path)
+
+        if use_sandbox:
+            sbie_start = r"C:\Program Files\Sandboxie-Plus\Start.exe"
+            game_dir = os.path.dirname(exe_path) # Pasta do Sonic
+            game_exe = os.path.basename(exe_path) # Apenas "SonicMania.exe"
+            
+            if os.path.exists(sbie_start):
+                # COMANDO LIMPO: Sem caminhos longos, apenas o nome do EXE
+                comando = f'"{sbie_start}" /box:DefaultBox "{game_exe}"'
+                
+                print(f" [MOTOR] Iniciando SBIE em: {game_dir}")
+                
+                # O SEGREDO: 'cwd=game_dir' faz o Windows achar os arquivos do jogo
+                subprocess.Popen(comando, shell=True, cwd=game_dir, creationflags=0x08000000)
+            else:
+                print(r" [ERRO] Start.exe não encontrado em C:\Program Files\Sandboxie-Plus\\")
+        else:
+            # Lógica Normal
+            proc = GL.start_process([exe_path], os.path.dirname(exe_path))
+            if proc:
+                self.processes.append(proc)
+                self.pids.append(proc.pid)
+
+align_manager.py
+
+class AlignManager:
+
+        def run():
+            self.is_busy = True
+            try:
+                # 1. Limpa o motor antes de começar
+                self.manager.cleanup()
+                
+                # 2. Loop de Lançamento Inteligente
+                for exe in executables:
+                    if use_dxw:
+                        print(f" [MOTOR] Lançando via DXWnd: {os.path.basename(exe)}")
+                        self.manager.launch_game_with_dxw(exe, dx_path)
+                    else:
+                        print(f" [MOTOR] Lançando via Sistema (SBIE: {use_sandbox}): {os.path.basename(exe)}")
+                        self.manager.launch_game(exe, use_sandbox=use_sandbox)
+                    
+                    time.sleep(l_delay)
+                
+                print(" [MOTOR] Lançamento em grupo concluído. Aguarde as janelas para alinhar.")
+            except Exception as e:
+                print(f" [ERRO WORKFLOW] {e}")
+            finally:
+                self.is_busy = False
+
+gui_events.py
+
+class GUIEvents:
+    @staticmethod
+    def add_exe(app):
+        """Adiciona executável à lista do Lorde Raveno."""
+        p = filedialog.askopenfilename(
+            title="Selecionar Jogo",
+            filetypes=[("Executáveis", "*.exe")]
+        )
+        if p:
+            app.executables.append(p)
+            app.update_listbox()
+            print(f"[UI] Adicionado: {os.path.basename(p)}")
+
+    @staticmethod
+    def start_single_exe(app):
+        """Lógica 100%: Lança os executáveis marcados na lista de Checkboxes."""
+        try:
+            # 1. Filtra na lista de variáveis quais estão marcadas (True)
+            active_items = [item for item in app.exe_check_vars if item["var"].get()]
+
+            if not active_items:
+                print("[AVISO] Nenhum jogo marcado! Marque o checkbox do jogo que deseja lançar.")
+                return
+
+            # 2. Captura os estados globais (Sandboxie e DXWnd)
+            use_sandbox = app.use_sandbox_var.get()
+            use_dxw = app.use_dxw_var.get()
+
+            # 3. Itera sobre os marcados e lança um por um
+            for item in active_items:
+                target_path = item["path"]
+                exe_name = os.path.basename(target_path)
+                
+                print(f" [MOTOR] Inicialização: {exe_name} (SBIE: {use_sandbox} | DXW: {use_dxw})")
+
+                if use_dxw:
+                    # Busca o caminho do DXWnd das configurações carregadas
+                    dxw_path = app.settings.get("dxwnd_path", "")
+                    app.manager.launch_game_with_dxw(target_path, dxw_path)
+                else:
+                    app.manager.launch_game(target_path, use_sandbox=use_sandbox)
+                    
+        except Exception as e:
+            print(f"[ERRO] Falha no evento de lançamento avulso: {e}")       
+
+    @staticmethod
+    def start_flow(app):
+        """Workflow Conjunto: Lança os jogos sem aplicar alinhamento automático."""
+        active_exes = [item["path"] for item in app.exe_check_vars if item["var"].get()]
+        if not active_exes: 
+            print("[AVISO] Nada marcado para iniciar!")
+            return
+        
+        # Enviamos None para o modo de layout, forçando o motor a apenas abrir os processos
+        app.workflow.start_process_workflow(
+            active_exes, 
+            app.use_sandbox_var.get(), 
+            None, 
+            app.clean_ui_var.get()
+        )
+
+    @staticmethod
+    def quick_align(app, mode):
+        """Chamada para botões de alinhamento rápido (Manual)."""
+        clean_ui = app.clean_ui_var.get()
+        # O AlignManager interno cuidará para não sobrepor threads
+        app.workflow.quick_align_workflow(mode, app.clean_ui_var.get())
+
+gui_tabs.py
+def show_motor_content(master):
+
+    # --- GRID DE CONFIGURAÇÕES E SISTEMA ---
+    grid = ctk.CTkFrame(master.main_content, fg_color="transparent")
+    grid.pack(fill="both", expand=True, pady=5)
+    grid.columnconfigure((0, 1, 2), weight=1, uniform="col")
+
+    # COLUNA 1: MODO JANELA (Identidade Visual Atualizada)
+    c1 = _create_card(grid, 0, "MODO JANELA")
+    
+    ctk.CTkCheckBox(c1, text="Sandbox: Isolamento", 
+                    variable=master.use_sandbox_var, 
+                    text_color="#88cacf").pack(anchor="w", padx=10, pady=(5, 2))
+    
+    ctk.CTkCheckBox(c1, text="Clean UI: Sem bordas", 
+                    variable=master.clean_ui_var, 
+                    text_color="#88cacf").pack(anchor="w", padx=10, pady=2)
+    
+    ctk.CTkCheckBox(c1, text="DXWND: Forçar Modo Janela", 
+                    variable=master.use_dxw_var, 
+                    text_color="#88cacf").pack(anchor="w", padx=10, pady=(2, 5))
+
+gui_core.py
+
+import os
+import customtkinter as ctk
+from gui_configs import load_settings
+PYTHON_313 = r"C:\Users\lorde\AppData\Local\Programs\Python\Python313\python.exe"
+
+def setup_app_variables(master):
+    """Lê o JSON e aplica as variáveis ao self (master) da GUI."""
+    
+    # 1. Carrega o dicionário real do JSON
+    master.settings = load_settings()
+
+    # 2. Aplica o Caminho do Sandboxie (Prioridade para o que está no JSON)
+    master.sbie_path = master.settings.get("sbie_path")
+    
+    # Se o caminho do JSON estiver vazio ou não existir no PC, tenta os padrões
+    if not master.sbie_path or not os.path.exists(master.sbie_path):
+        default_paths = [
+            r"C:\Program Files\Sandboxie-Plus\SandMan.exe",
+            r"C:\Program Files\Sandboxie\SandMan.exe"
+        ]
+        for p in default_paths:
+            if os.path.exists(p):
+                master.sbie_path = p
+                break
+                
+    master.use_dxw_var = ctk.BooleanVar(value=master.settings.get("use_dxw", False))            
+
+    # 3. Aplica o Caminho do DXWnd
+    # Se não houver no JSON, usa o caminho relativo padrão do projeto
+    default_dx = os.path.join(os.path.dirname(os.path.abspath(__file__)), "dxwnd", "dxwnd.exe")
+    master.dxwnd_path = master.settings.get("dxwnd_path", default_dx)
+
+    # 4. Estado dos Processos e Listas
+    master.dxwnd_process = None
+    master.sbie_process = None
+    master.executables = []
+
+    # 5. Variáveis de Interface (Booleanos)
+    # Aqui usamos o .get() para buscar as preferências de motor do JSON
+    master.use_sandbox_var = ctk.BooleanVar(value=False)
+    master.clean_ui_var = ctk.BooleanVar(value=True)
+    
+    # Nota: O 'launch_delay' e 'auto_focus' ficam guardados em master.settings
+    # para serem usados pelo AlignManager depois.
+    
+    print(f" [CORE] Configurações aplicadas: Delay={master.settings.get('launch_delay')}s")

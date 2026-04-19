@@ -1,0 +1,69 @@
+dll_bridge.py :: ref_fix [v1.6.5]
+
+import ctypes
+import os
+
+class DLLBridge:
+    def __init__(self, gui_root=None):
+        self.gui = gui_root
+        self.base_path = os.path.dirname(os.path.abspath(__file__))
+        
+        # Carregamento das DLLs compiladas pelo Lorde Raveno
+        self.cleaner = self._load_dll("window_cleaner.dll")
+        self.forcer = self._load_dll("window_forcer.dll")
+        self.snap = self._load_dll("snap_dwm.dll")
+        self.audio = self._load_dll("window_audio_ext.dll")
+
+    def _load_dll(self, name):
+        path = os.path.join(self.base_path, name)
+        if os.path.exists(path):
+            try: 
+                dll = ctypes.CDLL(path)
+                return dll
+            except Exception as e:
+                print(f"[ERRO DLL] Falha ao carregar {name}: {e}")
+        return None
+
+    def apply_window_cleaner(self, hwnd):
+        """Remove bordas e botões de controle."""
+        if self.cleaner and hasattr(self.cleaner, "RemoveControlButtons"):
+            self.cleaner.RemoveControlButtons(hwnd)
+            return True
+        return False
+
+    def apply_forcer(self, hwnd):
+        """
+        RESTAURADO: Aplica Foco Simultâneo e Borda Vermelha (Visual Hook).
+        Engana o Windows para manter múltiplas janelas ativas.
+        """
+        if self.forcer:
+            # Força o estado ativo
+            if hasattr(self.forcer, "ForceActivate"):
+                self.forcer.ForceActivate(hwnd)
+            # Ativa a borda vermelha indicando que o sistema está injetado
+            if hasattr(self.forcer, "EnableVisualHook"):
+                self.forcer.EnableVisualHook(hwnd, True)
+            return True
+        return False
+
+    # No arquivo dll_bridge.py
+
+    def set_window_pos(self, hwnd, x, y, w, h, clean_ui=False):
+        """Manipulação via snap_dwm.dll"""
+        if self.snap:
+            # CORREÇÃO: Só habilita Snap Features se NÃO for Clean UI
+            if not clean_ui:
+                if hasattr(self.snap, "EnableSnapFeatures"):
+                    self.snap.EnableSnapFeatures(hwnd)
+        
+            # O MoveAndStretch deve ser chamado sempre para posicionar
+            if hasattr(self.snap, "MoveAndStretch"):
+                self.snap.MoveAndStretch(hwnd, int(x), int(y), int(w), int(h))
+                return True
+        return False
+
+    def toggle_mute(self, hwnd, mute_state):
+        if self.audio and hasattr(self.audio, "SetMute"):
+            self.audio.SetMute(hwnd, mute_state)
+            return True
+        return False

@@ -1,0 +1,16 @@
+Abra o prompt nesse local e cole tudo na cmd admin confirme os processos individuais:
+
+Cmd e Poweshell:
+
+g++ -shared -o window_forcer.dll window_forcer.cpp -luser32
+g++ -shared -o snap_dwm.dll snap_dwm.cpp -luser32 -ldwmapi
+g++ -shared -o window_cleaner.dll window_cleaner.cpp -luser32
+g++ -shared -o window_audio_ext.dll window_audio_ext.cpp -lole32 -luuid
+
+Cmd:
+
+if not exist "xinput1_3 x64" mkdir "xinput1_3 x64"
+x86_64-w64-mingw32-g++ -shared -o "xinput1_3 x64/xinput1_3_x64.dll" xinput1_3.cpp -lwinmm -static-libgcc -static-libstdc++
+if not exist "xinput1_3 x86" mkdir "xinput1_3 x86"
+i686-w64-mingw32-g++ -shared -o "xinput1_3 x86/xinput1_3_x86.dll" xinput1_3.cpp -lwinmm -static-libgcc -static-libstdc++
+

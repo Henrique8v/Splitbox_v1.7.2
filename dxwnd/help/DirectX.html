@@ -1,0 +1,913 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE>DirectX</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice 4.1.3  (Win32)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="0;0">
+	<SCRIPT SRC="js/jquery.min.js"></SCRIPT>
+	<SCRIPT>
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "DxWnd.html?" + sTopicUrl;
+			}
+		});
+	
+	</SCRIPT>
+	<STYLE TYPE="text/css">
+	<!--
+		P { margin-bottom: 0cm; border: none; padding: 0cm; color: #000000; font-family: "Arial", "Helvetica", sans-serif; font-size: 10pt; font-style: normal; font-weight: normal; text-align: left; text-decoration: none }
+		P.rvps2 { font-family: "Arial", "Helvetica", sans-serif; font-size: 10pt; font-style: normal; font-weight: normal }
+		H3 { color: #000000 }
+		H3.cjk { font-family: "SimSun" }
+		H3.ctl { font-family: "Mangal" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR" STYLE="border: none; padding: 0cm">
+<DIV ID="topic_content" DIR="LTR">
+	<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm"><IMG SRC="lib/dxwnd_configuration_directx4.png" NAME="grafiikka4" ALIGN=BOTTOM BORDER=0></P>
+	<H3 CLASS="western">DirectX Version Hook</H3>
+	<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm">DirectX Version Hook:
+	Sets the basic intervention strategy. DxWnd should use a different
+	hooking technique depending on the technology of the game. Automatic mode
+	tries to find the correct technique by itself, but it doesn't always
+	succeed. OpenGL handling requires a dedicated setting (see <A HREF="OpenGL.html">OpenGL</A>).</P>
+	<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm">Available options:</P>
+	<UL>
+		<LI><P>Automatic 
+		</P>
+		<LI><P>DirectX1~6 
+		</P>
+		<LI><P>DirectX7 
+		</P>
+		<LI><P>DirectX8 
+		</P>
+		<LI><P>DirectX9 
+		</P>
+		<LI><P>DirectX10 
+		</P>
+		<LI><P>DirectX11 
+		</P>
+		<LI><P STYLE="margin-bottom: 0.5cm">None 
+		</P>
+	</UL>
+	<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm">In &quot;Automatic&quot;
+	(the default mode), DxWnd automatically detects the DirectX calls and
+	hooks them to track and modify the calls and their corresponding COM
+	methods. In some cases though, DxWnd is unable to properly detect
+	these calls and the windowing effect can be recovered by explicitly
+	telling DxWnd the version of DirectX that it should hook. Each option
+	corresponds to a different DLL file that is involved in the DirectX
+	implementation. This is directed by the following options:</P>
+	<UL>
+		<LI><P>DirectX1~6 (for ddraw.dll) 
+		</P>
+		<LI><P>DirectX7 (for ddrawex.dll) 
+		</P>
+		<LI><P>DirectX8 (for d3d8.dll) 
+		</P>
+		<LI><P>DirectX9 (for d3d9.dll) 
+		</P>
+		<LI><P>DirectX10 (for ...) 
+		</P>
+		<LI><P STYLE="margin-bottom: 0.5cm">DirectX11 (for ...) 
+		</P>
+	</UL>
+	<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm">The last two options
+	are generally useless, since the current Direct3D10/11
+	implementation seems to be based on Direct3D9, so hooking DirectX9
+	works for them as well (however, the implementation may change in
+	the future).</P>
+	<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm">It is also possible to
+	specify the option &quot;None&quot; to avoid hooking DirectX at all.
+	This could be helpful whenever you are interested in DxWnd features
+	that are not related to the graphics (e.g., time stretching,
+	compatibility options) and you want to leave the graphics alone.</P>
+	<P><BR>
+	</P>
+	<HR>
+	<H3 CLASS="western">Emulation - Renderer</H3>
+	<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm">DirectX emulation
+	determines how the fullscreen DirectX operations are managed to fit
+	in a windowed environment, with the following options:</P>
+	<TABLE WIDTH=100% BORDER=1 CELLPADDING=2 CELLSPACING=2>
+		<TR VALIGN=TOP>
+			<TD WIDTH=142>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">None</P>
+			</TD>
+			<TD WIDTH=1259>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">The primary
+				surface and backbuffers are simply scaled to the desired size,
+				but no other feature is altered. In particular, the pixel
+				color depth and mode are not altered.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=142>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Primary
+				Buffer</P>
+			</TD>
+			<TD WIDTH=1259>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Same as
+				&quot;None,&quot; but blit operations are made against a memory
+				surface and then transferred to the real primary surface:
+				this handles the so-called &quot;pitch-bug&quot; problem.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=142>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Locked
+				Surface</P>
+			</TD>
+			<TD WIDTH=1259>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Same as
+				&quot;Primary Buffer&quot; (EMULATEBUFFER), but the buffer is the
+				surface of an OFFSCREENPLAIN DirectDraw surface, so it is handled
+				similarly to a DirectX surface buffer.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=142>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Primary
+				Surface</P>
+			</TD>
+			<TD WIDTH=1259>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">The virtual
+				primary surface has a different color depth from the real primary
+				surface, and DxWnd takes care of the color transformation
+				internally: it might be a little slower but it involves no screen
+				mode changes. Furthermore, this option allows you to set the &quot;Set
+				AERO compatible mode&quot; that avoids making a temporary color
+				conversion and stretching it to the primary surface (which would
+				break the AERO desktop composition mode).</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=142>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">GDI</P>
+			</TD>
+			<TD WIDTH=1259>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Similar to
+				&quot;Primary Surface&quot; mode (EMULATESURFACE), but DxWnd
+				forwards all the conversion between the virtual primary interface
+				and the window surface instead of managing it internally. Because
+				of the recent optimizations to GDI that can now take advantage of
+				hardware-accelerated functions, this mode is becoming
+				particularly interesting, and the lack of extra service surfaces
+				brings it closer to the original game schema. It is also quite
+				respectful of AERO desktop modes.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=142>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">SDL</P>
+			</TD>
+			<TD WIDTH=1259>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Similar to
+				&quot;Primary Surface&quot; mode (EMULATESURFACE), but DxWnd uses
+				SDL functions to bring the emulated primary surface to screen.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=142>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">SDL2</P>
+			</TD>
+			<TD WIDTH=1259>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Same as SDL,
+				but using the newer SDL2 library.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=142>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">OpenGL</P>
+			</TD>
+			<TD WIDTH=1259>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Same as SDL,
+				but using OpenGL functions. This is a new and experimental blitter, derived from Jari Komppa's "ddhack" tool, that 
+				transfers the DirectDraw blitted surface (typically the backbuffer) to an OpenGL texture and then moves it to the screen.
+				The use of OpenGL texture brings out better performance, quality and the possibility to add aditional features.
+				</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=142>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">D3D9</P>
+			</TD>
+			<TD WIDTH=1259>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Same as SDL,
+				but using Direct3D9 functions. This renderer uses (when supported by the video card) HW acceleration to process
+				the graphics, so it may have optimum quality and performance, but it may show incompatibilities when rendering
+				programs that are natively based on Direct3D9 already.
+				</P>
+			</TD>
+		</TR>
+	</TABLE>
+	<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm">Note that the chosen
+	option only influences DirectDraw1 through DirectDraw7 interfaces.
+	Interfaces with Direct3D8 and up (or OpenGL) are not affected by
+	these options.</P>
+	<P STYLE="margin-bottom: 0.5cm"><BR><BR>
+	</P>
+	<H3 CLASS="western">Emulation - Filter</H3>
+	<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm">NOTE: Not all
+	emulation modes support filtering. In case filtering is not
+	supported, the listbox is grayed out and becomes inactive. When the emulation mode is updated, the listbox will be updated as well, listing all available filters (if any) for the new emulation mode and defaulting the selection to "none". If no filters are available for the selected emulation mode, then the listbox will be grayed out.</P>
+	<TABLE WIDTH=100% BORDER=1 CELLPADDING=2 CELLSPACING=2>
+		<TR VALIGN=TOP>
+			<TD WIDTH=104>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">none</P>
+			</TD>
+			<TD WIDTH=1293>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">The normal
+				mode, with no additional filters.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=104>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Fast 2X
+				Bilinear</P>
+			</TD>
+			<TD WIDTH=1293>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Activates a
+				simplified filter that scales each pixel twice, interpolating the
+				colors of adjacent pixels. The default window size is double the
+				resolution of the virtual screen. If you choose a different size,
+				the surface is scaled to fit into the client area, but this
+				noticeably slows down the blit operation.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=104>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">HQ 2X/3X/4X</P>
+			</TD>
+			<TD WIDTH=1293>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">High quality,
+				scales the surface of a 2X/3X/4X factor by interpolating the adjacent pixel colors.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=104>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">deinterlace</P>
+			</TD>
+			<TD WIDTH=1293>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">When this
+				filter detects even or odd full black lines, it replaces them
+				with the line above. This eliminates the striped effect of old
+				interlaced movies.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=104>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">interlace</P>
+			</TD>
+			<TD WIDTH=1293>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Opposite of
+				deinterlace, it forcefully inserts even black lines to simulate a
+				retro-gaming interlaced video.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=104>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">PIX 2X/3X/4X</P>
+			</TD>
+			<TD WIDTH=1293>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Experimental,
+				simply scales the pixels by 2X, 3X, or 4X without making any
+				attempt to interpolate them.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=104>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Scale2X 2x/3x/4x</P>
+			</TD>
+			<TD WIDTH=1293>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Scaling
+				algorithm meant to smooth the pixel lines by scaling the pixels of a 2X, 3X or
+				4X factor, used in the "AdvanceMAME" program and by the kind courtesy of A. Mazzoleni. 
+				It is the best fit for low-resolution and non-aliased screens.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=104>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Scale2K 2x/3x/4x</P>
+			</TD>
+			<TD WIDTH=1293>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Same as Scale
+				2X but with better support for color transitions.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=104>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Blur effect</P>
+			</TD>
+			<TD WIDTH=1293>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Currently implemented 
+				for the OpenGL renderer only, thanks to the source code found in "ddhack".
+				It simulates a partial persistency effect of past frames as visible
+				in old LCD monitors.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=104>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Dithering</P>
+			</TD>
+			<TD WIDTH=1293>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+				Forces color dithering with a limited color palette.
+				</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=104>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">HalfTone</P>
+			</TD>
+			<TD WIDTH=1293>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+				Available in GDI renderer, forces halftone filtering when GDI scales the images.
+				</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=104>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Rotate 90/180/270</P>
+			</TD>
+			<TD WIDTH=1293>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+				Available in OpenGL renderer, rotates the images by 90, 180 or 270 degrees.
+				</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=104>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Blur</P>
+			</TD>
+			<TD WIDTH=1293>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+				Available in OpenGL renderer, produces a blur effect by mixing the current and past images.
+				</P>
+			</TD>
+		</TR>
+	</TABLE>
+	<P><BR>
+	</P>
+	<HR>
+	
+	
+	<H3 CLASS="western">Additional flags</H3>
+	<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm"></P>
+	<TABLE WIDTH=100% BORDER=1 CELLPADDING=2 CELLSPACING=2>
+		<TR VALIGN=TOP>
+			<TD WIDTH=104>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Async blit mode</P>
+			</TD>
+			<TD WIDTH=152>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">ASYNCBLITMODE</P>
+			</TD>
+			<TD WIDTH=1134>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Runs the final phase of the blit operation to the screen
+				in asynchronous mode. When the flag is not set, each blit operation to the primary surface is 
+				executed, including the color conversion and scaling. This operation, in case of programs that make frequent
+                        updates of tiny portions of the screen, can be very CPU and bandwidth consuming . 
+				When the flag is set, on the contrary, the final phases of the blit operations are performed
+				asynchronously at the screen refresh rate of 60Hz, no matter whether the primary surface was updated or 
+				not. So, depending on the nature of the program, it could be more convenient to either set or to unset
+				this option.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=104>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Full Bilinear</P>
+			</TD>
+			<TD WIDTH=152>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">BILINEARFILTER</P>
+			</TD>
+			<TD WIDTH=1134>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Activates a
+				bilinear filter to scale the DirectDraw primary surface to the
+				window client area. When this is used with GDI games, it
+				activates GDI internal filtering for better scaling.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=104>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Simulate BW monitor</P>
+			</TD>
+			<TD WIDTH=152>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">BLACKWHITE</P>
+			</TD>
+			<TD WIDTH=1134>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Activates a
+				tweak in the palette handling that causes all the colors to be
+				replaced with their corresponding grayscale color. It works only on
+				8bpp palettized games or while emulating 16bpp on a 32bpp
+				desktop.</P>
+			</TD>
+		</TR>
+	</TABLE>
+	<P><BR>
+	</P>
+	<HR>	
+	
+	
+	
+	<H3 CLASS="western">DirectDraw Surface handling</H3>
+	<TABLE BORDER=1 CELLPADDING=2 CELLSPACING=2>
+		<TR VALIGN=TOP>
+			<TD WIDTH=247>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">switch VIDEO
+				to SYSTEM on fail</P>
+			</TD>
+			<TD WIDTH=152>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">VIDEOTOSYSTEMMEM</P>
+			</TD>
+			<TD WIDTH=1134>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">When this
+				option is set and a CreateSurface fails because of video memory
+				shortage, DxWnd backs this up by creating the surface on memory.
+				&nbsp;Oddly enough, some games expect to notice this by
+				themselves and work correctly only when the option is NOT set.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=247>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Suppress DX
+				common errors</P>
+			</TD>
+			<TD WIDTH=152>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">SUPPRESSDXERRORS</P>
+			</TD>
+			<TD WIDTH=1134>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Some games
+				running in windowed mode generate sporadic errors that wouldn't
+				prevent the game from working, but terminate the game. This
+				option makes DirectX methods return a manageable condition in such common
+				cases.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=247>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Palette
+				update don't Blit</P>
+			</TD>
+			<TD WIDTH=152>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">NOPALETTEUPDATE</P>
+			</TD>
+			<TD WIDTH=1134>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Avoids
+				executing a blit operation in case of a palette update. This could
+				be used to fix conflicts between GDI and DirectDraw palette updates.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=247>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Don't fix the
+				Pixel Format</P>
+			</TD>
+			<TD WIDTH=152>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">NOPIXELFORMAT</P>
+			</TD>
+			<TD WIDTH=1134>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Tries not to
+				fix the surface pixel format.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=247>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">By default
+				set no ALPHACHANNEL</P>
+			</TD>
+			<TD WIDTH=152>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">NOALPHACHANNEL</P>
+			</TD>
+			<TD WIDTH=1134>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">By default,
+				DirectDraw surfaces are created with alpha channel capability.
+				This flag directs the creation of surfaces without alpha
+				channel capability.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=247>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Auto Primary
+				Surface Blit</P>
+			</TD>
+			<TD WIDTH=152>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">AUTOREFRESH</P>
+			</TD>
+			<TD WIDTH=1134>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Some games
+				ignore DirectDraw specifications, updating the memory address
+				returned by the first IDirectDrawSurface::Lock operation, avoiding
+				the need to unlock and lock on every frame (the original version
+				of "Cossacks" does this). On modern systems, these games display a
+				black screen even though the image is refreshed on the virtual
+				surfaces. This flag periodically refreshes the display while
+				processing the Windows message queue, forcing the game to blit
+				each updated frame to the screen.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=247>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Forced mode</P>
+			</TD>
+			<TD WIDTH=152>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">INDEPENDENTREFRESH</P>
+			</TD>
+			<TD WIDTH=1134>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Same as Auto
+				Primary Surface Blit, but uses a dedicated thread to manage
+				situations where the game doesn't process the message queue
+				(e.g., during intro movies).</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=247>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Set texture
+				pixel format</P>
+			</TD>
+			<TD WIDTH=152>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">TEXTUREFORMAT</P>
+			</TD>
+			<TD WIDTH=1134>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Applies the
+				virtual pixel format to texture surfaces that don't have an
+				explicit DDSD_PIXELFORMAT attribute.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=247>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Suppress
+				Release on backbuffer</P>
+			</TD>
+			<TD WIDTH=152>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">SUPPRESSRELEASE</P>
+			</TD>
+			<TD WIDTH=1134>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">This flag
+				ensures that the DirectDraw backbuffer surface, a critical
+				resource, will not be released in emulated modes, even if
+				explicitly requested.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=247>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Support
+				offscreen 3D</P>
+			</TD>
+			<TD WIDTH=152>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">OFFSCREENZBUFFER</P>
+			</TD>
+			<TD WIDTH=1134>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Allows the
+				creation of a ZBUFFER surface in some conditions (fixes "Nightmare
+				Creatures" and the Direct3D version of "Dungeon Keeper" [with "Handle Exceptions" enabled]).</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=247>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Suppress
+				ZBUFFER attach</P>
+			</TD>
+			<TD WIDTH=152>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">NOZBUFATTACH</P>
+			</TD>
+			<TD WIDTH=1134>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Pretends that the
+				ZBUFFER surface is not attached to another surface, even if that is the case. 
+				This may prevent Direct3D CreateSurface from returning an error code (fixes
+				"Silkolene Honda Motocross GP").</P>
+			</TD>
+		</TR>
+	<P><BR>
+	</P>
+	</TABLE>
+
+	
+	<HR>
+	<H3 CLASS="western">Overlay emulation</H3>
+	<P>
+	<TABLE WIDTH=100% BORDER=1 CELLPADDING=2 CELLSPACING=2>
+		<TR VALIGN=TOP>
+			<TD WIDTH=247>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">No</P>
+			</TD>
+			<TD WIDTH=152>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm"></P>
+			</TD>
+			<TD WIDTH=1134>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">No overlay emulation, 
+				to use overlays the feature must be supported.
+				</P>
+			</TD>
+		</TR>
+			<TD WIDTH=247>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Opaque</P>
+			</TD>
+			<TD WIDTH=152>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">EMULATEOVERLAY</P>
+			</TD>
+			<TD WIDTH=1134>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Pretends that the
+				system can handle overlay surfaces. This feature depends on the video
+				hardware capabilities, and many drivers dropped its support since
+				the era of Windows Vista, thus making it impossible to run a few games that
+				rely on its availability (namely, "The Godfather").
+				The flag pretends that the DirectDraw session can handle overlay surfaces
+				and emulates this unsupported feature by emulating some FourCC codecs in software
+				(at the moment, only YUY2) and blitting the frames to an overlying window.<P>
+				The fake-overlay window is opaque, so this mode is good in all cases where the overlay
+				is overlapped to the whole primary surface.
+				<P>
+				The flag should not be used together with the "DirectX(2) > Suppress overlay capability" (SUPPRESSOVERLAY) flag.
+				</P>
+			</TD>
+		</TR>
+
+		<TR VALIGN=TOP>
+			<TD WIDTH=247>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Transparent</P>
+			</TD>
+			<TD WIDTH=152>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">EMULATEOVERLAY + TRANSPARENTOVERLAY</P>
+			</TD>
+			<TD WIDTH=1134>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+				It makes the overlay window transparent. This mode is necessary when the overlay is smaller than
+				the primary surface (e.g., in the "mosquito.exe" sample in the Microsoft DX6/7 SDK).
+				</P>
+			</TD>
+		</TR>
+
+	</TABLE>
+	<P><BR>
+	</P>
+	<HR>
+	<H3 CLASS="western">Flip emulation</H3>
+	The DirectDrawSurface Flip method makes the surface memory that is associated with the 
+	DDSCAPS_BACKBUFFER surface become associated with the front buffer surface. In practice, it
+	swaps the content of surfaces tied in a flipchain in a very efficient way.<P>
+	Surface flipping is normally well supported in fullscreen mode, but when the program 
+	is forced to run in windowed mode, the Flip operation is unsupported and the
+	behavior of the Flip operation should be emulated.
+	<P>
+	<TABLE WIDTH=100% BORDER=1 CELLPADDING=2 CELLSPACING=2>
+		<TR VALIGN=TOP>
+			<TD WIDTH=247>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">No</P>
+			</TD>
+			<TD WIDTH=152>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm"></P>
+			</TD>
+			<TD WIDTH=1134>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">No Flip emulation, the 
+				operation is attempted using the native DirectDrawSurface Flip method.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=247>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Partial</P>
+			</TD>
+			<TD WIDTH=152>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">HALFFLIPEMULATION</P>
+			</TD>
+			<TD WIDTH=1134>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">In most cases, it is not
+				necessary to bring the primary surface content to the backbuffer, the program
+				can work flawlessly by just moving the backbuffer surface to the front buffer,
+				with a better performance.<P>
+				The picture shows how the surface contents are moved in a generic, three surface
+				flipchain. It should be noted that in the most common case of a flipchain
+				with a single backbuffer, half flip emulation requires a single surface copy.</P>
+				<IMG SRC="lib/half.png" NAME="partial Flip emulation" BORDER=0></P>
+                        <P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=247>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Full</P>
+			</TD>
+			<TD WIDTH=152>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">FULLFLIPEMULATION</P>
+			</TD>
+			<TD WIDTH=1134>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">In several cases (mostly involving mouse cursor
+				movement), this partial Flip emulation leaves trails on the screen.
+				This option implements a slower but more accurate method of Flip
+				emulation that resolves the issue. For an example, see <A HREF="RobinHoodTheLegendofSherwood.html">Examples
+				&gt; Robin Hood - The Legend of Sherwood</A>.</P>
+				The picture shows how the surface contents are moved in a generic, three surface
+				flipchain.</P>
+				<IMG SRC="lib/full.png" NAME="full Flip emulation" BORDER=0></P>
+                        <P>
+			</TD>
+		</TR>
+
+	</TABLE>
+	<P><BR>
+	</P>
+	<HR>
+	<H3 CLASS="western">AERO handling</H3>
+	<TABLE WIDTH=100% BORDER=1 CELLPADDING=2 CELLSPACING=2>
+		<TR VALIGN=TOP>
+			<TD WIDTH=171>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Set AERO
+				compatible mode</P>
+			</TD>
+			<TD WIDTH=138>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">SETCOMPATIBILITY</P>
+			</TD>
+			<TD WIDTH=1228>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Forces the
+				program to be compatible with AERO desktop mode by
+				invoking the DirectDraw SetAppCompatData call, suppressing the
+				switch from AERO to standard desktop mode. Useful for Windows
+				Vista to Windows 8.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=171>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Optimize for
+				AERO mode</P>
+			</TD>
+			<TD WIDTH=138>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">AEROBOOST</P>
+			</TD>
+			<TD WIDTH=1228>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Optimizes
+				operations for the AERO environment. All stretching and color
+				conversion operations are made on system memory surfaces, and
+				then the final blit to the screen doesn't break the AERO mode.</P>
+			</TD>
+		</TR>
+	</TABLE>
+	<HR>
+	<H3 CLASS="western">VSync</H3>
+	<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm">This panel contains a
+	set of different options meant to fine tune the vertical sync
+	feature. Here, by VSync we mean the wait operation performed by
+	the WaitForVerticalBlank() DirectDraw method. It should be noted that the
+	VSync is always referred to operations toward the real primary
+	surface on the video memory, so in direct modes, it changes the Flip/Blt to primary surface operations, while in emulated modes, it
+	applies only to blit operations from the virtual primary surface to
+	the real primary surface. The panel contains two selectors, one to
+	specify whether to perform the VSync operation or not, the other to
+	determine the method to be used. It should be noted that the
+	former flag &quot;Optimize CPU&quot; is equivalent to the
+	combination of VSync &quot;ON&quot; + &quot;WaitForFrequency&quot;.</P>
+	<TABLE WIDTH=100% BORDER=1 CELLPADDING=2 CELLSPACING=2>
+		<TR VALIGN=TOP>
+			<TD WIDTH=171>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Default</P>
+			</TD>
+			<TD WIDTH=138></TD>
+			<TD WIDTH=1228>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Set by
+				default. DxWnd closely follows the program's indications about
+				VSync.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=171>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">ON</P>
+			</TD>
+			<TD WIDTH=138>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">FORCEVSYNC</P>
+			</TD>
+			<TD WIDTH=1228>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">When not
+				present, DxWnd inserts a WaitForVerticalBlank operation before
+				each Blt/Flip to the primary surface.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=171>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">OFF</P>
+			</TD>
+			<TD WIDTH=138>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">FORCENOVSYNC</P>
+			</TD>
+			<TD WIDTH=1228>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Any
+				WaitForVerticalBlank() invocation is bypassed.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=171>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">WaitForVerticalBlank</P>
+			</TD>
+			<TD WIDTH=138></TD>
+			<TD WIDTH=1228>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Set by
+				default. When performed, the VSync operation invokes the DirectDraw
+				native WaitForVerticalBlank method.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=171>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">WaitForScanline</P>
+			</TD>
+			<TD WIDTH=138>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">VSYNCSCANLINE</P>
+			</TD>
+			<TD WIDTH=1228>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">This flag is
+				for experimental usage, mainly to try to cause bad wait
+				conditions on the vertical blank condition. The DirectDraw
+				WaitForVerticalBlank method only allows for two operation modes,
+				DDWAITVB_BLOCKBEGIN and DDWAITVB_BLOCKEND. Setting this flag, the
+				operation is replaced by a series of Sleep(1) waits until the
+				vertical line reaches a given threshold set in the numeric field
+				to the right. The number in there, ranging from 1 to some value
+				above 100, indicates the percentage of vertical line that
+				triggers the end of wait condition.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=171>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">WaitForFrequency</P>
+			</TD>
+			<TD WIDTH=138>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">SAVELOAD</P>
+			</TD>
+			<TD WIDTH=1228>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">On some
+				specific hardware and conditions, the WaitForVerticalBlank method could
+				be either unimplemented or implemented in such a way that causes
+				heavy CPU consumption. The WaitForFrequency flag replaces the
+				WaitForVerticalBlank() implementation with an equivalent Sleep(n)
+				operation, where 'n' is calculated to match the exact video
+				vertical frequency. This way, CPU consumption is lowered to the
+				minimum, though the operation is performed regardless of the actual
+				vertical line position. On modern computers and video hardware though,
+				this aspect is usually irrelevant and the risk of getting video
+				tearing is absent.</P>
+			</TD>
+		</TR>
+	</TABLE>
+
+
+	
+	<HR>
+	<H3 CLASS="western">Cooperative level</H3>
+	Sets the preference for the DirectDraw cooperative level when in fullscreen (non windowed) mode.
+	<P>
+	<TABLE WIDTH=100% BORDER=1 CELLPADDING=2 CELLSPACING=2>
+		<TR VALIGN=TOP>
+			<TD WIDTH=247>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">default</P>
+			</TD>
+			<TD WIDTH=152>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm"></P>
+			</TD>
+			<TD WIDTH=1134>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Keeps the cooperative level
+				set by the program with no changes.
+				</P>
+			</TD>
+		</TR>
+			<TD WIDTH=247>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">normal</P>
+			</TD>
+			<TD WIDTH=152>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">LOCKNORMALCOOP</P>
+			</TD>
+			<TD WIDTH=1134>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Forces
+				the DDSCL_NORMAL cooperative level
+				</P>
+			</TD>
+		</TR>
+
+		<TR VALIGN=TOP>
+			<TD WIDTH=247>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">exclusive</P>
+			</TD>
+			<TD WIDTH=152>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">LOCKEXCLUSIVECOOP</P>
+			</TD>
+			<TD WIDTH=1134>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+				Forces the DDSCL_EXCLUSIVE (together with DDSCL_FULLSCREEN) cooperative level
+				</P>.
+				</P>
+			</TD>
+		</TR>
+
+	</TABLE>
+
+	<P><BR>
+	</P>
+	<DIV ID="topic_footer" DIR="LTR">
+		<P STYLE="margin-bottom: 0.5cm"><BR><BR>
+		</P>
+	</DIV>
+</DIV>
+</BODY>
+
+</HTML>

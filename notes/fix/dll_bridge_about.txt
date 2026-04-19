@@ -1,0 +1,95 @@
+             FUNCIONAMENTO
+
+Aqui está como cada uma delas atua e como o Python interage com elas:
+
+1. windows_cleaner.dll (A Estética)
+Esta é a responsável pela função Clean UI. O Windows desenha bordas, barras de título e menus em todas as janelas por padrão.
+
+O que ela faz: Ela intercepta as chamadas de desenho da janela (WM_NCPAINT, WM_NCCALCSIZE) e diz ao Windows: "Não desenhe nada aqui".
+
+Como o Python usa: Através do DLLBridge no splitscreen_manager.py. O Python identifica o HWND (ID da janela) do jogo e envia um sinal para esta DLL remover as bordas.
+
+Resultado: O jogo fica em "Borderless" real, permitindo que as janelas fiquem coladas umas nas outras sem aquele relevo cinza do Windows.
+
+2. window_force.dll (A Garra)
+Esta DLL trabalha junto com o seu forcer_loop no window_utils.py.
+
+O que ela faz: Ela força a janela a aceitar as coordenadas de redimensionamento. Alguns jogos tentam "voltar" para o tamanho original ou centralizar sozinhos. A window_force bloqueia essas tentativas do jogo.
+
+Como o Python usa: O SplitscreenManager chama o método apply_forcer(hwnd). O Python passa a posição (x,y) e o tamanho (largura,altura) desejados, e a DLL injeta isso diretamente na memória de mensagens da janela do jogo.
+
+Resultado: A janela fica "congelada" na posição da grade que você definiu no Motor de Sistema.
+
+3. snap_dwm.dll (A Performance)
+Esta lida com o DWM (Desktop Window Manager) do Windows.
+
+O que ela faz: Ela gerencia o "Buffer" de imagem. Quando você tem muitas janelas sobrepostas ou alinhadas, o Windows pode causar tearing (imagem rasgada) ou lag de renderização. A snap_dwm ajuda a sincronizar a atualização da janela com o que o seu layout espera.
+
+Como o Python usa: Ela é geralmente carregada via CoreInjector no início do processo. O Python a utiliza para garantir que, ao mover 4 janelas ao mesmo tempo para o modo GRADE, o Windows não engasgue tentando redesenhar a área de trabalho.
+
+🛠️ Como o Python "conversa" com elas?
+No seu código, a integração ocorre principalmente via ctypes ou bridge:
+
+Carregamento: O Python localiza o arquivo .dll na pasta (ex: dinput8 x64).
+
+Injeção: O injector_manager.py usa uma técnica chamada Remote Thread Injection para colocar a DLL dentro do processo do jogo.
+
+Comando: Uma vez lá dentro, o Python usa o DLLBridge para chamar funções específicas dentro da DLL. Por exemplo:
+
+Python
+# Exemplo conceitual do que o seu Bridge faz:
+dll_atua = ctypes.WinDLL("windows_cleaner.dll")
+dll_atua.RemoveBorders(hwnd_do_jogo)
+Resumo do Ecossistema:
+Python: É o cérebro que decide quando e onde as janelas devem estar.
+
+DLLs: São as ferramentas que executam o trabalho sujo dentro do "território" do jogo, onde o Python não tem permissão direta para mexer.
+
+Sem essas três, o alinhamento seria instável e as janelas ainda teriam as bordas feias do Windows que atrapalham a imersão do split-screen.
+
+
+             DLL_BRIGE.PY
+
+O dll_bridge.py é o tradutor oficial do seu sistema. Ele serve para converter os comandos de alto nível do Python em instruções de baixo nível que as DLLs (windows_cleaner, window_force, etc.) conseguem entender.
+
+No seu projeto CORE KORVADO PRO, ele é o "músculo" acionado pelos seguintes componentes:
+
+1. No SplitscreenManager (O Dono da Instância)
+O SplitscreenManager é quem cria e mantém a ponte viva. No __init__ do manager, você tem:
+
+Python
+self.bridge = DLLBridge()
+Deste momento em diante, o Manager usa a self.bridge para qualquer manipulação física nas janelas dos jogos.
+
+2. No LayoutEngine (O Executor de Estética)
+A LayoutEngine é o lugar onde o dll_bridge brilha mais. Quando você decide alinhar em GRADE e marca a opção Clean UI:
+
+O LayoutEngine recebe a instância da bridge.
+
+Ele chama funções como self.bridge.remove_borders(hwnd) ou self.bridge.apply_transparency(hwnd).
+
+O que acontece: A bridge pega o HWND da janela e "conversa" com a windows_cleaner.dll para arrancar as bordas em milissegundos.
+
+3. No WindowUtils.forcer_loop (A Estabilização)
+Como vimos no seu código do loop de foco:
+
+Python
+# Dentro do forcer_loop no window_utils.py
+try: manager.bridge.apply_forcer(hwnd)
+except: pass
+Aqui, a bridge é usada para garantir que a window_force.dll mantenha a janela "grampeada" na posição correta, ignorando tentativas do Windows de redimensioná-la.
+
+🔍 O Fluxo de Trabalho da Bridge
+Gatilho: O usuário clica em "GRADE" na GUI.
+
+Ordem: O AlignManager avisa o SplitscreenManager para aplicar o layout.
+
+Tradução: O SplitscreenManager chama a DLLBridge.
+
+Ação: A DLLBridge carrega as funções da DLL via ctypes e injeta os parâmetros (HWND, X, Y, Largura, Altura) diretamente na memória do processo do jogo.
+
+🛠️ Por que ela é necessária?
+O Python, por padrão, não tem permissão para chegar no Windows e dizer: "Ei, tire a borda dessa janela de terceiros".
+A Bridge serve para carregar as funções da API do Windows (user32.dll, dwmapi.dll) e as suas DLLs customizadas para realizar essas tarefas de "invasão" positiva nos processos dos jogos.
+
+Em resumo, se o SplitscreenManager é o motor, o dll_bridge.py é a correia de transmissão que faz as rodas (as janelas) realmente girarem e se posicionarem. Sem ela, o seu Python falaria sozinho e as janelas não obedeceriam aos comandos de limpeza e força.

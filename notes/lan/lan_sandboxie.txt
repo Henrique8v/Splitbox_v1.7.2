@@ -1,0 +1,16 @@
+Para liberar o LAN Localhost (comunicação interna entre instâncias no mesmo PC), a melhor opção geralmente é:Loopback Pseudo-Interface 1O "Loopback" é o endereço padrão de interface interna (127.0.0.1). 
+
+No contexto do Sandboxie Plus, selecionar essa interface garante que os processos dentro da "box" consigam enxergar o tráfego que não sai para a rede física, facilitando a conexão entre múltiplas instâncias de jogos que rodam localmente.Outras Opções RelevantesSe o objetivo for um pouco diferente, considere estas alternativas:vEthernet (Default Switch): Útil se você estiver tentando comunicar as instâncias através de uma rede virtual interna do Windows (comum se houver Hyper-V ativo).
+
+None (Don't bind to adapter): Em muitos casos de LAN local simples, deixar em "None" permite que o Windows gerencie a rota automaticamente. Tente esta se o Loopback apresentar algum bloqueio específico.Dica de ConfiguraçãoVerifique também na aba "Restrições de Processo" ou "Firewall de Rede" (visíveis na sua imagem) se não há nenhum bloqueio ativo para portas específicas que o jogo utiliza.
+
+[não] Bloquear portas SAMBA comuns
+
+[não] Bloquear DNS, porta UDP 53
+
+Se você pretende que uma instância de jogo atue como "Host" e a outra como "Client" via LAN, mantenha essas caixas desmarcadas (como já estão na foto). Se você as marcar, o Sandboxie vai barrar o tráfego mesmo que o IP esteja certo.
+
+2. Firewall de Rede (Aba ao lado)
+A configuração de Bind to Adapter apenas diz por qual "caminho" os dados devem viajar. Porém, a aba Firewall de Rede (que está ao lado de "Restrições de Processo") pode ter regras que bloqueiam conexões de entrada ou saída por padrão.
+
+Para liberar tudo, certifique-se de que não existam regras restritivas nessa aba que impeçam o binário do jogo de acessar a rede.

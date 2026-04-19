@@ -1,0 +1,266 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE>Program List</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice 4.1.3  (Win32)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="20180208;19093048">
+	<STYLE TYPE="text/css">
+	<!--
+		P { margin-bottom: 0cm; border: none; padding: 0cm; color: #000000; font-family: "Arial", "Helvetica", sans-serif; font-size: 10pt; font-style: normal; font-weight: normal; text-align: left; text-decoration: none }
+		P.rvps2 { font-family: "Arial", "Helvetica", sans-serif; font-size: 10pt; font-style: normal; font-weight: normal }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR" STYLE="border: none; padding: 0cm">
+<DIV ID="topic_content" DIR="LTR">
+	<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm">
+	When right-clicking on the DxWnd panel in an empty area, a pop-up menu with few generic commands is shown.
+	<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm"><IMG SRC="lib/click_to_void.png" NAME="grafiikka3" ALIGN=BOTTOM BORDER=0></P>	
+	Instead, when right-clicking on a program's entry a richer pop-up menu is visible with additional commands related to the selected entry (Some of the options are only visible in Expert mode).</P>
+	<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm"><IMG SRC="lib/dxwnd_programlist_rclick2.png" NAME="grafiikka3" ALIGN=BOTTOM BORDER=0></P>
+	<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm">
+	The menu choices are divided into two groups. At the top, 
+	there are commands that are always available and allow you to add a new configuration entry ("Add" and "Import ...") 
+	while at the bottom, there are commands that work on a specific and selected program's entry.
+	<P>
+	Note: Depending on the visualization options (as set using View > List), the program entry can either be a line in a listbox or an icon.
+	</P>
+	<TABLE WIDTH=100% BORDER=1 CELLPADDING=2 CELLSPACING=2>
+		<TR VALIGN=TOP>
+			<TD WIDTH=78>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Add</P>
+			</TD>
+			<TD WIDTH=1465>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Prompts for
+				all data needed to define a new task in the list.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=78>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Import ...</P>
+			</TD>
+			<TD WIDTH=1465>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Opens a file selection dialog to let you select a .dxw import file with a program configuration and import that into the list of programs.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=78>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Enabled</P>
+			</TD>
+			<TD WIDTH=1465>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Toggle command to enable or disable the selected program's entry. If the program's hook is enabled, the menu command is checked but unchecked when disabled. In addition, disabled programs have a grayed icon or a dark-gray dot.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=160>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Modify</P>
+			</TD>
+			<TD WIDTH=1465>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Allows you to
+				view and modify the program's configuration.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=160>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Run...</P>
+			</TD>
+			<TD WIDTH=1465>
+				<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm; border: none; padding: 0cm">
+				Run hooked - Activates (runs) the selected task. Same as
+				double-clicking on the list entry.</P>
+				<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm; border: none; padding: 0cm">
+				Run unhooked - Runs the selected task without activating any form of DxWnd
+				injection.</P>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Run suspended
+				- For debugging purposes and for injection modes that support 
+				this feature (the "Inject DLL" and "Inject APC" modes only), runs and suspends the
+				injected task so that the user can safely activate a debugger and
+				attach it to the process. Once the attach operation is completed, the user should
+				run the attached program and only after that, he should click on
+				the OK button on the DxWnd dialog box to unfreeze the task. 
+				<P>
+				NOTE: While
+				frozen, the task stays within an endless closed loop that will
+				consume 100% of the current CPU core, so the processor may
+				get hot.<P>
+				NOTE: It is suggested to set a breakpoint for the "dxwnd.dll" module load event
+				in order to let the debugger control the task when the hooks are activated.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=160>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Delete</P>
+			</TD>
+			<TD WIDTH=1465>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Asks for
+				confirmation and then deletes the selected entry.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=160>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Edit list > Duplicate</P>
+			</TD>
+			<TD WIDTH=1465>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Duplicates or
+				clones an entry. You can modify the clone without affecting the
+				original. This allows you to create multiple different entries
+				with consistent settings.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=160>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Edit list > Move</P>
+			</TD>
+			<TD WIDTH=1465>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">This menu is
+				equivalent to Edit &gt; Move. Moves the selected entry in the
+				list.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=160>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Edit list > Copy path</P>
+			</TD>
+			<TD WIDTH=1465>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+				Copies the selected program's target pathname to the clipboard, with no need to edit the entry with the "Modify" command.
+				</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=160>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Edit list > Paste path</P>
+			</TD>
+			<TD WIDTH=1465>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+				Pastes the selected program's target pathname from the clipboard. 
+				In conjunction with the "Copy path" command, it allows to quickly replicate a task pathname with no need to edit the entries with the "Modify" command.
+				</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=160>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Explore</P>
+			</TD>
+			<TD WIDTH=1465>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Opens a File Explorer session, pointing to the program's configured install
+				path.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=160>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Log</P>
+			</TD>
+			<TD WIDTH=1465>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">This menu is
+				equivalent to Edit &gt; Log with a few additions for expert users.</P>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Run DebugView: 
+				Runs the DebugView tool, provided that this tool is installed and
+				present in DxWnd's directory. If the tool is either absent or not in DxWnd's
+				directory, an error message will appear.</P>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">view Tail:
+				Runs the tail tool on the target program's logfile,
+				provided that this tool is reached in DxWnd's directory. 
+				This tool is a part of DxWnd's tools distribution, you may copy it either to the
+				DxWnd folder or to $WinDir/System32. Run "tail.exe" from a
+				command prompt to get the command syntax: the tool can be used standalone
+				for any generic purpose.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=160>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">eXport...</P>
+			</TD>
+			<TD WIDTH=1465>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Exports the
+				highlighted program configuration to a file.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=160>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Kill > Hooked task</P>
+			</TD>
+			<TD WIDTH=1465>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Kills one instance of the
+				program whose pathname matches the selected entry. Differently from the Tools &gt; Process &gt;
+				Kill command, this command would not kill the currently active
+				program, but the selected one, no matter whether it was managed
+				by DxWnd or not. </P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=160>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Kill > All tasks</P>
+			</TD>
+			<TD WIDTH=1465>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Same as Kill > Hooked task, but it would kill every instance of the 
+				selected program. This could be necessary when there are multiple instances of the same program that are active at the same time.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=160>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Set registry</P>
+			</TD>
+			<TD WIDTH=1465>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Saves the
+				registy entries from DxWnd's "Registry tab" into a file called
+				"dxwnd.reg".</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=160>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Set path</P>
+			</TD>
+			<TD WIDTH=1465>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Can be used
+				to update the path field for a configuration. You must have the
+				game running for it to work.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=160>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">View Flags</P>
+			</TD>
+			<TD WIDTH=1465>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+				Opens a window showing all the DxWnd flags enabled for the application.
+				To make it easier to spot significant changes with the default configuration, all the default flags are written in lowercase characters, 
+				the additional flags are written in uppercase with a plus ('+') prefix and the deleted flags are written in uppercase with a minus ('-') prefix.
+				Debug and log flags are not prefixed since they are always cleared in a default configuration.
+				<P CLASS="rvps2" STYLE="margin-left: 0.5cm"><IMG SRC="lib/viewflags.png" NAME="View flags" ALIGN=LEFT>
+				</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=160>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">View import table</P>
+			</TD>
+			<TD WIDTH=1465>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Opens a
+				window showing the import table of the target program. It could be useful for experienced users to see the DLL modules that are linked, and the used calls.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=160>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Proxy</P>
+			</TD>
+			<TD WIDTH=1465>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Used to set up
+				the program to run from a proxy DLL. This way, the DxWnd interface
+				does not need to be started. See <A HREF="./proxy.html">Proxy/portable setup</A>.</P>
+                        <P>NOTE: Do not try to run a game with DxWnd if it has proxy DLLs
+                        installed (it usually results in a crash).</P>
+				<P>NOTE: If you edit the configuration of your game, then you will need to
+				remove and install the proxy again for the changes to take effect.</P>
+			</TD>
+		</TR>
+	</TABLE>
+</DIV>
+<DIV ID="topic_footer" DIR="LTR">
+	<P STYLE="margin-bottom: 0.5cm"><BR><BR>
+	</P>
+</DIV>
+</BODY>
+</HTML>

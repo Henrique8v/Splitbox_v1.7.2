@@ -1,0 +1,11 @@
+O pywebview suporta os níveis mais modernos de HTML5, CSS3 e JavaScript (ES6+), pois ele não possui uma engine de renderização própria, mas sim utiliza o motor do navegador web nativo do sistema operacional onde a aplicação está sendo executada. 
+
+Níveis de Suporte por SO (Engine Webview):
+
+Windows: Utiliza Edge WebView2 (Chromium) nas versões modernas, suportando as tecnologias web mais recentes. Em versões muito antigas, utilizava o EdgeHTML ou Internet Explorer, o que limitava o suporte a padrões mais novos.
+macOS: Utiliza WebKit (a mesma engine do Safari).
+Linux: Utiliza WebkitGTK. 
+
+Conclusão sobre CSS e HTML:
+
+Como o pywebview aproveita as engines nativas modernas (especialmente o Chromium/Edge no Windows e WebKit no macOS), você pode usar recursos avançados como Flexbox, CSS Grid, animações complexas, HTML5 e ES6+ sem problemas. A compatibilidade é equivalente à do navegador Google Chrome ou Safari atualizado. 

@@ -1,0 +1,550 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE>Compatibility</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice 4.1.3  (Win32)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="0;0">
+	<SCRIPT SRC="js/jquery.min.js"></SCRIPT>
+	<SCRIPT>
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "DxWnd.html?" + sTopicUrl;
+			}
+		});
+	
+	</SCRIPT>
+	<STYLE TYPE="text/css">
+	<!--
+		P { margin-bottom: 0cm; border: none; padding: 0cm; color: #000000; font-family: "Arial", "Helvetica", sans-serif; font-size: 10pt; font-style: normal; font-weight: normal; text-align: left; text-decoration: none }
+		P.rvps2 { font-family: "Arial", "Helvetica", sans-serif; font-size: 10pt; font-style: normal; font-weight: normal }
+		H3 { color: #000000 }
+		H3.cjk { font-family: "SimSun" }
+		H3.ctl { font-family: "Mangal" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR" STYLE="border: none; padding: 0cm">
+<DIV ID="topic_content" DIR="LTR">
+	<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm"><IMG SRC="lib/dxwnd_configuration_compat3.png" NAME="grafiikka4" ALIGN=BOTTOM BORDER=0></P>
+	<H3 CLASS="western">Tweaks</H3>
+	<TABLE BORDER=1 CELLPADDING=2 CELLSPACING=2>
+		<TR VALIGN=TOP>
+			<TD WIDTH=190>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Block process
+				priority class</P>
+			</TD>
+			<TD WIDTH=173>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">BLOCKPRIORITYCLASS</P>
+			</TD>
+			<TD WIDTH=1170>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Blocks a
+				process' attempts to change its own priority class. Old
+				fullscreen games may use this trick to get 100% CPU power
+				dedicated to them, but on modern OSes and windowed environments,
+				this could be a bad idea, interfering with other operations and
+				overheating the processor for no reason.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=190>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Set single
+				core process affinity</P>
+			</TD>
+			<TD WIDTH=173>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">SINGLEPROCAFFINITY</P>
+			</TD>
+			<TD WIDTH=1170>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Some games
+				are not properly synchronized to run on physically separate
+				multi-core CPUs, or simply don't properly handle powerful
+				CPUs. This option sets the program's core affinity so that the
+				program is run by a single core (the first one).</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=190>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Set last core
+				affinity</P>
+			</TD>
+			<TD WIDTH=173>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">USELASTCORE</P>
+			</TD>
+			<TD WIDTH=1170>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Same as
+				SINGLEPROCAFFINITY, but picks the last CPU core.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=190>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Limit
+				free disk area</P>
+			</TD>
+			<TD WIDTH=173>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">LIMITFREEDISK</P>
+			</TD>
+			<TD WIDTH=1170>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Causes the
+				query for available hard disk space 
+				to return a limited value. Some old games can't handle a very big
+				integer number and see it as a negative value, refusing to start and
+				usually showing a message claiming that there is not enough 
+				free hard disk space.
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=190>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Limit
+				free RAM</P>
+			</TD>
+			<TD WIDTH=173>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">LIMITFREERAM</P>
+			</TD>
+			<TD WIDTH=1170>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Causes the
+				query for available free RAM 
+				to return a limited value. Some old games can't handle a very big
+				integer number and see it as a negative value, refusing to start.
+                        <P>
+				NOTE: The "Inject DLL" injection mode may be required for this
+                        option to work.</P>
+				<P>Usually, games that need this flag crash immediately at the start 
+				complaining about the lack of memory. However, there are exceptions 
+				to this rule. For example, "Dungeon Keeper" crashes randomly during 
+				the gameplay if this flag is not enabled.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=190>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Limit
+				video memory</P>
+			</TD>
+			<TD WIDTH=173>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">LIMITVIDEORAM</P>
+			</TD>
+			<TD WIDTH=1170>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Causes the
+				query for available video memory 
+				to return a limited value. Some old games can't handle a very big
+				integer number and see it as a negative value.
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=190>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Limit
+				texture memory</P>
+			</TD>
+			<TD WIDTH=173>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">LIMITTEXTURERAM</P>
+			</TD>
+			<TD WIDTH=1170>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Causes the
+				query for available video texture memory 
+				to return a limited value. Some old games can't handle a very big
+				integer number and see it as a negative value.
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=190>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Disable
+				performance counter</P>
+			</TD>
+			<TD WIDTH=173>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">NOPERFCOUNTER</P>
+			</TD>
+			<TD WIDTH=1170>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Since the
+				performance metrics hardware is not mandatory on a PC, this flag
+				disables the GetPerfCounter() performance metrics API, simulating
+				an unsupported condition. Usually, in this condition, the software
+				should rely on other performance measurement metrics that are
+				more conveniently manipulated by the DxWnd timing hooks. It should be
+				set when, despite the time acceleration feature, the program
+				doesn't seem to behave according to the imposed speed ratio.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=190>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Bypass font
+				unsupported api</P>
+			</TD>
+			<TD WIDTH=173>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">FONTBYPASS</P>
+			</TD>
+			<TD WIDTH=1170>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Some games
+				may attempt to manage old font styles that were present by
+				default on legacy platforms and are no longer supported. This
+				flag simulates a success operation to let the program continue and run.
+				Of course, the font will be wrong, but Windows will approximate
+				the choice with the most similar available font.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=190>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Intercept
+				Imagehlp.dll</P>
+			</TD>
+			<TD WIDTH=173>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">NOIMAGEHLP</P>
+			</TD>
+			<TD WIDTH=1170>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Intercepts
+				unsupported calls in "imagehlp.dll", returning a clean error condition
+				so that the program doesn't crash. One notable game that needs
+				this flag is "The Fifth Element".</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=190>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Reserve
+				legacy memory segments</P>
+			</TD>
+			<TD WIDTH=173>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">LEGACYALLOC</P>
+			</TD>
+			<TD WIDTH=1170>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Old 16-bit
+				programs for Windows 95 and Windows 98 relied on the availability of
+				memory from address 0x4000000 to 0x8FFFFFF, even though they
+				never explicitly allocated it. Recent OSes don't guarantee this
+				memory availability. This flag, combined with the "Inject DLL"
+                        injection mode, reserves memory in this range when the
+				program starts up, before that memory can be used for other
+				purposes.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=190>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Disable Max
+				Windowed Mode</P>
+			</TD>
+			<TD WIDTH=173>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">DISABLEMAXWINMODE</P>
+			</TD>
+			<TD WIDTH=1170>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Invokes
+				DirectDraw SetAppCompatData(12,0) to set the
+				DisableMaxWindowedMode.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=190>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Win7 color
+				fix</P>
+			</TD>
+			<TD WIDTH=173>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">COLORFIX</P>
+			</TD>
+			<TD WIDTH=1170>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">As described
+				in a DirectDraw hack, this flag fixes a color problem that
+				Windows 7 has with 8bpp palettized modes. It only has an effect
+				when the screen is actually set to an 8bpp color depth, which is
+				now very rare.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=190>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Pretend Win
+				visible on top</P>
+			</TD>
+			<TD WIDTH=173>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">PRETENDVISIBLE</P>
+			</TD>
+			<TD WIDTH=1170>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">When set, it
+				forces the detection of the main window as always visible
+				(IsWindowVisible will always return TRUE) and on top of the
+				z-order (GetTopWindow always returning the main window handle) as
+				one would expect from a fullscreen program window.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=190>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Win
+				insulation</P>
+			</TD>
+			<TD WIDTH=173>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">WININSULATION</P>
+			</TD>
+			<TD WIDTH=1170>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Avoids
+				enumerating windows so that the program can't interfere with
+				them. It is useful for the game "Tribal Rage", which interferes with the desktop.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=190>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Disable CPU
+				MMX support</P>
+			</TD>
+			<TD WIDTH=173>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">DISABLEMMX</P>
+			</TD>
+			<TD WIDTH=1170>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Makes the CPUID assembler instruction to return a CPU state without MMX support.
+				Fixes &quot;The New Adventures of the Time Machine&quot; game.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=190>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Safe MSVCRT allocs</P>
+			</TD>
+			<TD WIDTH=173>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">SAFEALLOCS</P>
+			</TD>
+			<TD WIDTH=1170>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">The "msvcrt.dll" library contains the
+				implementation of C/C++ allocation routines: malloc, free, realloc. Many bugs may
+				come from errors in using the addresses returned by and fed to these calls. The
+				flag tries to prevent some problems by wrapping the allocated areas with a small preamble
+				that identifies the correct usage of these functions. In particular, it avoids free operations
+				on bad addresses (either because they are already freed or just wrong), skipping a potential
+				cause of a game crash.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=190>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Legacy events / waveOut</P>
+			</TD>
+			<TD WIDTH=173>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">HOOKLEGACYEVENTS, HOOKLEGACYWAVE</P>
+			</TD>
+			<TD WIDTH=1170>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">The winmm.dll library holds
+				two functions that can use callback procedures, namely timeSetEvents and waveOutOpen.
+				These callback functions are defined with WINAPI calling convention, but in the
+				early stage of Win9X systems some games (mainly, most of the Mechwarrior 2 episodes) 
+				inherited the former callback procedures that were used in the DOS game versions and
+				used a different calling convention, at that time still working but now no more.
+				These two flags activate a WINAPI wrapper for the legacy callbacks that takes care of 
+				saving and restoring the CPU registers and avoid exceptions.</P>
+			</TD>
+		</TR>
+	</TABLE>
+	<P><BR>
+	</P>
+	<HR>
+	<H3 CLASS="western">Tweaks(2)</H3>
+	<TABLE WIDTH=100% BORDER=1 CELLPADDING=2 CELLSPACING=2>
+		<TR VALIGN=TOP>
+			<TD WIDTH=190>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Fix
+				FreeLibrary</P>
+			</TD>
+			<TD WIDTH=173>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">FIXFREELIBRARY</P>
+			</TD>
+			<TD WIDTH=1170>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Fixes
+				FreeLibrary, simulating a return code of 0 (error) when
+				attempting to free an unallocated module as Windows 95 and 98
+				would. Use this flag to fix the endless loop problem in &quot;Heavy
+				Gear&quot; version 1.2.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=198>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Skip 
+				FreeLibrary recursion</P>
+			</TD>
+			<TD WIDTH=148>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">SKIPFREELIBRARY
+								</P>
+			</TD>
+			<TD WIDTH=1191>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Corrects an issue
+				 with the FreeLibrary invocation that ends up in a recursive call 
+				causing a stack overflow. 
+				This fixes <i>Disciples Sacred Lands</i>' crash at startup.</P>
+			</TD>
+		</TR>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=198>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Fix
+				LoadLibrary error</P>
+			</TD>
+			<TD WIDTH=148>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">LOADLIBRARYERR
+								</P>
+			</TD>
+			<TD WIDTH=1191>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Returns
+				ERROR_DLL_NOT_FOUND instead of ERROR_MOD_NOT_FOUND error code.
+				This fixes &quot;Nightmare Creatures&quot;.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=198>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Fix 
+				LoadLibrary altered search path</P>
+			</TD>
+			<TD WIDTH=148>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">FIXALTEREDPATH
+								</P>
+			</TD>
+			<TD WIDTH=1191>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Corrects 
+				an issue with the standard and alternate search strategy in 
+				LoadLibraryEx by adding the current working directory to the 
+				search path, so that the files can be linked while staying in 
+				the original place. It is needed for the game "Anachronox".</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=198>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Fix
+				AdjustWindowRect</P>
+			</TD>
+			<TD WIDTH=148>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">FIXADJUSTWINDOWRECT</P>
+			</TD>
+			<TD WIDTH=1191>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Selectively
+				turns the AdjustWindowRect coordinate patching. This flag must be
+				checked for &quot;Manx TT Super Bike&quot; and unchecked for
+				&quot;Imperialism II&quot;.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=198>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Emulates Windows Help</P>
+			</TD>
+			<TD WIDTH=148>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">EMULATEWINHELP</P>
+			</TD>
+			<TD WIDTH=1191>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+				Provides a partial WinHelp support by running "WinHelp.exe" and the target .hlp file as argument.
+				WinHelp with full capabilities is no longer supported by Microsoft
+				for security reasons, but running the WinHelp program alone can provide
+				some basic functionalities without support for the vulnerable macros and
+				other full-fledged features.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=190>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Handle
+				Exceptions</P>
+			</TD>
+			<TD WIDTH=173>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">HANDLEEXCEPTIONS</P>
+			</TD>
+			<TD WIDTH=1170>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Setting this
+				flag causes DxWnd to set its own exception handler that tries
+				(often successfully) to fix several common exceptions, such as
+				the divide by zero exception in old games which tries to calculate the CPU speed. This is a good flag to try and fix 
+				random crashes. See also the following FORCENOPS flag</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=190>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Set NOPs</P>
+			</TD>
+			<TD WIDTH=173>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">FORCENOPS</P>
+			</TD>
+			<TD WIDTH=1170>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Some assembly instruction exceptions may 
+				generate exceptions only on certain circumstances, so it is reasonable to jump the faulty 
+				instruction, leaving it in place for the following occasions. But in some cases this practice can give bad results,
+				so this flag replaces the faulty instruction with a sequence of NOP (no operation) instructions
+				so that the exception never gets repeated.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=198>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Suppress DEP</P>
+			</TD>
+			<TD WIDTH=148>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">SUPPRESSDEP</P>
+			</TD>
+			<TD WIDTH=1191>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+				This flag depends on the "Handle Exceptions" flag. DxWnd detects a specific exception type 
+				that could be caused by the lack of execution permission in the memory segment and in this case tries
+				to assign execution permission to the data segment where the instruction lies.
+				This situation can occur with legacy programs targeted to Windows versions that didn't prevent 
+				the execution of code in data segments. On recent versions of Windows, this execution is restricted (see
+				DEP - Data Execution Prevention) because it is typical of malicious code and could be harmful
+				if the execution of code is allowed. So, the flag must be used carefully and at your own risk,
+				allowing it only on specific and trusted programs.
+				</P>
+			</TD>
+		</TR>
+
+	</TABLE>
+	<P><BR>
+	</P>
+	<HR>
+	<H3 CLASS="western">Fake Version</H3>
+	<TABLE WIDTH=100% BORDER=1 CELLPADDING=2 CELLSPACING=2>
+		<TR VALIGN=TOP>
+			<TD WIDTH=91>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Fake Version</P>
+			</TD>
+			<TD WIDTH=112>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">FAKEVERSION</P>
+			</TD>
+			<TD WIDTH=1334>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Causes the
+				program to detect the chosen Windows version. Notice: This is not
+				the same thing as the compatibility setting of Windows'
+				"Properties" panel, which also adjusts the system's behavior to
+				emulate the chosen platform.</P>
+			</TD>
+		</TR>
+	</TABLE>
+	<P><BR>
+	</P>
+	<HR>
+	<H3 CLASS="western">GOG</H3>
+	<TABLE WIDTH=100% BORDER=1 CELLPADDING=2 CELLSPACING=2>
+		<TR VALIGN=TOP>
+			<TD WIDTH=116>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Hook GOG libs</P>
+			</TD>
+			<TD WIDTH=126>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">HOOKGOGLIBS</P>
+			</TD>
+			<TD WIDTH=1295>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Games
+				distributed by GOG (gog.com) sometimes apply compatibility
+				patches by changing the name and compatibility behavior of some
+				system DLLs and routing system calls there. This flag causes DxWnd
+				to hook these custom libraries instead of the system equivalent.
+				Only use this flag on certain GOG games.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=116>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Bypass GOG
+				libs</P>
+			</TD>
+			<TD WIDTH=126>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">BYPASSGOGLIBS</P>
+			</TD>
+			<TD WIDTH=1295>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">The purpose
+				of this flag is similar to that of HOOKGOGLIBS. It is sometimes a
+				better solution to avoid rerouting the system calls to custom
+				DLLs and instead map them to system DLLs. This flag breaks GOG's
+				system call rerouting. Only use this flag on certain GOG games.</P>
+			</TD>
+		</TR>
+	</TABLE>
+	<DIV ID="topic_footer" DIR="LTR">
+		<P STYLE="margin-bottom: 0.5cm"><BR><BR>
+		</P>
+	</DIV>
+</DIV>
+</BODY>
+</HTML>

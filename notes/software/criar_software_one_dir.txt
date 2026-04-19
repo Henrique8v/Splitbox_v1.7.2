@@ -1,0 +1,51 @@
+Para transformar o projeto em um executável final:
+- Use o comando `auto-py-to-exe` no terminal.
+
+1. Configurações Principais
+Script Location: Selecione o seu splitscreen_gui.py.
+
+One Directory: Selecione "Um Diretório" (Essencial para manter as pastas settings e dxwnd acessíveis).
+
+Console Window: Selecione "Baseado em Janelas" (Para ocultar o terminal preto ao abrir o programa).
+
+Icon: Aponte para splitbox.ico.
+
+2. Adicionar Arquivos e Pastas (Crucial)
+
+Vá na aba "Arquivos Adicionais" e adicione os seguintes itens:
+
+Tipo	Origem (Pasta/Arquivo)	Destino (Caminho Relativo)
+Pasta	dxwnd
+Pasta	install
+Pasta	settings	
+Pasta	export com Injection (Contendo as DLLs e o how_to_use.txt)
+Arquivo	tutorial.html
+Arquivos Todas as DLLs da raiz (snap_dwm.dll, etc.)
+	.
+3. Configurações Avançadas
+
+Abra a aba "Advanced" e procure por:
+
+--uac-admin: Ative esta opção. Sem ela, os hooks de janela e as permissões do Sandboxie podem falhar.
+--name: Defina como Splitbox_Alpha_1.6.3.
+--manifest: selecione o seu splitbox.manifest.
+--version-file: selecione o seu file_version_info.txt.
+
+Sugestões de nomes para o diretório:
+--contents-directory core (Simples e profissional)
+
+--contents-directory bin (Padrão clássico de sistemas para arquivos binários)
+
+--contents-directory engine (Dá a ideia de que o motor do software está ali dentro)
+
+--contents-directory system (Deixa claro que são arquivos de funcionamento)
+
+4. A Forja Final
+
+  .Clique no botão azul "CONVERT .PY TO .EXE".
+  .Após terminar, clique em "Open Output".
+  .Teste Real: Entre na pasta gerada e execute o Splitbox_Alpha_1.6.3.exe.
+  .Verifique se o ícone aparece na barra de tarefas.
+  .Veja se a aba "Help" carrega o tutorial.html.
+
+Confirme se a pasta Injection está lá com as subpastas x64 e x86.

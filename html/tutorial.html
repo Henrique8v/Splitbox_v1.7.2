@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            background-color: #242323;
+            color: #dce4ee;
+            font-family: sans-serif;
+            margin: 0;
+            padding: 20px;
+            overflow-y: scroll;          
+        }	
+
+        /* Container sem box-shadow ou border-radius (não suportados no motor básico) */
+        .container {
+            width: 95%;
+            margin: 0 auto;
+            border: 0px;
+            padding: 20px;
+            background-color: #242323;
+        }
+
+        h1 {
+            color: #3b8ed0;
+            font-size: 22px;
+            border-bottom: 2px solid #3a3a3a;
+            padding-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        /* Resto do estilo mantido para consistência azul/cinza/branco */
+        h2 { 
+            color: #3b8ed0; /* Azul Padrão */
+            border-bottom: 2px solid #333; 
+            padding-bottom: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+		h3 {
+            color: #88cacf;
+            font-size: 14px;
+            margin-top: 25px;
+            border-bottom: 1px solid #3a3a3a;
+        }
+
+        pre {
+            background-color: #1a1a1a;
+            padding: 15px;
+            border-left: 4px solid #3b8ed0;
+            color: #dce4ee;
+            font-family: monospace;
+            font-size: 13px;
+            display: flex;      
+        }
+		
+		.p-flexivel {			
+			white-space: pre; /* ou white-space: pre-wrap; quebra o texto mas tira os espaços*/
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            overflow-x: auto;			
+            max-width: 100%;
+        }
+
+        .highlight { 
+            color: #fff; /* Destaque em Branco */
+            font-weight: bold; 
+        }
+
+        ul { list-style: none; padding-left: 0; }
+        li { margin-bottom: 15px; padding-left: 25px; position: relative; }
+        li::before { content: "»"; position: absolute; left: 0; color: #3b8ed0; font-weight: bold; }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SPLITBOX ALPHA</h1>
+        <h2>MANUAL DE OPERAÇÃO</h2>
+        <pre>Modo de uso</pre>
+	
+        <h2>Ferramentas</h2>
+        <p class="p-flexivel">
+<h3>Sandboxie:</h3> é uma ferramenta de segurança e virtualização para Windows que cria um ambiente isolado (uma "caixa de areia") para executar programas. Ele impede que softwares instalados, arquivos suspeitos ou navegadores modifiquem o sistema operacional principal, garantindo que qualquer alteração seja apagada facilmente. 
+    Importante: é um software adicional que precisa ser instalado. Seu instalador está na pasta install. Noprocesso instale o Imdisk com suporte a driver.
+<h3>DxWnd:</h3> é uma ferramenta de compatibilidade (wrapper) de código aberto. 
+    Finalidade: Ele serve para rodar jogos e aplicações antigas de Windows (que foram desenhadas para rodar apenas em tela cheia) em modo janela, além de melhorar a compatibilidade com sistemas operacionais modernos.
+    Como funciona: Ele intercepta as chamadas DirectX (gráficos) que o jogo faz e emula versões antigas da API, permitindo que jogos clássicos funcionem no Windows 10/11.
+<h3>Ximput1_3.dll:</h3> estas dlls ficam na pasta export/injection/ e servem para os controles e jogos que suportam ximput, porem, tem injeção de codigo para que a maniulação e foco de janelas funcione. 
+    É recomendável usar o XOutput para controles dualshock 2 ou genericos de xbox360 e o DS4Windows para Dualshock 4 Generico que tem problema de conectar P1,P2, P3 etc corretamente, principalmente o P1.
+        </p>
+		
+<h2>Como utilizar</h2>
+        <h3>janela padrão:</h3>
+        <ul>
+            <li><span class="highlight">Passo 1:</span> Adicione os executáveis (.exe) na aba Motor.</li>
+            <li><span class="highlight">Passo 2:</span> Selecione o Preset de alinhamento.</li>
+            <li><span class="highlight">Passo 3:</span> Clique em Execute System.</li>
+        </ul>
+    	    <h3>janela no modo isolamento:</h3>
+        <ul>
+            <li><span class="highlight">Passo 1:</span> Adicione os executáveis (.exe) na aba Motor.</li>
+            <li><span class="highlight">Passo 2:</span> Selecione o Preset de alinhamento.</li>
+            <li><span class="highlight">Passo 3:</span> Clique em Execute System.</li>
+        </ul>
+	        <h3>janela padrão + isolamento (padrão+sandbox):</h3>
+        <ul>
+            <li><span class="highlight">Passo 1:</span> Adicione o 1° executavel (.exe) na aba Motor.</li>
+            <li><span class="highlight">Passo 2:</span> Selecione o Preset de alinhamento.</li>
+            <li><span class="highlight">Passo 3:</span> Clique em Execute System.</li>
+    		<li><span class="highlight">Passo 4:</span> Mantenha o mesmo executavel na aba Motor.</li>
+            <li><span class="highlight">Passo 5:</span> Selecione o Preset de alinhamento igual.</li>
+	    	<li><span class="highlight">Passo 6:</span> Selecione a caixa de isolamento.</li>
+            <li><span class="highlight">Passo 7:</span> Clique em Execute System.</li>
+        </ul>
+	    <p> Se o alinhamento bugar, clique em um dos botões de alinhar.</p>
+	    <p> Dependendo de cada engine e configurações do jogo, pode ser que não abra o mesmo executavel no isolamento.</p>
+		    <h3>DxWnd:</h3>
+        <ul>
+            <li><span class="highlight">Passo 1:</span> Abra o DxWnd e Procure pelo executavel do seu jogo</li>
+            <li><span class="highlight">Passo 2:</span> Configure o dxw</li>
+            <li><span class="highlight">Passo 3:</span> Clique duas vezes sobre icone do jogo</li>
+		</ul>
+		<p>Atenção: salve a lista ao sair, e opcionalmente exporte o '.dxw' do jogo se quiser manter as configurações em backup</p>
+		<p>Siga o tutorial de como configurar o 'dxw' em 'modify' para funcionar perfeitamente no Splitbox</p>
+    </div>
+</body>
+</html>

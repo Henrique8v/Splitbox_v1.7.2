@@ -1,0 +1,25 @@
+# --- Core System & Windows API ---
+pywin32>=305
+
+# --- Modern UI (CustomTkinter) ---
+customtkinter>=5.2.2
+darkdetect>=0.8.0
+packaging>=23.1
+
+# --- WebView ---
+tkinterweb>=4.25.0
+tkinterweb-tkhtml>=2.1.1
+pywebview>=6.1 # para testes
+pythonnet>=3.0.5 # para testes
+bottle>=0.13.4
+proxy_tools>=0.1.0
+typing_extensions>=4.15.0
+
+# --- Build Tools (Forja) ---
+pyinstaller
+auto-py-to-exe
+
+# --- Utilities ---
+psutil>=7.2.2
+pygame>=2.6.1
+pillow>=12.1.1

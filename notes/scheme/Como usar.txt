@@ -1,0 +1,10 @@
+# 1. Organize a estrutura 
+Pasta do Projeto Splitbox_Pro
+
+# 2. Instale dependências
+Instale python 113 e Codeblocks g++ (MinGW-W64 x86_64-ucrt-posix-seh, built by Brecht Sanders, r3 + MinGW versão x86) 14.2.0
+Instale o Pip
+Execute o dependencias.bat
+
+# 3. Execute
+python main_.py pelo powershel admin ou cmd admin

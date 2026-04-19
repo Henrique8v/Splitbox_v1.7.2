@@ -1,0 +1,108 @@
+🧠 1. ISOLAMENTO DE INSTÂNCIAS (base)
+
+👉 Garante que cada cliente seja “único”
+
+✔️ Diretório separado por instância
+Pastas: instance_1, instance_2, etc
+Evita conflito de config/save
+✔️ Redirecionamento de ambiente
+APPDATA, USERPROFILE
+Força configs independentes
+✔️ Sandbox
+Sandboxie
+Isola filesystem + registro
+🌐 2. REDE / IDENTIDADE DE CLIENTE
+
+👉 Faz cada instância parecer uma máquina diferente
+
+🥇 TAP Adapter (RECOMENDADO)
+OpenVPN TAP Adapter
+1 adaptador por instância
+IP único real
+🥈 Loopback Adapter
+Microsoft Loopback Adapter
+múltiplos IPs na mesma interface
+mais simples, menos confiável
+🔗 3. FORÇAR USO DE IP
+
+👉 Faz o jogo usar o IP correto
+
+✔️ Parâmetro do jogo
+-ip, -bind, etc
+melhor opção quando disponível
+✔️ ForceBindIP (externo)
+força processo a usar IP específico
+funciona mesmo sem suporte do jogo
+✔️ Proxy (Python)
+intercepta e redireciona tráfego
+controle total (nível avançado)
+🧪 4. CONTROLE DE EXECUÇÃO
+
+👉 Gerencia múltiplas instâncias
+
+✔️ Launcher Python
+subprocess
+cria múltiplos clientes
+✔️ Batch + PowerShell (admin)
+Start-Process -Verb RunAs
+garante permissões elevadas
+✔️ Controle de processos
+psutil, pywin32
+prioridade, mutex, etc
+🔒 5. BYPASS / LIMITAÇÕES DE JOGOS
+
+👉 Necessário pra jogos AAA
+
+✔️ Mutex bypass
+remove trava de instância única
+✔️ Portas diferentes
+evitar conflito entre clientes
+✔️ Player ID único
+via config isolada ou override
+🎮 6. INPUT / INTERAÇÃO
+
+👉 Permite jogar com múltiplos clientes
+
+✔️ Multi-input tools
+teclado/controle por instância
+✔️ Scripts (AutoHotkey / Python)
+automatizar foco/input
+🔌 7. MÓDULOS / COMPLEMENTOS (GitHub)
+
+👉 Blocos reutilizáveis pro sistema
+
+✔️ Bind de IP
+ForceBindIP GUI
+✔️ Proxy
+mitmproxy
+✔️ LAN virtual
+WireGuard scripts
+✔️ Emulação de rede
+Kathará
+✔️ Injector / plugins
+sistemas de modding
+🏗️ 8. ARQUITETURA FINAL (ordem ideal)
+
+👉 Como tudo se encaixa
+
+1. Criar instâncias (pastas separadas)
+2. Isolar (Sandbox)
+3. Criar/adicionar NICs (TAP)
+4. Atribuir IP por instância
+5. Forçar bind de IP (ForceBindIP/proxy)
+6. Configurar portas/IDs
+7. Launch via Python ou .bat (admin)
+8. Controlar input
+🧠 RESUMO FINAL (essência)
+🧩 Diretório separado = identidade de dados
+🌐 IP separado = identidade de rede
+⚙️ Launcher = controle total
+🔥 Tudo junto = simulação de múltiplos PCs reais
+
+Se quiser, posso transformar isso em:
+
+✔️ checklist automático
+✔️ script Python que faz tudo
+✔️ ou um “core” modular pro Splitbox
+
+Só dizer 👍

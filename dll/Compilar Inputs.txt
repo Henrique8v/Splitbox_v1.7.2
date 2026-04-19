@@ -1,0 +1,33 @@
+Powershell:
+
+# --- CONFIGURAÇÃO DE PASTAS ---
+$folders = "xinput1_3 x64", "xinput1_3 x86", "dinput8 x64", "dinput8 x86", "core x64", "core x86", "sdl2 x64", "sdl2 x86", "multiplayer x64", "multiplayer x86"
+foreach ($f in $folders) { if (-not (Test-Path $f)) { New-Item -ItemType Directory -Name $f } }
+
+Write-Host "Iniciando compilação das DLLs do Splitbox..." -ForegroundColor Yellow
+
+# --- COMPILAÇÃO DINPUTHOOK (CORE CENTRAL) ---
+# Necessário para gerenciar o foco e a identidade global
+x86_64-w64-mingw32-g++ -shared -o "core x64/dinputhook.dll" dinputhook.cpp main.cpp -lwinmm -static-libgcc -static-libstdc++
+i686-w64-mingw32-g++ -shared -o "core x86/dinputhook.dll" dinputhook.cpp main.cpp -lwinmm -static-libgcc -static-libstdc++
+
+# --- COMPILAÇÃO XINPUT1_3 ---
+x86_64-w64-mingw32-g++ -shared -o "xinput1_3 x64/xinput1_3.dll" xinput1_3.cpp dinputhook.cpp main.cpp -lwinmm -static-libgcc -static-libstdc++
+i686-w64-mingw32-g++ -shared -o "xinput1_3 x86/xinput1_3.dll" xinput1_3.cpp dinputhook.cpp main.cpp -lwinmm -static-libgcc -static-libstdc++
+
+# --- COMPILAÇÃO DINPUT8 ---
+x86_64-w64-mingw32-g++ -shared -o "dinput8 x64/dinput8.dll" dinput8.cpp dinputhook.cpp main.cpp -lwinmm -static-libgcc -static-libstdc++
+i686-w64-mingw32-g++ -shared -o "dinput8 x86/dinput8.dll" dinput8.cpp dinputhook.cpp main.cpp -lwinmm -static-libgcc -static-libstdc++
+
+# --- COMPILAÇÃO SDL2 ---
+x86_64-w64-mingw32-g++ -shared -o "sdl2 x64/sdl2.dll" sdl2.cpp dinputhook.cpp main.cpp -lwinmm -static-libgcc -static-libstdc++
+i686-w64-mingw32-g++ -shared -o "sdl2 x86/sdl2.dll" sdl2.cpp dinputhook.cpp main.cpp -lwinmm -static-libgcc -static-libstdc++
+
+# --- COMPILAÇÃO MULTIPLAYER ---
+x86_64-w64-mingw32-g++ -shared -o "multiplayer x64/multiplayer.dll" multiplayer.cpp dinputhook.cpp main.cpp -lwinmm -static-libgcc -static-libstdc++
+i686-w64-mingw32-g++ -shared -o "multiplayer x86/multiplayer.dll" multiplayer.cpp dinputhook.cpp main.cpp -lwinmm -static-libgcc -static-libstdc++
+
+# --- ATIVIDADE FINALIZADA ---
+Write-Host "`n[SUCCESS] Todas as DLLs de Hooking e Interceptação compiladas com sucesso!" -ForegroundColor Cyan
+
+____________________________________________________________________________

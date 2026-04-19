@@ -1,0 +1,21 @@
+splitscreen_gui.py
+
+class SPLITBOX_GUI(ctk.CTk):
+
+    def toggle_sbie(self):
+        import subprocess
+        sbie_path = self.settings.get("sbie_path", r"C:\Program Files\Sandboxie-Plus\SandMan.exe")
+        if os.path.exists(sbie_path):
+            subprocess.Popen([sbie_path], creationflags=0x08000000)
+            print("[SISTEMA] Painel Sandboxie acionado.")
+
+    def toggle_dxwnd(self):
+        import subprocess
+        dxw_path = self.settings.get("dxwnd_path", "")
+        if dxw_path and os.path.exists(dxw_path):
+            subprocess.Popen(
+                [dxw_path], 
+                cwd=os.path.dirname(dxw_path), 
+                creationflags=0x08000000
+            )
+            print("[SISTEMA] Painel DXWnd acionado.")

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            background-color: #242323;
+            color: #dce4ee;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 95%;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #3b8ed0;
+            font-size: 24px;
+            border-bottom: 2px solid #3a3a3a;
+            padding-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h2 {
+            color: #3b8ed0;
+            font-size: 18px;
+            margin-top: 25px;
+            display: flex;
+            align-items: center;
+        }
+
+        h3 {
+            color: #88cacf;
+            font-size: 15px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .card {
+            background-color: #2a2a2a;
+            border: 1px solid #3a3a3a;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .row {
+            display: block;
+            clear: both;
+            margin-bottom: 8px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 5px;
+        }
+
+        .label {
+            font-weight: bold;
+            color: #88cacf;
+        }
+
+        .status-value {
+            float: right;
+            font-family: 'Consolas', monospace;
+        }
+
+        /* Cores de estado do Padrão Splitgamer */
+        .loaded {
+            color: #3b8ed0; /* Azul Splitbox */
+            font-weight: bold;
+        }
+
+        .missing {
+            color: #e74c3c; /* Vermelho Erro */
+            font-weight: bold;
+        }
+
+        .footer {
+            margin-top: 40px;
+            font-size: 11px;
+            color: #666;
+            text-align: center;
+            border-top: 1px solid #333;
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>System Status</h1>
+    <p>Monitoramento de integridade</p>
+
+    <div class="card">
+        <h3>Core Environment</h3>
+        <div class="row">
+            <span class="label">Interpretador:</span>
+            <span class="status-value loaded">Python PY_VERSION_VAL</span>
+        </div>
+        <div class="row">
+            <span class="label">Workstation:</span>
+            <span class="status-value">LORD-PC</span>
+        </div>
+    </div>
+
+    <h2>DLL Bridge (x64)</h2>
+    <div class="card">
+        <h3>Core Engine (Sistema & Isolação)</h3>
+        <div class="row">
+            <span class="label">Window Forcer (Focus):</span>
+            <span class="status-value">FORCER_STATUS</span>
+        </div>
+        <div class="row">
+            <span class="label">Snap DWM Manager:</span>
+            <span class="status-value">SNAP_STATUS</span>
+        </div>
+        <div class="row">
+            <span class="label">Clean UI Engine:</span>
+            <span class="status-value">CLEANER_STATUS</span>
+        </div>
+        <div class="row">
+            <span class="label">Audio Isolation (WASAPI):</span>
+            <span class="status-value">AUDIO_STATUS</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Injection Arsenal (Pacotes ZIP)</h3>
+        <div class="row">
+            <span class="label">XInput Wrapper x86:</span>
+            <span class="status-value">INPUT_STATUS</span>
+        </div>
+        <div class="row">
+            <span class="label">XInput Wrapper x64:</span>
+            <span class="status-value">EXTRA_STATUS</span>
+        </div>
+    </div>
+
+    <div class="footer">
+        Splitbox Project &copy; 2026 - Powered by RV Project Brotherhood
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,28 @@
+1. Principais DLLs de Input (Bibliotecas de Link Dinâmico)
+Esses arquivos gerenciam a comunicação entre o jogo e o hardware do controle. 
+
+xinput1_4.dll / xinput9_1_0.dll (XInput): É a DLL padrão moderna para controles de Xbox 360, Xbox One, Series X/S e a maioria dos controles de PC atuais no Windows 10/11.
+dinput8.dll (DirectInput): Usada por jogos mais antigos para joysticks, volantes e controles que não seguem o padrão Xbox.
+gameinput.dll (Microsoft GameInput): A nova API de próxima geração da Microsoft que unifica XInput, DirectInput e HID (Human Interface Device) em uma única interface.
+steam_api.dll / steam_api64.dll: Essencial para o "Steam Input", que mapeia controles (como PS4/PS5/Switch) para funcionar como controles de Xbox ou entrada de mouse/teclado. 
+
+2. Tipos de Input (APIs e Métodos)
+XInput: O padrão da indústria para PC. Reconhece gatilhos analógicos e vibração nativamente.
+DirectInput (DInput): Sistema legado usado para dispositivos genéricos. Frequentemente exige remapeamento manual em jogos modernos.
+Raw Input / HID: A forma mais básica e direta de ler teclados e mouses diretamente do hardware, comum em jogos competitivos FPS.
+Steam Input: Uma camada de software do Steam que traduz quase qualquer controle para o jogo, permitindo customização profunda (gyro, trackpads, etc.).
+Windows.Gaming.Input (WinRT): Namespace usado em aplicativos UWP e jogos modernos da Microsoft Store. 
+
+3. Principais Métodos de Controle no PC
+Teclado e Mouse (WASD): O padrão "WASD" para movimentação e mouse para visualização/rotação (eixos x/y).
+Gamepads (Com fio/USB): Ideal para baixa latência.
+Wireless (Dongle 2.4 GHz): Conexão mais estável para PC que Bluetooth.
+Bluetooth: Comum para controles de console (PS4/PS5) conectados ao PC. 
+
+Dica de compatibilidade: Se um jogo antigo não reconhecer seu controle moderno, ele provavelmente procura o dinput8.dll, enquanto controles novos usam xinput. Ferramentas como o Steam Input resolvem esse conflito convertendo DInput para XInput. 
+
+DLLS: dinput.dll, Wrappers (Dinput 1-7 para 8), dinput8.dll, xinput1_3.dll, xinput1_4.dll, xinput9_1_0.dll, gameinput.dll. 
+
+APIs:
+Steam Input (camada de compatibilidade), Windows.Gaming.Input (WinRT), Teclado e Mouse (WASD), Raw Input (HID), 
+Tipos de Controladores: Direct Imput, AWSD, Gamepads (Com fio/USB), Wireless (Dongle 2.4 GHz) e Bluetooth.

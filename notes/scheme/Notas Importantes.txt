@@ -1,0 +1,5 @@
+1. DLLs do Sistema → Localizadas em modules/core/bin/ e carregadas dinamicamente pelo dll_bridge.py.
+2. DLLs de Injeção → Organizadas em dll/core x86/ e dll/core x64/. O injector_manager.py identifica a arquitetura do jogo e realiza a cópia automaticamente.
+3. Window Force → Módulo totalmente integrado ao align_manager.py (Workflow), permitindo o disparo de estratégias de redimensionamento diretamente pela interface (GUI).
+4. Gamepad Mapper → Arquitetura flexível; pode ser operado de forma standalone (independente) ou integrado ao Dashboard principal.
+5. Configuração → Toda a persistência de dados do usuário é salva em settings/app_settings.json, criado de forma automática na primeira execução.

@@ -1,0 +1,317 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE>Sound</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice 4.1.3  (Win32)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="0;0">
+	<SCRIPT SRC="js/jquery.min.js"></SCRIPT>
+	<SCRIPT>
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "DxWnd.html?" + sTopicUrl;
+			}
+		});
+	
+	</SCRIPT>
+	<STYLE TYPE="text/css">
+	<!--
+		P { margin-bottom: 0cm; border: none; padding: 0cm; color: #000000; font-family: "Arial", "Helvetica", sans-serif; font-size: 10pt; font-style: normal; font-weight: normal; text-align: left; text-decoration: none }
+		P.rvps2 { font-family: "Arial", "Helvetica", sans-serif; font-size: 10pt; font-style: normal; font-weight: normal }
+		H3 { color: #000000 }
+		H3.cjk { font-family: "SimSun" }
+		H3.ctl { font-family: "Mangal" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR" STYLE="border: none; padding: 0cm">
+<DIV ID="topic_content" DIR="LTR">
+	<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm"><IMG SRC="lib/dxwnd_configuration_cdaudio.png" NAME="grafiikka4" ALIGN=BOTTOM BORDER=0></P>
+	<H3 CLASS="western">Generic</H3>
+	<TABLE WIDTH=100% BORDER=1 CELLPADDING=2 CELLSPACING=2>
+		<TR VALIGN=TOP>
+			<TD WIDTH=189>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">CDA Drive</P>
+			</TD>
+			<TD WIDTH=137>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">CDADrive</P>
+			</TD>
+			<TD WIDTH=1171>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+				Most programs that play music directly from the audio tracks of a CD use MCI functions providing a generic indication about the CD drive. In effect, unless instructed differently, MCI plays music from the first CD drive, that is the CD drive with the lowest letter that holds a CD with audio tracks. This may become a problem if the user has more than one CD drive and wish to leave more than one audio CD inserted: this way, only the first drive would be used. The situation was uncommon until the arrival of virtual CD drives (like "DAEMON Tools", "MagicISO" and so forth) which made the setting of many CD drives extremely easy and cheap, with users leaving the CD images mounted.
+				<P>
+				The "CDA Drive" combo box lists all the CD drives present in the system and forces the hooked program to use the specified drive letter instead of the default one chosen by the MCI system. The first entry in the combo box named "def." selects the default MCI behavior.
+				<P CLASS="rvps2" STYLE="margin-left: 0.0cm"><IMG SRC="lib/attention.png" NAME="attention" ALIGN=LEFT>
+				NOTE: The drive list is built each time DxWnd is run. If you change the CD configuration by adding or deleting drives, it will be necessary to quit and start DxWnd again.
+				<P>
+				<P CLASS="rvps2" STYLE="margin-left: 0.0cm"><IMG SRC="lib/attention.png" NAME="attention" ALIGN=LEFT>
+				NOTE: The functionality operates only on CD-DA, not on the data track file system.
+				The selection affects all the emulation modes except for the "Use audio files" mode.
+				</P>
+			</TD>
+		</TR>
+		
+		<TR VALIGN=TOP>
+			<TD WIDTH=189>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Lock CD tray</P>
+			</TD>
+			<TD WIDTH=137>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">LOCKCDTRAY</P>
+			</TD>
+			<TD WIDTH=1171>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+				Attempts to bypass all operations that may open/close the physical CD tray.
+				</P>
+			</TD>
+		</TR>
+
+	</TABLE>
+	<P><BR>
+	</P>
+	<HR>
+	<H3 CLASS="western">CD audio emulation</H3>
+	
+	<P><b>Emulation mode</b></p>
+	<TABLE WIDTH=100% BORDER=1 CELLPADDING=2 CELLSPACING=2>
+		<TR VALIGN=TOP>
+			<TD WIDTH=189>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">No emulation</P>
+			</TD>
+			<TD WIDTH=137>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm"></P>
+			</TD>
+			<TD WIDTH=1171>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">This is the default mode. DxWnd doesn't emulate the MCI audio processing, but the CD-DA redirection using the CD drive specified in the "CDA Drive" listbox is still available.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=189>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Play from CD</P>
+			</TD>
+			<TD WIDTH=137>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">VIRTUALCDAUDIO + PLAYFROMCD</P>
+			</TD>
+			<TD WIDTH=1171>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">DxWnd emulates the MCI audio processing, reading the audio tracks directly from a CD drive. The CD can be either a physical CD or a CD image mounted on a CD drive emulator capable of emulating the audio tracks.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=189>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">RIP CD Audio</P>
+			</TD>
+			<TD WIDTH=137>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">VIRTUALCDAUDIO + CDAUTOMATICRIP</P>
+			</TD>
+			<TD WIDTH=1171>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">DxWnd makes an automatic RIP of the audio tracks present in the selected CD drive writing them as .wav files inside a "Music" subfolder of the game folder. This way, the tracks are no longer required to be ripped again and it is advisable to select the "Use audio files" mode before the next launch of the program.</P>
+			</TD>
+		</TR>		
+		<TR VALIGN=TOP>
+			<TD WIDTH=189>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Use audio files</P>
+			</TD>
+			<TD WIDTH=137>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">VIRTUALCDAUDIO</P>
+			</TD>
+			<TD WIDTH=1171>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">DxWnd plays the audio tracks using audio files located in the "Music" subfolder of the target program folder. Audio files can be encoded in several supported formats: .wav, .mp3, .ogg, .flac.
+				For a detailed tutorial, see <A HREF="VirtualCDA.html">Tutorials
+				&gt; Virtual CD Audio</A>.
+				<P>NOTE: When using this mode, the CD drive selected in the "CDA Drive" listbox is ignored.
+				</P>
+			</TD>
+		</TR>		
+	</TABLE>	
+	
+	<P><b>MCI platform</b></p>
+	<TABLE WIDTH=100% BORDER=1 CELLPADDING=2 CELLSPACING=2>
+		<TR VALIGN=TOP>
+			<TD WIDTH=189>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Windows 9x MCI</P>
+			</TD>
+			<TD WIDTH=137>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">VIRTUALCDAUDIO + EMULATEWIN9XMCI</P>
+			</TD>
+			<TD WIDTH=1171>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Emulates the incomplete behavior of the MCI system of Windows 95, Windows 98 and Windows ME.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=189>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Windows XP MCI</P>
+			</TD>
+			<TD WIDTH=137>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">VIRTUALCDAUDIO</P>
+			</TD>
+			<TD WIDTH=1171>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Emulates the fully developed behavior of the MCI system of Windows XP SP3. It is the default and suggested choice.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=189>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Windows Vista+ MCI</P>
+			</TD>
+			<TD WIDTH=137>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">VIRTUALCDAUDIO + EMULATEVISTAMCI</P>
+			</TD>
+			<TD WIDTH=1171>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Emulates the incomplete and bugged behavior of the MCI system starting from Windows Vista and the following, up to the current Windows 11.</P>
+			</TD>
+		</TR>		
+	</TABLE>
+
+
+	<P><b>MCI flags</b></p>
+	<TABLE WIDTH=100% BORDER=1 CELLPADDING=2 CELLSPACING=2>
+			<TR VALIGN=TOP>
+			<TD WIDTH=189>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Force track
+				repeat</P>
+			</TD>
+			<TD WIDTH=137>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">FORCETRACKREPEAT</P>
+			</TD>
+			<TD WIDTH=1171>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Forces the repetition of a track, unlike the original behaviour of the program.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=189>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Ignore Device
+				Id.</P>
+			</TD>
+			<TD WIDTH=137>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">IGNOREMCIDEVID</P>
+			</TD>
+			<TD WIDTH=1171>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">The audio CD player emulation needs to know whether a given ID belongs to a video device (e.g., when playing a movie) or an audio device (the CD-ROM reader to play a soundtrack). To avoid ambiguity, the fake audio devices are opened returning a fake device ID 0xBEEF that will never overlap a valid real device ID. But in some cases, the device is opened before the hook takes place, so the audio device could get a real device ID (like 0, 1 or such) unless you set strong injection modes ("Inject DLL" mode or "Debugger" mode). But if such an ambiguity does not exist, the IGNOREMCIDEVID flag tells the audio emulator to handle any device ID, no matter if it is real or a fake 0xBEEF. This allows to make audio emulation also work with the default hooking, and in cases when the device is opened before the hook.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=189>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Force CDROM present
+				</P>
+			</TD>
+			<TD WIDTH=137>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">CDROMPRESENT</P>
+			</TD>
+			<TD WIDTH=1171>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+				Pretends that there is a CD-ROM disk ready to be played in each queried device.
+				</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=189>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Hack track frames
+				</P>
+			</TD>
+			<TD WIDTH=137>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">HACKMCIFRAMES</P>
+			</TD>
+			<TD WIDTH=1171>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+				Some games (so far, "Absolute Terror") could use a fake CD track frame counter as a copy protection mechanism. The flag causes the CD-DA emulation to return an hacked frame counter value for each track as stored in the "mcihack.txt" file located in the "Music" folder.
+				</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=189>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Emulate CD pause capability
+				</P>
+			</TD>
+			<TD WIDTH=137>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">CDPAUSECAPABILITY</P>
+			</TD>
+			<TD WIDTH=1171>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+				According to the MSDN documentation, a CD drive may or may not have the capability to pause the music play. Depending on that, when a "pause" command is sent, the returned drive status could be either "pause" or "stop". Since the majority of drives doesn't have this capability, it is possible that a program may simply expect the "stop" answer. This is what happens with "Speedboat Attack" that, after a pause command is sent entering the ESC key during a boat race, it resumes the music play only if the status is equal to "stop" and not "paused". For these reasons the flag is defaulted to off.
+				</P>
+			</TD>
+		</TR>
+
+
+		<TR VALIGN=TOP>
+			<TD WIDTH=189>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Suppress CD audio
+				</P>
+			</TD>
+			<TD WIDTH=137>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">SUPPRESSCDAUDIO</P>
+			</TD>
+			<TD WIDTH=1171>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+				Experimental flag, pretends that the system has no audio CD, also if such a device is present. In order to have effect, the flag must be set together with VIRTUALCDAUDIO.
+				</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=189>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Emulate CD mixer
+				</P>
+			</TD>
+			<TD WIDTH=137>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">EMULATECDMIXER</P>
+			</TD>
+			<TD WIDTH=1171>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+				When this flag is set, all operations directed to the CD Audio volume mixer are instead redirected to the CD-DA emulation. This way, commands to change or mute the music volume level can be correctly performed.
+				</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=189>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Emulate CD aux
+				</P>
+			</TD>
+			<TD WIDTH=137>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">EMULATECDAUX</P>
+			</TD>
+			<TD WIDTH=1171>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+				When this flag is set, DxWnd pretends that there are aux ports dedicated to the sound mixer and the CD device. Some games control the volume level by changing the volume at the aux ports, so this may let the volume control of the emulated CD-DA to work. It should be used when necessary.
+				</P>
+			</TD>
+		</TR>
+
+		<TR VALIGN=TOP>
+			<TD WIDTH=189>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Set emulated CD volume</P>
+			</TD>
+			<TD WIDTH=137>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm"> </P>
+			</TD>
+			<TD WIDTH=1171>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">When enabled, it allows the adjustment of the emulated CD-DA volume using the slider. This is useful for games that have a broken in-game volume control which do not allow the setting of music volume independently from the effects volume.</P>
+			</TD>
+		</TR>
+
+
+
+	</TABLE>
+	<H3 CLASS="western">mcihack.txt</H3>
+		<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+		The file "mcihack.txt" allows the definition of the special behaviors of the MCI calls accessing 
+		the virtual CD.</P>
+		It is a standard Windows .ini file composed by different sections:</P>
+		[info]</P>
+		identity=<I>value</I> : defines the CD identity (ref. mciSendString("info cdaudio identity"))</P>
+		product=<I>value</I> : defines the CD product code (ref. mciSendString("info cdaudio upc"))</P>
+		[frames]</P>
+		track<I>nn</I>=<I>value</I> : forces the track length of track<I>nn</I> when requested in frames</P>
+		[msec]</P>
+		track<I>nn</I>=<I>value</I> : forces the track length of track<I>nn</I> when requested in milliseconds</P>
+		[tmsf]</P>
+		track<I>nn</I>=<I>value</I> : forces the track length of track<I>nn</I> when requested in tmsf format</P>
+	<DIV ID="topic_footer" DIR="LTR">
+		<P STYLE="margin-bottom: 0.5cm"><BR><BR>
+		</P>
+	</DIV>
+</DIV>
+</BODY>
+</HTML>

@@ -1,0 +1,317 @@
+splitscreen_gui.py
+
+from align_manager import AlignManager
+
+class SPLITBOX_GUI(ctk.CTk):
+    def __init__(self):
+        super().__init__()
+
+        setup_app_variables(self) # Essa função (que vem do gui_core.py) é quem injeta no self as variáveis de estado que o alinhamento precisa, como:
+           # O modo de alinhamento selecionado (Grade, Vertical, Horizontal).
+           # A lista de executáveis selecionados que serão alvo do alinhamento.
+           # As flags de clean_ui (remover bordas), que é parte do processo de alinhamento visual.
+
+        self.title("Splitbox Alpha 1.6.5 - Lorde Raveno")
+        self.geometry("900x650")
+        
+        try:
+            self.manager = SplitscreenManager()
+            self.workflow = AlignManager(self, self.manager) # conexão vital para funcioanr o alinhamento. É através dessa variável que, quando clicamos em um botão (que está definido dentro do show_motor_content), o comando chega ao AlignManager para mover as janelas.
+            print(" [OK] Motores sincronizados e DLLs injetadas.")
+        except Exception as e:
+            print(f"[ERRO] Falha crítica ao iniciar motores: {e}")
+
+        self._setup_main_layout()
+# Funciona assim:
+    # A Ordem de Alinhamento: Vem do gui_tabs.py (dentro de show_motor_content), onde os botões de Grade/Vertical chamam o self.workflow.start_process_workflow.
+    # O Cálculo das Posições: Está dentro do layout_engine.py (que o AlignManager usa).
+    # O Movimento das Janelas (WinAPI): Está no window_utils.py.
+
+splitscreen_manager.py
+
+# Nota: funciona como o Maestro do Sistema. Enquanto a GUI cuida da aparência, este arquivo é quem realmente "suja as mãos" para garantir que o lançamento, a injeção e o alinhamento aconteçam na ordem certa.
+
+from layout_engine import LayoutEngine
+from window_utils import WindowUtils
+
+class SplitscreenManager:
+    def __init__(self):
+        self.pids = []
+        self.processes = []
+        self.pids_to_paths_map = []        
+        self.bridge = DLLBridge()
+        self.layout_engine = LayoutEngine(self.bridge)
+        self.injector = CoreInjector() 
+        self.forcer_active = True        
+        threading.Thread(target=WindowUtils.forcer_loop, args=(self,), daemon=True).start()
+
+    def apply_layout(self, mode, clean_ui):
+        """Apenas repassa a ordem para a Engine."""
+        hwnds = WindowUtils.get_managed_hwnds(self.pids, self.pids_to_paths_map)
+        self.layout_engine.full_layout_workflow(hwnds, mode, clean_ui)
+
+  # 1. O Sistema de Monitoramento (Loop de Força)
+  # No __init__, você inicia uma Thread separada:
+threading.Thread(target=WindowUtils.forcer_loop, args=(self,), daemon=True).start()
+  # O que faz: Ele fica rodando em segundo plano sem parar.
+  # A Função: Ele vigia se as janelas dos jogos ainda estão abertas ou se foram minimizadas/movidas. Se o self.forcer_active estiver True, ele garante que as janelas fiquem presas na posição do layout que você escolheu, impedindo que elas "fujam" ou se sobreponham sozinhas.
+
+  # 2. A Ponte de Dados (Mapeamento de PIDs)
+  # Você mantém três listas vitais: self.pids, self.processes e self.pids_to_paths_map.
+  # O problema que resolve: Quando você lança um jogo via Sandboxie ou DXWnd, o ID do processo (PID) muda ou o Python perde o rastro direto.
+  # A solução: O pids_to_paths_map guarda o caminho do executável original. Assim, o WindowUtils consegue escanear o Windows e dizer: "Achei uma janela aberta que veio desse executável, vamos alinhar ela!".
+
+  # 3. O Despachante de Ordens (apply_layout)
+  # Esta função é o gatilho final. Ela não faz o cálculo matemático (quem faz é a LayoutEngine), mas ela prepara os ingredientes:
+  # Identificação: Chama o WindowUtils.get_managed_hwnds para pegar os "Handles" (IDs de janela) reais que estão ativos no momento.
+  # Execução: Envia esses IDs para a self.layout_engine.full_layout_workflow.
+  # Resultado: É aqui que a mágica de dividir a tela em Grade, Vertical ou Horizontal acontece, aplicando também o clean_ui (remoção de bordas) via DLLBridge.
+
+window_utils.py
+class WindowUtils:
+
+import psutil
+
+class WindowUtils:
+    @staticmethod
+    def get_managed_hwnds(pids, paths_map):
+        if not pids and not paths_map: return []
+        hwnds = []
+        target_names = [os.path.basename(p).lower() for p in paths_map]
+
+        def cb(hwnd, _):
+            if not win32gui.IsWindowVisible(hwnd): return
+            try:
+                _, pid = win32process.GetWindowThreadProcessId(hwnd)
+                title = win32gui.GetWindowText(hwnd)
+                if not title: return
+
+                # Filtro de lixo
+                if any(x in title.lower() for x in ["splitbox", "sandman", "sbiectrl"]): return
+
+                # Detecção por PID ou Nome (Sandboxie)
+                if pid in pids:
+                    hwnds.append(hwnd)
+                else:
+                    p_name = psutil.Process(pid).name().lower()
+                    if p_name in target_names:
+                        hwnds.append(hwnd)
+            except: pass
+
+        win32gui.EnumWindows(cb, None)
+        return sorted(list(set(hwnds)))
+
+    @staticmethod
+    def forcer_loop(manager):
+        """Loop de foco em thread separada."""
+        while True:
+            if manager.forcer_active and manager.pids_to_paths_map:
+                hwnds = WindowUtils.get_managed_hwnds(manager.pids, manager.pids_to_paths_map)
+                for hwnd in hwnds:
+                    try: manager.bridge.apply_forcer(hwnd)
+                    except: pass
+                time.sleep(0.8)
+            else:
+                time.sleep(2.0)
+
+  # 1. O Filtro de Lixo (Segurança)
+  # Python: if any(x in title.lower() for x in ["splitbox", "sandman", "sbiectrl"]): return
+  # Isso evita um erro clássico: o programa tentar alinhar a própria interface do Splitbox ou a janela do Sandboxie como se fossem o jogo. Ele ignora as janelas de controle para focar apenas no alvo.
+
+  # 2. O Sistema de Dupla Identificação
+  # Como você usa Sandboxie e DXWnd, o PID pode ser traiçoeiro (ele muda quando o jogo é lançado dentro da caixa isolada). Por isso, sua lógica usa dois caminhos:
+  # Caminho A (Direto pelo PID): Se o Python lançou o processo e tem o PID na lista pids, ele captura a janela instantaneamente. É o método mais rápido.
+  # Caminho B (Pelo Nome via psutil): Se o PID não bater (comum no Sandboxie), ele usa o psutil.Process(pid).name(). Se o nome do processo (ex: SonicMania.exe) estiver na sua paths_map, ele valida a janela. Isso é o que garante que o alinhamento funcione mesmo com isolamento de sistema.
+
+  # 3. O "Forcer Loop" (A Garra do Motor)
+O seu forcer_loop usa essas informações para manter a ordem:
+  # Ele pega os HWNDs (Handles das janelas) validados.
+  # Chama o apply_forcer(hwnd) a cada 0.8 segundos.
+
+  # Resultado: Se o usuário tentar arrastar a janela ou se ela tentar mudar de tamanho sozinha, o seu script a "puxa" de volta para o lugar definido pelo layout.
+  # Resumo: o PID e o Nome do Processo são as chaves da fechadura. Sem o window_utils.py identificando quem é quem através desses dados, o AlignManager estaria "cego" e não teria em quais janelas aplicar os cálculos de posição.
+
+align_manager.py
+
+import threading
+import time
+import os 
+
+class AlignManager:
+    def __init__(self, gui_root, splitscreen_manager):
+        self.root = gui_root
+        self.manager = splitscreen_manager
+        self.is_busy = False
+
+    def quick_align_workflow(self, mode, clean_ui):
+        """Alinhamento manual imediato."""
+        if self.is_busy: return
+        target_mode = mode.strip().lower()
+        threading.Thread(target=self._exec_align, args=(target_mode, clean_ui), daemon=True).start()
+
+    def _exec_align(self, mode, clean_ui):
+        self.is_busy = True
+        try:
+            self.manager.apply_layout(mode, clean_ui)
+        finally:
+            self.is_busy = False
+
+    def start_process_workflow(self, executables, use_sandbox, mode, clean_ui):
+        """Workflow: Limpeza -> Lançamento Híbrido (DXW ou Sistema)."""
+        if not executables or self.is_busy: return
+
+        # Captura configurações e estados da UI
+        try:
+            l_delay = float(self.root.settings.get("launch_delay", 2.0))
+            use_dxw = self.root.use_dxw_var.get()
+            dx_path = self.root.settings.get("dxwnd_path", "")
+        except:
+            l_delay, use_dxw, dx_path = 2.0, False, ""
+
+        def run():
+            self.is_busy = True
+            try:
+                # 1. Limpa o motor antes de começar
+                self.manager.cleanup()
+                
+                # 2. Loop de Lançamento Inteligente
+                for exe in executables:
+                    if use_dxw:
+                        print(f" [MOTOR] Lançando via DXWnd: {os.path.basename(exe)}")
+                        self.manager.launch_game_with_dxw(exe, dx_path)
+                    else:
+                        print(f" [MOTOR] Lançando via Sistema (SBIE: {use_sandbox}): {os.path.basename(exe)}")
+                        self.manager.launch_game(exe, use_sandbox=use_sandbox)
+                    
+                    time.sleep(l_delay)
+                
+                print(" [MOTOR] Lançamento em grupo concluído. Aguarde as janelas para alinhar.")
+            except Exception as e:
+                print(f" [ERRO WORKFLOW] {e}")
+            finally:
+                self.is_busy = False
+
+        threading.Thread(target=run, daemon=True).start()
+
+layout_engine.py
+
+import math
+import win32gui
+import win32con
+from identity_manager import IdentityManager
+
+class LayoutEngine:
+    def __init__(self, bridge):
+        self.bridge = bridge
+
+    def calculate_and_apply(self, hwnds, mode, clean_ui):
+        if not hwnds: return
+        
+        hwnds = list(dict.fromkeys(hwnds))
+        num = len(hwnds)
+        
+        # Captura a resolução da área de trabalho
+        rect = win32gui.GetWindowRect(win32gui.GetDesktopWindow())
+        sw = rect[2] - rect[0]
+        sh = rect[3] - rect[1]
+
+        # Se não for Clean UI, reserva espaço para a barra de tarefas (aprox. 40px)
+        if not clean_ui:
+            sh -= 40 
+
+        print(f" [DEBUG ENGINE] Modo: {mode} | Resolução: {sw}x{sh} | Janelas: {num}")
+
+        for i, hwnd in enumerate(hwnds):
+            # --- Lógica de Alinhamento Original Preservada ---
+            if mode == "vertical":
+                w, h = sw // num, sh
+                x, y = i * w, 0
+            elif mode == "horizontal":
+                w, h = sw, sh // num
+                x, y = 0, i * h
+            else: # grid
+                cols = math.ceil(math.sqrt(num))
+                rows = math.ceil(num / cols)
+                w, h = sw // cols, sh // rows
+                x, y = (i % cols) * w, (i // cols) * h
+
+            try:
+                # 1. POSICIONAMENTO VIA DLL (Snap DWM)
+                self.bridge.set_window_pos(hwnd, x, y, w, h, clean_ui=clean_ui)
+                
+                if clean_ui:
+                    # Chamamos sua DLL original (ela vai tirar a barra e a borda)
+                    self.bridge.apply_window_cleaner(hwnd)
+                    
+                    # --- CORREÇÃO PÓS-DLL VIA PYTHON ---
+                    # Recuperamos o que a DLL acabou de definir
+                    style = win32gui.GetWindowLong(hwnd, win32con.GWL_STYLE)
+                    
+                    # Devolvemos APENAS a borda de redimensionamento (Thickframe)
+                    # Sem devolver a WS_CAPTION, a barra de título continua invisível
+                    style |= win32con.WS_THICKFRAME
+                    
+                    # Aplicamos o novo estilo "Híbrido"
+                    win32gui.SetWindowLong(hwnd, win32con.GWL_STYLE, style)
+                else:
+                    # Lógica de restauração padrão
+                    style = win32gui.GetWindowLong(hwnd, win32con.GWL_STYLE)
+                    style |= (win32con.WS_CAPTION | win32con.WS_THICKFRAME | win32con.WS_SYSMENU)
+                    win32gui.SetWindowLong(hwnd, win32con.GWL_STYLE, style)
+
+                # 2. VALIDAÇÃO FINAL
+                # O SWP_FRAMECHANGED aqui é o que faz o Windows entender: 
+                # "Ok, sem barra, mas com borda de redimensionamento ativa"
+                win32gui.SetWindowPos(hwnd, win32con.HWND_TOP, int(x), int(y), int(w), int(h), 
+                                     win32con.SWP_SHOWWINDOW | win32con.SWP_FRAMECHANGED | win32con.SWP_NOACTIVATE)
+                                      
+            except Exception as e:
+                print(f" [ERRO ENGINE] Falha na janela {hwnd}: {e}")
+    
+    def full_layout_workflow(self, hwnds, mode, clean_ui):
+        """Nova função que coordena todo o pós-alinhamento."""
+        if not hwnds:
+            print(" [AVISO] Alinhamento ignorado: Nenhuma janela encontrada.")
+            return
+
+        print(f" [MOTOR] Janelas detectadas: {hwnds}")
+
+        # 1. Aplica o movimento e redimensionamento
+        self.calculate_and_apply(hwnds, mode.lower(), clean_ui)
+        
+        # 2. Delay para o Windows processar
+        time.sleep(0.2)
+        
+        # 3. Identidade Visual (Player 1, 2...)
+        IdentityManager.apply_identity(hwnds)
+
+        # 4. Ativa o Forcer via Bridge
+        for hwnd in hwnds:
+            self.bridge.apply_forcer(hwnd)    
+
+gui_events.py
+
+class GUIEvents:
+
+    @staticmethod
+    def start_flow(app):
+        """Workflow Conjunto: Lança os jogos sem aplicar alinhamento automático."""
+        active_exes = [item["path"] for item in app.exe_check_vars if item["var"].get()]
+        if not active_exes: 
+            print("[AVISO] Nada marcado para iniciar!")
+            return
+        
+        # Enviamos None para o modo de layout, forçando o motor a apenas abrir os processos
+        app.workflow.start_process_workflow(
+            active_exes, 
+            app.use_sandbox_var.get(), 
+            None, 
+            app.clean_ui_var.get()
+        )
+
+    @staticmethod
+    def quick_align(app, mode):
+        """Chamada para botões de alinhamento rápido (Manual)."""
+        clean_ui = app.clean_ui_var.get()
+        # O AlignManager interno cuidará para não sobrepor threads
+        app.workflow.quick_align_workflow(mode, app.clean_ui_var.get())

@@ -1,0 +1,123 @@
+splitscree_gui.py versão 1.6.5
+
+import customtkinter as ctk
+import sys
+import ctypes
+import os
+
+from gui_core import setup_app_variables
+from gui_tabs import (
+    show_config_content, 
+    show_help_content, 
+    show_about_content, 
+    show_status_content,
+    show_motor_content
+)
+from splitscreen_manager import SplitscreenManager
+from align_manager import AlignManager
+
+class SPLITBOX_GUI(ctk.CTk):
+    def __init__(self):
+        super().__init__()
+
+        setup_app_variables(self)
+        self.title("Splitbox Alpha 1.6.5 - Lorde Raveno")
+        self.geometry("900x650")
+        
+        try:
+            self.manager = SplitscreenManager()
+            self.workflow = AlignManager(self, self.manager)
+            print(" [OK] Motores sincronizados e DLLs injetadas.")
+        except Exception as e:
+            print(f"[ERRO] Falha crítica ao iniciar motores: {e}")
+
+        self._setup_main_layout()
+
+    def _setup_main_layout(self):
+        self.grid_columnconfigure(1, weight=1)
+        self.grid_rowconfigure(0, weight=1)
+
+        self.sidebar = ctk.CTkFrame(self, width=180, corner_radius=0)
+        self.sidebar.grid(row=0, column=0, sticky="nsew")
+        
+        ctk.CTkLabel(self.sidebar, text="SPLITBOX", font=("Segoe UI", 18, "bold")).pack(pady=20)
+
+        btns = [
+            ("Motor", self.show_motor), 
+            ("Config", lambda: show_config_content(self)),
+            ("Status", lambda: show_status_content(self)), 
+            ("Help", lambda: show_help_content(self)),
+            ("About", lambda: show_about_content(self))
+        ]
+        for txt, cmd in btns:
+            ctk.CTkButton(
+                self.sidebar, 
+                text=txt, 
+                fg_color="transparent", 
+                anchor="w", 
+                command=cmd
+            ).pack(padx=10, pady=5, fill="x")
+
+        self.main_content = ctk.CTkFrame(self, corner_radius=0, fg_color="transparent")
+        self.main_content.grid(row=0, column=1, sticky="nsew", padx=15, pady=15)
+        
+        self.show_motor()
+
+    def clear_main_content(self):
+        for child in self.main_content.winfo_children():
+            child.destroy()
+
+    def show_motor(self):
+        show_motor_content(self)
+
+    def update_listbox(self):
+        # Limpa widgets antigos do frame
+        for widget in self.exe_listbox.winfo_children():
+            widget.destroy()
+        
+        self.exe_check_vars = [] # Limpa a lista de referências
+        
+        for exe in self.executables:
+            var = ctk.BooleanVar(value=False)
+            cb = ctk.CTkCheckBox(self.exe_listbox, text=os.path.basename(exe), variable=var)
+            cb.pack(anchor="w", padx=5, pady=2)
+            self.exe_check_vars.append({"path": exe, "var": var})
+
+    def remove_executable(self):
+        if self.executables:
+            self.executables.pop()
+            self.update_listbox()
+
+    def clear_all_executables(self):
+        self.executables.clear()
+        self.update_listbox()
+
+    def cleanup(self):
+        self.manager.cleanup()
+
+    def toggle_sbie(self):
+        import subprocess
+        sbie_path = self.settings.get("sbie_path", r"C:\Program Files\Sandboxie-Plus\SandMan.exe")
+        if os.path.exists(sbie_path):
+            subprocess.Popen([sbie_path], creationflags=0x08000000)
+            print("[SISTEMA] Painel Sandboxie acionado.")
+
+    def toggle_dxwnd(self):
+        import subprocess
+        dxw_path = self.settings.get("dxwnd_path", "")
+        if dxw_path and os.path.exists(dxw_path):
+            subprocess.Popen(
+                [dxw_path], 
+                cwd=os.path.dirname(dxw_path), 
+                creationflags=0x08000000
+            )
+            print("[SISTEMA] Painel DXWnd acionado.")
+
+if __name__ == "__main__":
+    if ctypes.windll.shell32.IsUserAnAdmin():
+        app = SPLITBOX_GUI()
+        app.mainloop()
+    else:
+        ctk_path = sys.executable
+        params = " ".join(sys.argv)
+        ctypes.windll.shell32.ShellExecuteW(None, "runas", ctk_path, params, None, 1)

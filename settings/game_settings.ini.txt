@@ -1,0 +1,1 @@
+O arquivo de configurações principais do jogo  podem ser postas aqui com o nome inteiro do executavel! Alguns podem funcionar, e outros não. O script do motor irá primeiro checar se pode ser utilizado as configurações que estão aqui nessa pasta.

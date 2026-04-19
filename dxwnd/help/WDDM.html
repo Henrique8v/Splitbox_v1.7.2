@@ -1,0 +1,176 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE>WDDM</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice 4.1.3  (Win32)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="0;0">
+	<SCRIPT SRC="js/jquery.min.js"></SCRIPT>
+	<SCRIPT>
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "DxWnd.html?" + sTopicUrl;
+			}
+		});
+	
+	</SCRIPT>
+	<STYLE TYPE="text/css">
+	<!--
+		P { margin-bottom: 0cm; border: none; padding: 0cm; color: #000000; font-family: "Arial", "Helvetica", sans-serif; font-size: 10pt; font-style: normal; font-weight: normal; text-align: left; text-decoration: none }
+		TD P { margin-bottom: 0cm; border: none; padding: 0cm; color: #000000; font-family: "Arial", "Helvetica", sans-serif; font-size: 10pt; font-style: normal; font-weight: normal; text-align: left; text-decoration: none }
+		H1 { color: #000000; font-style: normal; text-decoration: none }
+		P.rvps2 { font-family: "Arial", "Helvetica", sans-serif; font-size: 10pt; font-style: normal; font-weight: normal }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR" STYLE="border: none; padding: 0cm">
+<P></P>
+<DIV ID="topic_content" DIR="LTR">
+	<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm"><IMG SRC="lib/dxwnd_configuration_wddm.png" NAME="grafiikka4" ALIGN=BOTTOM BORDER=0></P>
+	<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm">
+WDDM stands for "Windows Display Driver Model" (see
+<A HREF="https://www.wikipedia.org/wiki/Windows_Display_Driver_Model">Windows Display Driver Model at Wikipedia</A> ).
+	</P>
+	<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm">
+WDDM offers a programmatic interface to customize the behavior of video drivers, though it is available only from Microsoft Vista and therefore it's not supported on Windows XP.
+	</P>
+	<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm">
+Most of these features are provided thanks to the support and code sharing of Narzoul's DDrawCompat wrapper 
+( see <A HREF="https://github.com/narzoul/DDrawCompat">DDrawCompat</A> ). For additional features it is also possible to 
+use DDrawCompat both alone or integrated with DxWnd. DxWnd with DDrawCompat can work depending on the respective 
+configuration, though in my opinion they have a good compatibility.
+	</P>
+	<TABLE WIDTH=100% BORDER=1 CELLPADDING=2 CELLSPACING=2>
+		<TR VALIGN=TOP>
+			<TD WIDTH=168>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Hook WDDM</P>
+			</TD>
+			<TD WIDTH=141>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">HOOKVIDEOADAPTER</P>
+			</TD>
+			<TD WIDTH=1228>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+Enables WDDM callbacks hooking.
+				</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=200>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Alternate Pixel Center</P>
+			</TD>
+			<TD WIDTH=112>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">ALTPIXELCENTER</P>
+			</TD>
+			<TD WIDTH=1225>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+implements the alternate pixel center correction (by adding -0.5f offset to both x and y vertex coordinates).<P>
+See Microsoft page <A HREF=" https://learn.microsoft.com/en-us/windows/win32/direct3d9/directly-mapping-texels-to-pixels">Directly Mapping Texels to Pixels</A><P>
+The flag depends on the video adapter hooking that must be enabled (see the "Hook video adapter" flag).<P>
+The problem impacts heavily on small textures like those used as fonts. 
+The flag fixes for instance "Beast Wars Transformers" texts. 
+				</P>
+			</TD>
+		</TR>
+
+		<TR VALIGN=TOP>
+			<TD WIDTH=200>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Fix texture color key</P>
+			</TD>
+			<TD WIDTH=112>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">FIXCOLORKEY</P>
+			</TD>
+			<TD WIDTH=1225>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+A common bug of video drivers implementation is to enable the transparency color key feature when not required.
+This produces artifacts of various aspects but caused by texture areas made transparent when they shouldn't (see ).
+The flag analyzes the frame content and enables the transparent color key feature only when requested.
+				</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=200>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Enable zooming</P>
+			</TD>
+			<TD WIDTH=112>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">ENABLEZOOMING</P>
+			</TD>
+			<TD WIDTH=1225>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+Experimental flag. 
+The flag activates d3dumddi callbacks that scale the X and Y values of vertices giving the 
+effect of zooming. The flag is experimental because it doesn't work on all kind of
+3D engines and in some cases corrupts the scene.
+				</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=200>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Trim vertex buffer</P>
+			</TD>
+			<TD WIDTH=112>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">TRIMVERTEXBUFFER</P>
+			</TD>
+			<TD WIDTH=1225>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+Experimental flag. 
+The flag activates d3dumddi callbacks that verify that the vertices Z value is trimmed inside the range from 0.0 to 1.0.
+This fixes the disapparition of the sky textures that build a starred sky in "Thief II".
+				</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=168>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Clean ZBUFFER @WDDM</P>
+			</TD>
+			<TD WIDTH=141>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">DEPTHBUFZCLEAN</P>
+			</TD>
+			<TD WIDTH=1228>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+This flag cleans the depth buffer at each frame rendering by means of the pfnDepthFill callback.
+It provides a stronger and more generalized way to fix some ZBUFFER artifacts, provided that the WDDM interface
+is available, as a valid alternative to the other ZBUFFER-related flags (i.e. "Clean ZBUFFER @0.0 fix", 
+"Clean ZBUFFER @1.0 fix", ...) that work at the application level in the D3D method wrappers.
+				</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=247>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Suppress overlay capability</P>
+			</TD>
+			<TD WIDTH=157>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">WDDMNOOVERLAY</P>
+			</TD>
+			<TD WIDTH=1129>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+The suppression of the overlay capability can be activated at the application level (see SUPPRESSOVERLAY flag in DirectX2 tab). When WDDM hook is enabled, the WDDMNOOVERLAY flag prevents the detection of the OVERLAY capability
+also at the WDDM GetCaps callback level.
+				</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=200>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Force W-based fog</P>
+			</TD>
+			<TD WIDTH=112>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">FORCEWBASEDFOGWDDM</P>
+			</TD>
+			<TD WIDTH=1225>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+The W-based fog can be activated at the application level (see FORCEWBASEDFOG flag in Direct3D tab). When WDDM hook is enabled, the FORCEWBASEDFOGWDDM flag 
+works also at the WDDM updateWInfo callback level.
+				</P>
+			</TD>
+		</TR>		
+	</TABLE>
+</DIV>
+<DIV ID="topic_footer" DIR="LTR">
+	<P><BR>
+	</P>
+</DIV>
+</BODY>
+</HTML>

@@ -1,0 +1,87 @@
+Como funcionava paara usar o webview2
+
+Pasta webview/: Contém seus arquivos .html e .css (About, Tutorial). Nos scripts, acessamos via os.path.join(base_dir, "webview", file_name).
+
+Pasta webview2/: É o "motor" (os binários do Chromium). O pywebview busca essa pasta na raiz para carregar o ambiente de renderização moderno.
+
+WebView2Loader.dll: Deve estar na raiz. O Windows a localiza automaticamente quando o script inicia o motor edgechromium.
+
+__________________________________________________________________________
+
+Pywebview com um parent window handle.
+
+Para embutir o pywebview dentro do seu splitscreen_gui.py usando o Window Handle (HWND) do Windows, precisamos capturar o identificador do frame do CustomTkinter e passá-lo para o motor Chromium.
+
+Essa técnica permite que o motor WebView2 renderize o about.html como se fosse um "filho" da sua interface principal, mantendo a estética unificada da Brotherhood.
+
+🛠️ Atualização do gui_tabs.py (Versão Inframe)
+Substitua o conteúdo do seu gui_tabs.py por este código que realiza a ancoragem via Win32:
+
+Python
+import os
+import customtkinter as ctk
+import webview
+import threading
+import ctypes
+
+def render_html_inframe(parent_frame, file_name):
+    """
+    Ancora o motor WebView2 dentro de um frame específico do CustomTkinter
+    usando o Window Handle (HWND).
+    """
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    html_path = os.path.join(current_dir, "webview", file_name)
+    
+    if not os.path.exists(html_path):
+        print(f"[ERRO] {file_name} não encontrado.")
+        return
+
+    # Forçamos o Tkinter a desenhar o frame para obtermos um HWND válido
+    parent_frame.update()
+    hwnd = parent_frame.winfo_id()
+
+    def start_webview():
+        try:
+            # Criamos a janela sem bordas (master=hwnd faz a mágica)
+            window = webview.create_window(
+                '', 
+                url=html_path,
+                master=hwnd, # O Parent Window Handle
+                width=parent_frame.winfo_width(),
+                height=parent_frame.winfo_height()
+            )
+            # Iniciamos o motor Chromium (WebView2)
+            webview.start(gui='edgechromium', debug=False)
+        except Exception as e:
+            print(f"[ERRO INFRAME] Falha ao acoplar Chromium: {e}")
+
+    # Iniciamos em thread para não bloquear o loop de mensagens do CustomTkinter
+    t = threading.Thread(target=start_webview, daemon=True)
+    t.start()
+
+def show_config_content(master):
+    """Aba de Configurações Nativa."""
+    master.clear_main_content()
+    from gui_configs import render_config_tab
+    render_config_tab(master)
+
+def show_help_content(master):
+    """Aba Help embutida."""
+    master.clear_main_content()
+    render_html_inframe(master.main_content, "tutorial.html")
+
+def show_about_content(master):
+    """Aba About embutida."""
+    master.clear_main_content()
+    # Criamos um container interno para garantir que o HTML ocupe o espaço todo
+    container = ctk.CTkFrame(master.main_content, fg_color="transparent")
+    container.pack(fill="both", expand=True)
+    render_html_inframe(container, "about.html")
+🔍 O que mudou no Protocolo:
+parent_frame.winfo_id(): Capturamos o endereço de memória (HWND) do frame do Windows onde o HTML será injetado.
+
+master=hwnd: O pywebview utiliza esse handle para se tornar um processo dependente da janela pai, evitando a abertura de janelas externas.
+
+Isolamento Visual: Como o motor Chromium (WebView2) tem seu próprio renderizador, as animações do seu about.html não afetarão o desempenho das suas DLLs de C++ (window_forcer.dll) que rodam no fundo.
+
+Nota: quando o webview é usado sem o hwnd é obrigatorio usar uma tread com janela externa. O pywebview nativo tenta criar uma janela própria (o que gera o conflito de threads que vimos), a solução para embutir é usar o tkinterwebview ou o pywebview com um parent window handle.

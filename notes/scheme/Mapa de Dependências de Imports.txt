@@ -1,0 +1,42 @@
+main_.py
+  ↓
+splitscreen_gui.py (SPLITBOX_GUI)
+  ├─ [HERANÇA] modules.gui.mixins.NetworkMixin
+  ├─ [HERANÇA] modules.gui.mixins.ToolsMixin
+  ├─ [HERANÇA] modules.gui.mixins.ListManagerMixin
+  ├─→ modules.gui.gui_core (setup_app_variables)
+  ├─→ modules.gui.gui_tabs (show_motor_content, etc)
+  └─→ modules.gui.gui_network (render_network_tab)
+
+NetworkMixin
+  └─→ network_settings.json (I/O de dados)
+
+ListManagerMixin
+  └─→ master.exe_listbox (Manipulação direta de widgets)
+
+SplitscreenManager
+  ├─→ modules.core.launcher (GameLauncher)
+  ├─→ modules.window_engine.layout_engine (LayoutEngine)
+  ├─→ modules.core.dll_bridge (DLLBridge)
+  ├─→ modules.core.injector_manager (CoreInjector)
+  └─→ modules.window_engine.window_utils (WindowUtils)
+
+AlignManager
+  ├─→ modules.window_engine.window_force (WindowForcer) ✨ NOVO
+  ├─→ modules.window_engine.layout_engine (LayoutEngine)
+  ├─→ modules.window_engine.window_utils (WindowUtils)
+  ├─→ modules.input_management.identity_manager (IdentityManager)
+  └─→ modules.input_management.mouse_logic (MouseLogic)
+
+LayoutEngine
+  └─→ modules.input_management.identity_manager (IdentityManager)
+
+gui_events.py
+  └─→ modules.window_engine.window_force (WindowForcer) ✨ NOVO
+
+gui_tabs.py
+  ├─→ modules.gui.gui_configs (render_config_tab)
+  └─→ modules.gui.gui_events (GUIEvents)
+
+gui_core.py
+  └─→ modules.gui.gui_configs (load_settings)

@@ -1,0 +1,651 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+<TITLE>Global settings</TITLE>
+<META NAME="GENERATOR" CONTENT="OpenOffice 4.1.3  (Win32)">
+<META NAME="CREATED" CONTENT="0;0">
+<META NAME="CHANGED" CONTENT="0;0">
+<SCRIPT SRC="js/jquery.min.js"></SCRIPT>
+<SCRIPT>
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "DxWnd.html?" + sTopicUrl;
+			}
+		});
+	
+</SCRIPT>
+<STYLE TYPE="text/css">
+	<!--
+		P { margin-bottom: 0cm; border: none; padding: 0cm; color: #000000; font-family: "Arial", "Helvetica", sans-serif; font-size: 10pt; font-style: normal; font-weight: normal; text-align: left; text-decoration: none }
+		H3 { color: #000000; text-decoration: none }
+		H3.western { font-style: normal }
+		H3.cjk { font-family: "SimSun"; font-style: normal }
+		H3.ctl { font-family: "Mangal"; font-style: normal }
+		P.rvps2 { font-family: "Arial", "Helvetica", sans-serif; font-size: 10pt; font-style: normal; font-weight: normal }
+		H3.rvps4-western { margin-bottom: 0.11cm; border: none; padding: 0cm; font-style: normal; text-align: left }
+		H3.rvps4-cjk { margin-bottom: 0.11cm; border: none; padding: 0cm; font-family: "SimSun"; font-style: normal; text-align: left }
+		H3.rvps4-ctl { margin-bottom: 0.11cm; border: none; padding: 0cm; font-family: "Mangal"; font-style: normal; text-align: left }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR" STYLE="border: none; padding: 0cm">
+<DIV ID="topic_content" DIR="LTR">
+<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm">
+<IMG SRC="lib/dxwnd_global_settings1.png" NAME="grafiikka4" ALIGN=BOTTOM BORDER=0>
+<IMG SRC="lib/dxwnd_global_settings2.png" NAME="grafiikka4" ALIGN=BOTTOM BORDER=0>
+<IMG SRC="lib/dxwnd_global_settings3.png" NAME="grafiikka4" ALIGN=BOTTOM BORDER=0>
+</P>
+<H2 CLASS="rvps4-western">Flags</H2>
+<H3 CLASS="rvps4-western">Flags</H3>
+<TABLE WIDTH=100% BORDER=1 CELLPADDING=2 CELLSPACING=2>
+<TR VALIGN=TOP>
+<TD WIDTH=155>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Save paths</P>
+</TD>
+<TD WIDTH=1388>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Writes the
+last path used for the game folder and the import/export directory, to
+"dxwnd.ini". These paths will then serve as the default values for
+these folders. Saving the last used path can be useful, but there
+are some potential incompatibilities and problems (reported
+mainly on Windows XP) when a saved folder no longer exists. In
+this case, you may have to manually delete the saved path from
+"dxwnd.ini", and you may prefer to disable this option.</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=155>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Auto hide GUI</P>
+</TD>
+<TD WIDTH=1388>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Minimizes
+DxWnd while the hooked program runs, restoring the window when
+the program ends. This only works for programs started through
+the DxWnd interface.</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=155>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Check for
+Admin rights</P>
+</TD>
+<TD WIDTH=1388>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Tells DxWnd
+to autodetect its own administrator permissions at startup and
+propose a self-elevation if missing. This option can also be
+modified with a configuration file (see <A HREF="Configurationfile.html">Configuration
+file</A>).</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=155>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Name from
+Folder</P>
+</TD>
+<TD WIDTH=1388>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">When selected,
+DxWnd creates the default name from the folder instead of the
+executable.</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=155>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Allow
+multiple hooks</P>
+</TD>
+<TD WIDTH=1388>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Allows hooking
+more than one application at a time.</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=155>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Warn on exit</P>
+</TD>
+<TD WIDTH=1388>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Yes/No prompt
+when closing DxWnd.</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=155>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Debug mode</P>
+</TD>
+<TD WIDTH=1388>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Enables <A HREF="Debug.html">debug mode.</A> This option can also be modified with a
+configuration file (see <A HREF="Configurationfile.html">Configuration
+file</A>).</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=155>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">32 bit icons</P>
+</TD>
+<TD WIDTH=1388>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">To use 32-bit
+icons instead of the default 16 colors.</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=155>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Gray inactive
+icons</P>
+</TD>
+<TD WIDTH=1388>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">When a path
+to an executable can not be found, the icon will be grayed out.</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=155>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Auto save updates</P>
+</TD>
+<TD WIDTH=1388>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Forces DxWnd to save any
+configuration update immediately to the disk (on "dxwnd.ini") instead of saving at the
+end of the configuration, so reducing the risk of configuration losses in case of a crash.</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=155>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Hide on ESC key</P>
+</TD>
+<TD WIDTH=1388>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">When enabled, hitting the ESC key when DxWnd is in background and
+with focus will hide the DxWnd window to the icon tray.</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=155>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Strip root path</P>
+</TD>
+<TD WIDTH=1388>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Enables the conversion of a common path prefix (hereby
+referred as "root") to a conventional path marker ":" in "dxwnd.ini". This way, it would be possible to
+remap the whole configuration and export files to a new root value, making it easier to handle the migration of the configuration to different machines. The "root folder" button allows the definition of a custom root folder (by default, "C:\Root").</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=155>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Check running targets</P>
+</TD>
+<TD WIDTH=1388>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+When this flag is set, at startup DxWnd will go through the list of all configured entries and will check if any of them is currently running.
+For each running program, its configuration will be temporarily disabled for the current DxWnd session and automatically restored at next DxWnd activation if the program is no longer running.
+In this way it is possible to avoid possible interferences when DxWnd is started while some target program is currently running.
+</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=155>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Export relative path</P>
+</TD>
+<TD WIDTH=1388>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+When this flag is cleared, the export operation copies the full pathname of the target program to the exported file . This path will likely be invalid when importing the configuration in another system.
+When this flag is set, the program pathname in the export file will be shortened in such a way that, when imported in another system, DxWnd will prompt a request to choose the correct program folder.
+</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=155>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Export debug flags</P>
+</TD>
+<TD WIDTH=1388>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+By default, the export operation clears all debug and log flags to avoid the replication of harmful configurations. 
+When this flag is set, the debug and log flags are preserved in the exported configuration.
+</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=155>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Activate Wine debug</P>
+</TD>
+<TD WIDTH=1388>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+The flags tell the WineVDM program to enable debug logging. The log is written to the $stdout and $stderr output files and it can be
+registered by setting the flag "stdout+stderr" in the "Logs" tab. Beware: the Wine debug is very verbose and can impact on the 
+system performances and used HD space, so it is to be used only when necessary for debugging operations.
+</P>
+</TD>
+</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0.5cm"><BR><BR>
+</P>
+<HR>
+<H3 CLASS="rvps4-western">Overlay</H3>
+<TABLE WIDTH=100% BORDER=1 CELLPADDING=2 CELLSPACING=2>
+<TR VALIGN=TOP>
+<TD WIDTH=155>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Position</P>
+</TD>
+<TD WIDTH=1388>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+The combo box defines the position for the DxWnd overlay messages (FPS and time stretching): it can be set in
+each one of the four window corners, or randomly moved to all corners, or centered in the window.</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=155>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Style</P>
+</TD>
+<TD WIDTH=1388>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+Defines the style for the overlay text.</P>
+</TD>
+</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0.5cm"><BR><BR>
+</P>
+<HR>
+<H3 CLASS="rvps4-western">Text dump</H3>
+<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm">
+These flags determine the way that text capture is managed and formatted for output. </BR>
+They are general flags valid for every
+task entry that enables the text dump feature through the "patch:DumpText" tweak
+<TABLE WIDTH=100% BORDER=1 CELLPADDING=2 CELLSPACING=2>
+<TR VALIGN=TOP>
+<TD WIDTH=101>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Naked dump</P>
+</TD>
+<TD WIDTH=1388>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+By default, the text dump prints additional information to the bare text, like the x,y text position coordinates and the function
+call responsible for the output. This flag strips all additional information so that only the "naked" text is out.
+This mode is useful for instance to cut & paste the bare text to a translation tool.
+</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=155>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Timed-out dump</P>
+</TD>
+<TD WIDTH=1388>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+Some programs (namely, many visual novel games) prints the text one chunk at a time in quick sequence. In this case, the text dump
+would return a long list of single characters or words. This flag chains together all strings received within a short timeout to try to rebuild a whole sentence.
+</P>
+</TD>
+</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0.5cm"><BR><BR>
+</P>
+<HR>
+<H2 CLASS="rvps4-western">Hotkeys</H2>
+<H3 CLASS="rvps4-western">Function Keys</H3>
+<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm">
+This area allows you
+to assign common tasks, like turning on logging or taking a
+screenshot, to the function keys (the row with F1 through F12 at the
+top of your keyboard). You can map the following functions:</P>
+<TABLE WIDTH=100% BORDER=1 CELLPADDING=2 CELLSPACING=2>
+<TR VALIGN=TOP>
+<TD WIDTH=101>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Time toggle</P>
+</TD>
+<TD WIDTH=1442>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Toggles
+between normal and accelerated program speed. This allows you to
+accelerate/decelerate only a part of the gameplay (e.g., during a
+fight) while running at a normal speed otherwise.</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=101>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Time fast</P>
+</TD>
+<TD WIDTH=1442>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Speeds up the
+hooked program. See <A HREF="TimeSlider.html">Time Slider.</A></P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=101>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Time slow</P>
+</TD>
+<TD WIDTH=1442>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Slows down
+the hooked program. See <A HREF="TimeSlider.html">Time Slider.</A>
+</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=101>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Alt-F4</P>
+</TD>
+<TD WIDTH=1442>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">This key is
+the well known quit command for any task. If the application
+doesn't react quickly enough to your command, you can set the
+&ldquo;Intercept Alt-F4 key&rdquo; option to cause DxWnd to
+immediately quit the program.</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=101>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Clip toggle</P>
+</TD>
+<TD WIDTH=1442>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Toggles the
+clipping region ON and OFF so that you can exit the game area and
+control other tasks or move/resize your game window.</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=101>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Refresh</P>
+</TD>
+<TD WIDTH=1442>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Forces a
+surface repaint. Some old games didn't even consider the
+possibility of a task overriding the game area, so they don't
+repaint when they should. This is a technical detail, but if your
+game screen gets dirty, try this key to fix it.</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=101>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Log toggle</P>
+</TD>
+<TD WIDTH=1442>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Toggles
+logging ON/OFF. Since painting operations can be quite verbose,
+toggling the log can be a useful trick to get information about a
+specific activity without having to browse tons of log
+lines.</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=101>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Position t.</P>
+</TD>
+<TD WIDTH=1442>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Toggles the
+window position locking (if enabled). This allows you to
+temporarily unlock the window, move or resize it, and then lock it
+again.</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=101>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">FPS toggle</P>
+</TD>
+<TD WIDTH=1442>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Toggles the
+FPS display ON and OFF.</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=101>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Print screen</P>
+</TD>
+<TD WIDTH=1442>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Captures an
+image of the current screen in the hooked program and saves it to
+your computer's clipboard.</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=101>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Corner tog.</P>
+</TD>
+<TD WIDTH=1442>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Toggles
+&quot;cornerized&quot; mode. Cornerized mode is a fake windowing
+mode that leaves the screen at the current (usually higher)
+resolution while the game is not aware of that. The game then
+runs at the 0,0 coordinate that corresponds to the top-left
+corner of the screen. It is useful when the GDI emulation is
+not perfect, so it's better to have a cornerized mode than a
+badly emulated rendering. This feature is intended to handle
+Blizzard's GDI networking screens.</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=101>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Time freeze</P>
+</TD>
+<TD WIDTH=1442>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">This switches
+between the normal time mode and a &quot;locked&quot; mode, where
+the time is not advancing at all. This sometimes produces weird
+effects, like having all the characters in a game stand still while
+still being able to move the camera.</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=101>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Fullscr. t.</P>
+</TD>
+<TD WIDTH=1442>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Toggles
+between fullscreen mode and windowed mode.</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=101>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Work area t.</P>
+</TD>
+<TD WIDTH=1442>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Similar to
+&quot;Desktop toggle&quot;, but the window is stretched to fill
+only the desktop work area rather than the entire desktop area,
+leaving the taskbar visible.</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=101>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Desktop t.</P>
+</TD>
+<TD WIDTH=1442>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Similar to
+Fullscreen toggle, toggles between fullscreen emulated mode and
+windowed mode. The difference is that in Desktop mode, the video
+color settings are still emulated, while the color depth remains
+unchanged.</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=101>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Custom t.</P>
+</TD>
+<TD WIDTH=1442>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+Sets a custom toggle key. This key has no predefined meaning, it is reserved
+for debugging purposes on experimental DxWnd releases and should not be used.
+</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=101>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">CD next</P>
+</TD>
+<TD WIDTH=1442>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+When multiple CD paths are present, the key rotates the currently active CD volume forward
+by unity, cycling the avaliable disks. For exmple, if there are 3 CD disks configured
+in the following folders: "cd", "cd02" and "cd03", if the currently active disk is CD2 then the key activates CD3 and,
+on the next presses, CD1, CD2, CD3, ... again.
+<P>
+BEWARE: The CD switch cannot be immediate, it will
+be scheduled for the next time the application will access a virtual CD disk drive.
+<P>
+BEWARE: Using the "CD Prev."/"CD Next" function keys is equivalent to setting the active CD by means of
+the <A HREF="CDCharger.html">CD Charger</A> panel, but when the game is configured for proxy mode
+and run with no DxWnd GUI, these
+keys are the only way to change the mounted CD volume!
+</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=101>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">CD prev</P>
+</TD>
+<TD WIDTH=1442>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+Same as the CD next key, but rotates the currently active CD volume backwards
+by unity, cycling the avaliable disks. For exmple, if there are 3 CD disks configured
+in the following folders: "cd", "cd02" and "cd03", if the currently active disk is CD2 then the key activates CD1 and,
+on the next presses, CD3, CD2, CD1, ... again.
+</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=101>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Zoom in</P>
+</TD>
+<TD WIDTH=1442>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+Increases the scaling factor of the ENABLEZOOMING effect of a 10% value. This function key can be used
+as alternative to the mouse wheel.
+</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=101>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Zoom out</P>
+</TD>
+<TD WIDTH=1442>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+Decreases the scaling factor of the ENABLEZOOMING effect of a 10% value, up to the minimum value of 1.0. This function key can be used
+as alternative to the mouse wheel.
+</P>
+</TD>
+</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0.5cm"><BR><BR>
+</P>
+<HR>
+<H3 CLASS="rvps4-western">Hot Keys</H3>
+<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm">This area allows you
+to assign hot keys to minimize the window, restore it, or kill the
+process. These functions are accessed by holding down Alt, Ctrl, Shift, and then pressing the chosen function key (F1 through F12).</P>
+<HR>
+<H3 CLASS="rvps4-western">Shortcuts</H3>
+<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm">This area allows you
+to assign shortcut keys. Currently there is one single key definition. It is the "Boss key" shortcut key to hide the target program screen. 
+It is intended to replicate the behavior of the "Boss key" of old DOS games that had a special key
+to show a fake working screen to play games unnoticed.</P>
+<HR>
+<H2 CLASS="rvps4-western">Defaults</H2>
+This section allows to change the initial values of some parameters when a new entry is created.
+For each one of these parameters it will be then possible to change its value with the "Modify" panel.
+This way, the creation of new program entries will be easier and faster.
+<H3 CLASS="rvps4-western">Position</H3>
+<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm">This section allows
+you to change the default settings for DxWnd window size and
+position, as well as the uptime delta (see "Timing > Increase UpTime" flag) and the custom clock frequency
+(see "time:CustomPerfCount" tweak).
+These values are applied by default when a new program entry is created.</P>
+<HR>
+<H3 CLASS="rvps4-western">Texture limits</H3>
+<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm">This area allows you
+to set minimum and maximum widths and heights for texture
+processing. The format is as follows:</P>
+<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm">Min &lt;minimum width&gt;
+x &lt;minimum height&gt;</P>
+<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm">Max &lt;maximum width&gt;
+x &lt;maximum height&gt;</P>
+<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm">See <A HREF="Configurationfile.html">Configuration
+file &gt; Texture</A>.</P>
+<P STYLE="margin-bottom: 0.5cm"><BR><BR>
+</P>
+<HR>
+<H3 CLASS="rvps4-western">Time</H3>
+<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm">This area allows you
+to set the default values for some time related flags:</P>
+<TABLE WIDTH=100% BORDER=1 CELLPADDING=2 CELLSPACING=2>
+<TR VALIGN=TOP>
+<TD WIDTH=101>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">UpTime delta</P>
+</TD>
+<TD WIDTH=1442>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">The elapsed UpTime (time from last Windows boot) expressed in days.
+The default value of 45 days is usually valid to generate some overflow problems.</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=101>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Custom perf.</P>
+</TD>
+<TD WIDTH=1442>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">This field allows you to specify a custom performance frequency value. By default, this value should be
+1MHz (1.000.000). The value affects the behavior of the "Timing > Normalize performancy counter" flag.</P>
+</TD>
+</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0.5cm"><BR><BR>
+</P>
+<HR>
+<H3 CLASS="rvps4-western">Resource limits</H3>
+<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm">Here is the definition of the custom values for the limitation flags. All the values are expressed in MBytes,
+where 1MByte = 1024 * 1024 bytes.</P>
+<TABLE WIDTH=100% BORDER=1 CELLPADDING=2 CELLSPACING=2>
+<TR VALIGN=TOP>
+<TD WIDTH=101>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Free disk area</P>
+</TD>
+<TD WIDTH=1442>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Maximum value for the free disk area.</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=101>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Free RAM</P>
+</TD>
+<TD WIDTH=1442>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Maximum value for the free RAM.</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=101>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Free video memory</P>
+</TD>
+<TD WIDTH=1442>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Maximum value for the free video memory.</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=101>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Free texture memory</P>
+</TD>
+<TD WIDTH=1442>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Maximum value for the free texture memory.</P>
+</TD>
+</TR>
+</TABLE>
+<HR>
+<H3 CLASS="rvps4-western">Miscellaneous</H3>
+<TABLE WIDTH=100% BORDER=1 CELLPADDING=2 CELLSPACING=2>
+<TR VALIGN=TOP>
+<TD WIDTH=101>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Fog color</P>
+</TD>
+<TD WIDTH=1442>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">The forced color of the fog to replace the value defined by the application, when the "3D > Set fog color" flag is set. To ease the operation,
+the color can be set by clicking on the "..." button on the right that opens a color selection dialog. The chosen color is then drawn in the colored rectangle.</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=101>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Fake date</P>
+</TD>
+<TD WIDTH=1442>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Allows the definition of the fake system date that is used when the "Timing > Fake date" flag is set.</P>
+</TD>
+</TR>
+</TABLE>
+</DIV>
+<DIV ID="topic_footer" DIR="LTR">
+<P STYLE="margin-bottom: 0.5cm"><BR><BR>
+</P>
+</DIV>
+</BODY>
+</HTML>

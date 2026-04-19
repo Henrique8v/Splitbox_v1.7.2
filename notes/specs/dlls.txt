@@ -1,0 +1,29 @@
+A lógica de construção das DLLs do Splitbox segue um padrão de "Interceptação e Modificação de Comportamento" do Windows. Basicamente, você está criando ferramentas que dizem ao sistema operacional para tratar as janelas dos jogos de uma forma que eles não foram programados originalmente para aceitar.
+
+1. xinput1_3.cpp (O "Proxy" de Controle)
+Este é o mais complexo tecnicamente. Ele não apenas exporta funções, ele atua como um Hook.
+
+Lógica: Ele carrega a DLL real do sistema (C:\Windows\System32\xinput1_3.dll) e se coloca no meio do caminho.
+
+Bypass de Foco: O grande truque aqui é que ele intercepta a chamada XInputGetState. Normalmente, um jogo para de ler o controle se perde o foco. Sua DLL engana o jogo, retornando o estado do controle mesmo quando a janela não é a principal, permitindo o multiplayer local em janelas separadas.
+
+2. window_audio_ext.cpp (Isolamento de Áudio)
+Utiliza as APIs de baixo nível do Windows (WASAPI e IAudioSessionManager2).
+
+Lógica: Ele percorre todas as sessões de áudio ativas no Windows, identifica qual PID (Process ID) pertence à janela que você quer e aplica o SetMute.
+
+Utilidade: Fundamental para o Splitbox para que você possa silenciar instâncias específicas sem afetar o som global do sistema.
+
+3. snap_dwm.cpp & window_cleaner.cpp (Manipulação de Estilo)
+Ambos trabalham com a função SetWindowLong e o parâmetro GWL_STYLE.
+
+Snap DWM: Adiciona estilos como WS_THICKFRAME e WS_MAXIMIZEBOX para que o Windows "pense" que aquela janela de jogo é uma janela comum de desktop, habilitando o layout de encaixe (Snap) do Windows 11.
+
+Cleaner: Faz o oposto ou limpa a sujeira visual. Remove bordas, barras de título (WS_CAPTION) e menus de sistema para que, ao alinhar as janelas lado a lado, elas pareçam uma única interface limpa, sem sobreposição de bordas.
+
+4. window_forcer.cpp (Persistência de Atividade)
+Focado em manter o jogo "acordado".
+
+Lógica: Usa SendMessage para enviar sinais de WM_ACTIVATE e WM_NCACTIVATE para a janela.
+
+Truque: Ele força a janela a acreditar que acabou de ser clicada ou ativada, mesmo que o usuário esteja interagindo com outra janela. Isso evita que jogos entrem em modo de pausa automática.

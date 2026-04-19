@@ -1,0 +1,22 @@
+Fluxo de Execução Completo
+
+Mudança: Agora o fluxo de UI passa pelos Mixins herdados.
+
+INÍCIO
+└─ main_.py
+└─ SPLITBOX_GUI()
+├─ Herda: NetworkMixin, ToolsMixin, ListManagerMixin
+├─ setup_app_variables() → carrega config.json
+├─ SplitscreenManager() → inicializa core
+└─ AlignManager(gui, manager) → cria workflow
+
+NAVEGAÇÃO (Plug & Play)
+└─ Usuário clica em "NETWORK"
+└─ gui.show_network()
+└─ render_network_tab(self) (em gui_network.py)
+└─ Lê network_settings.json e monta a tela.
+
+GERENCIAMENTO DE LISTA
+└─ Usuário clica em "+ ADD" ou "Limpar"
+└─ Chamada via master (GUI) para ListManagerMixin.update_listbox()
+└─ Interface é limpa e reconstruída dinamicamente.

@@ -1,0 +1,101 @@
+Origem do erro: Para o pywebview ser compilado e rodar via pythonnet no seu Python 3.14, o cenário é esse mesmo. O erro que você viu (subprocess.CalledProcessError) ocorre porque o instalador tenta "construir" a ponte entre o Python e o Windows, e sem o MSBuild (que vem no SDK do .NET ou VS Studio .NET), ele não tem as ferramentas para "soldar" essa conexão.
+
+CMD____________________________________ERRO:  
+
+note: This error originates from a subprocess, and is likely not a problem with pip.
+  ERROR: Failed building wheel for pythonnet
+Failed to build pythonnet
+error: failed-wheel-build-for-install
+
+× Failed to build installable wheels for some pyproject.toml based projects
+╰─> pythonnet
+_________________________________________
+
+O erro que você encontrou é o "Caminho da Morte" clássico para quem tenta instalar o pythonnet em versões muito recentes do Python ou em ambientes sem ferramentas de compilação C++ completas.
+
+O culpado não é o seu código, mas sim o NuGet e o processo de compilação do Wheel.
+
+🔍 A Causa Técnica do Erro
+O pythonnet (que o pywebview tanto exige) não é uma biblioteca Python pura; ele é uma ponte complexa escrita em C#. Quando você dá o comando pip install, ele tenta:
+
+Baixar o código-fonte.
+
+Usar o nuget.exe para baixar dependências do .NET.
+
+O Erro: O comando nuget.exe update -self falhou com status 1. Isso geralmente acontece porque:
+
+O NuGet incluído no pacote está tentando se autoatualizar e foi bloqueado pelo Firewall ou falta de permissão.
+
+Você não tem o MSBuild (do Visual Studio) configurado corretamente no seu PATH.
+
+O Python 3.14 ainda não possui um "Wheel" (binário pré-compilado) para o pythonnet, forçando o seu PC a tentar compilar do zero, o que exige um ambiente de desenvolvimento C++ gigante que você provavelmente não quer instalar só para isso.
+
+🛡️ Por que o nosso plano com Tkinterweb é superior?
+Se fôssemos insistir no pywebview, você teria que:
+
+  . Instalar o Visual Studio Community (vários GBs).
+  . Instalar o .NET SDK.
+  . Corrigir manualmente o executável do NuGet.
+
+No Splitbox Alpha 1.6.4, nós ignoramos essa burocracia. Usamos o motor de 480MB diretamente, porque ele já está compilado e pronto para o combate.
+
+_________________________________________________________________________________
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+---------------------------------------------------------------------------------
+
+Instale o instalador com VisualStudioSetup.exe [4.24mb]
+Abra o setup: C:\Program Files (x86)\Microsoft Visual Studio\Installer\Setup.exe
+
+Escolha uma versão profissional estavel
+Para que o pythonnet e o pywebview funcionem e o erro do MSBuild desapareça, você deve selecionar exatamente estas duas opções:
+
+Selecione desenvolvimento para desktop com C++ e esenvolvimento para desktop com .NET
+
+Desenvolvimento para desktop com .NET (A segunda opção no topo direito):
+
+  . Por que: É aqui que mora o MSBuild.exe que o Python tanto procura. Sem isso, você não     consegue compilar a ponte entre o Python e o Windows.
+
+  . Desenvolvimento para desktop com C++ (Abaixo da anterior):
+
+  . Por que: O pythonnet frequentemente exige compiladores C++ nativos (MSVC) para gerar os   binários compatíveis com o seu sistema. Marcar isso evita que você tenha outro erro de   "Visual C++ 14.0 or greater is required" daqui a 5 minutos.
+
+Você pode desmarcar quase tudo e deixar apenas o "esqueleto" que o pip install exige. No instalador, vá na aba "Componentes Individuais" (ao lado de Cargas de Trabalho) e busque apenas por estes:
+
+  . MSBuild (O motor de busca do Python).
+  . MSVC v143 - Ferramentas de compilação do VS 2022 C++ x64/x86 (v14.42-17.12): o compilador essencial.
+  . SDK do Windows 10 (10.0.19041.0) (As bibliotecas de sistema) ou SDK do Windows 11 (10.0.26100.7705)
+  . SDK do CRT Universal do Windows
+
+Fazendo isso, o tamanho deve cair de 14 GB para algo em torno de 2 GB ou 3 GB. Ainda é pesado, mas é uma "dieta" agressiva comparado ao pacote completo.
+
+Nota: Se mesmo 2 GB parecer desaforo para o Splitbox Alpha 1.6.4, a minha recomendação técnica como seu assistente de dados é: Abandone o pywebview.
+
+O seu motor atual de 480MB (Tkinterweb/WebView2) tem uma vantagem que o pywebview nunca terá: ele é autocontido. Com pywebview você precisa dessa instalação gigante de 14 GB no seu PC para compilar, e o usuário final vai precisar do .NET Runtime instalado. Com seu Motor Atual você só precisa do Python. O motor de 480MB que você já tem na pasta teste_motor_web já contém tudo o que é necessário para renderizar o HTML, o vídeo e a calculadora.
+
+Verficar versão: msbuild -version
+
+Se aparecer a versão: Está pronto. Pode mandar o pip install pythonnet.
+Se der "comando não encontrado": Você precisa adicionar o caminho manualmente.
+
+🛠️ Como encontrar e adicionar o MSBuild ao PATH
+O MSBuild costuma ficar em um destes caminhos (dependendo da versão do SDK/Visual Studio que o instalador do .NET puxou):
+
+Caminho Padrão do .NET SDK:
+C:\Program Files\dotnet\sdk\10.0.201\bin (ou similar)
+
+Caminho do Build Tools (se instalado via VS):
+C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\MSBuild\Current\Bin
+Passo a passo para adicionar:
+Pressione a tecla Win, digite "Variáveis de Ambiente" e abra.
+Clique em Variáveis de Ambiente (botão inferior).
+Em Variáveis do Sistema, procure por Path e clique em Editar.
+Clique em Novo e cole o caminho da pasta onde está o seu msbuild.exe.
+Dê OK em tudo e reinicie o VS Code ou o Terminal.
+
+Nota: Instalar o Visual Studio ou configurar caminhos complexos para o pythonnet vai inflar o seu projeto Splitbox Alpha 1.6.4 com dependências que você não pode levar para outros computadores facilmente.
+
+depois vá no cmd admin e instale o: python -m pip install pythonnet
+
+Se você não tem espaço para o MSBuild e o Visual Studio, não force a barra. Vamos abandonar o pywebview e o pythonnet agora mesmo. Eles não são a única forma de criar interfaces incríveis.
+
+

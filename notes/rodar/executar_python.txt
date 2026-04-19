@@ -1,0 +1,6 @@
+powershel:
+& "C:\Users\lorde\AppData\Local\Programs\Python\Python313\python.exe" splitscreen_gui.py
+
+cmd:
+cd /d "C:\Users\lorde\Downloads\Splitbox_Alpha_1.6.5"
+"C:\Users\lorde\AppData\Local\Programs\Python\Python313\python.exe" splitscreen_gui.py

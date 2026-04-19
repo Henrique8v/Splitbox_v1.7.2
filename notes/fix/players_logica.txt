@@ -1,0 +1,19 @@
+Aqui está como a estrutura de 4 players funciona na prática dentro do CORE KORVADO PRO:
+
+Identidade Digital: O identity_manager.py envia o sinal de "Player ID" para cada janela encontrada. Se você abrir 4 instâncias, ele enviará os IDs 0, 1, 2 e 3.
+
+Mapeamento de Hardware: O XpadderManager (o novo módulo) utiliza o player_count enviado pelo AlignManager para abrir os perfis correspondentes.
+
+Arquivos Necessários: Para que o quarto player funcione, você só precisa garantir que o arquivo p4.xpadderprofile esteja na pasta Xpadder v2015.
+
+
+Independência de Arquitetura: Como usamos o PostMessage (Lógica 100%), o Windows gerencia a entrega dos sinais para as 4 janelas, independentemente de serem 32-bit ou 64-bit.
+
+Fluxo de Identidade para 4 Players
+Janela (HWND) -> Player ID (Sinal)  -> Perfil Xpadder	   ->    Slot Xpadder (/M):
+Janela A      ->	0           -> p1.xpadderprofile   ->	         1
+Janela B      ->	1           -> p2.xpadderprofile   ->	         2
+Janela C      ->	2           -> p3.xpadderprofile   ->	         3
+Janela D      ->	3           -> p4.xpadderprofile   ->	         4
+
+O limite de 4 é o padrão comum para a maioria dos jogos e para o próprio barramento de mensagens que definimos no input_patch.py. Se você tiver os 4 arquivos de perfil prontos na pasta do Xpadder, o motor os carregará todos assim que as janelas forem detectadas pelo AlignManager.

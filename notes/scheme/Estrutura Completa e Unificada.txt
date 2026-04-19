@@ -1,0 +1,178 @@
+ESTRUTURA COMPLETA E UNIFICADA - SPLITBOX PRO 1.7.2
+═══════════════════════════════════════════════════════════════════════════
+
+LORDE RAVENO ©2026
+
+═══════════════════════════════════════════════════════════════════════════
+
+splitbox/                              🚀 PASTA RAÍZ
+│
+├── 🎯 ARQUIVOS PRINCIPAIS (Raiz)
+│   ├── 📄 main_.py                    ⭐ Ponto de entrada
+│   ├── 📄 splitscreen_gui.py          ⭐ GUI Principal (COM BATCH)
+│   ├── 📄 requirements.txt            ⭐ Dependências
+│   ├── 📄 dependencias.bat            ⭐ Setup automático Windows
+│   ├── 📄 config.json                 ⭐ Configuração (gerado)
+│   ├── 📄 network_settings.json
+│   ├── 📄 criar-lista.bat             ⭐ Listar estrutura
+│   ├── 📄 file_version_info.txt       ⭐ Versão
+│   ├── 📄 splitbox.manifest           ⭐ Manifesto
+│   ├── 📄 splitbox.ico                ⭐ Ícone
+│   └── 📄 README.md                   ⭐ Informações
+│
+├── 🖼 img/                            🖼 Screenshots e Prints
+│   └── ... (imagens PNG/JPG)
+│
+├── 🛠 install/                        🛠 Complementos e Instaladores
+│   ├── 📂 dev/
+│   │   └── 📦 python-3.13.0-amd64.exe (Python 3.13)
+│   ├── 📂 disable/
+│   │   └── 📦 Disable Defender.exe    (Bloqueia Windows Defender)
+│   ├── 📂 runtime/
+│   │   ├── 📦 Visual C++ 2015-2022 Redistributable_x64.exe
+│   │   └── 📦 windowsdesktop-runtime-8.0.25-win-x64.exe
+│   ├── 📂 sandboxie/
+│   │   ├── 📦 Sandboxie-Plus-x64-v1.17.2_Installer.exe
+│   │   └── 📦 DefaultBox.zip          (Configuração padrão)
+│   └── 📂 joyxoff/
+│       └── 📦 Joyxoff-3.64.8.4.rar    (Recurso futuro)
+│
+├── 📦 modules/                        📦 Código Modularizado
+│   ├── 📄 __init__.py
+│   │
+│   ├── 🎨 gui/                        Interface Gráfica
+│   │   ├── 📄 __init__.py
+│   │   ├── 📄 gui_configs.py          Carrega/salva config JSON
+│   │   ├── 📄 gui_core.py             Setup de variáveis
+│   │   ├── 📄 gui_tabs.py             ⭐ ATUALIZADO - Dropdown batch + Label
+│   │   ├── 📄 gui_events.py           ⭐ ATUALIZADO - apply_window_force() COM BATCH
+│   │   ├── 📄 gui_network.py 
+│   │   └── 📂 mixins/                 🧬 LÓGICA POR HERANÇA (Plug & Play)
+│   │       ├── 📄 init.py             Exportador de Mixins
+│   │       ├── 📄 network_mixin.py    🔧 NOVO: Lógica ZeroTier (Join/Status)
+│   │       ├── 📄 tools_mixin.py      🔧 NOVO: Ferramentas (Sandboxie/DXWnd)
+│   │       └── 📄 list_mixin.py
+│   │
+│   ├── 🔧 core/                       Motor Central
+│   │   ├── 📄 __init__.py
+│   │   ├── 📄 launcher.py             Injeção DXWnd + subprocess
+│   │   ├── 📄 injector_manager.py     Injeção de DLLs para jogos
+│   │   ├── 📄 dll_bridge.py           Carrega DLLs de bin/
+│   │   ├── 📄 splitscreen_manager.py  Orquestra tudo
+│   │   │
+│   │   └── 🔌 bin/                    DLLs DO SISTEMA
+│   │       ├── 📦 window_cleaner.dll      Remove bordas/barra
+│   │       ├── 📦 window_forcer.dll       Foco simultâneo
+│   │       ├── 📦 snap_dwm.dll           Posiciona janelas
+│   │       └── 📦 window_audio_ext.dll   Controle de áudio
+│   │
+│   ├── ⚡ window_engine/              Motor de Janelas
+│   │   ├── 📄 __init__.py
+│   │   ├── 📄 layout_engine.py        Cálculo de posições
+│   │   ├── 📄 window_utils.py         Utilitários Win32
+│   │   ├── 📄 align_manager.py        Com batch no workflow
+│   │   ├── 📄 window_force.py         ✨ Força janela
+│   │   └── 📄 batch_templates.py      batch injector para aplicar janela
+│   │
+│   ├── 🎮 input_management/           Gerenciamento de Input
+│   │   ├── 📄 __init__.py
+│   │   ├── 📄 mouse_logic.py          Toggle mouse lock
+│   │   ├── 📄 identity_manager.py     Player 1,2,3,4
+│   │   ├── 📄 input_patch.py          PostMessage para jogos
+│   │   ├── 📄 xpadder_manager.py      Xpadder profiles
+│   │   │
+│   │   └── �� gamepad_mapper/         Mapper Standalone
+│   │       ├── 📄 __init__.py
+│   │       ├── 📄 main.py             Interface CustomTkinter
+│   │       ├── 📄 config.json
+│   │       ├── 📄 requirements.txt
+│   │       └── 📂 modules/
+│   │           ├── 📄 __init__.py
+│   │           ├── 📄 process_manager.py
+│   │           ├── 📄 window_manager.py
+│   │           ├── 📄 process_checker.py
+│   │           └── 📄 gamepad_detector.py
+│   │
+│   └── 🔧 patches/                   Extensões
+│       ├── 📄 __init__.py
+│       └── 📄 audio_patch.py          Controle de áudio
+│
+├── 🎨 assets/                         Recursos Visuais
+│   ├── 🖼️ splitbox.ico
+│   ├── 🖼️ splitbox.jpg
+│   └── 🖼️ splitbox.png
+│
+├── ⚙️ settings/                       Configurações
+│   ├── 📄 app_settings.json           (Gerado automaticamente)
+│   └── 📄 default.dxw                 (Template DXWnd)
+│
+├── 🔌 dll/                            DLLs PARA INJEÇÃO + FONTES CPP
+│   ├── 📄 dinput8.cpp
+│   ├── 📄 dinputhook.cpp
+│   ├── 📄 InputBridge.h
+│   ├── 📄 main.cpp
+│   ├── 📄 sdl2.cpp
+│   ├── 📄 snap_dwm.cpp
+│   ├── 📄 window_audio_ext.cpp
+│   ├── 📄 window_cleaner.cpp
+│   ├── 📄 window_forcer.cpp
+│   ├── 📄 xinput1_3.cpp
+│   │
+│   └── 📂 Saídas Compiladas (x86 e x64)
+│       ├── 📂 core x86/
+│       │   └── 📦 dinputhook.dll
+│       ├── 📂 core x64/
+│       │   └── 📦 dinputhook.dll
+│       ├── 📂 dinput8 x86/
+│       │   └── 📦 dinput8.dll
+│       ├── 📂 dinput8 x64/
+│       │   └── 📦 dinput8.dll
+│       ├── 📂 xinput1_3 x86/
+│       │   └── 📦 xinput1_3.dll
+│       ├── 📂 xinput1_3 x64/
+│       │   └── 📦 xinput1_3.dll
+│       ├── 📂 sdl2 x86/
+│       │   └── 📦 sdl2.dll
+│       └── 📂 sdl2 x64/
+│           └── 📦 sdl2.dll
+│
+├── 🪟 dxwnd/                          Utilitário DXWnd (Portátil)
+│   ├── 📦 dxwnd.exe
+│   ├── 📄 dxwnd.ini
+│   └── ... (outros arquivos)
+│
+├── 📄 html/                           Arquivos HTML Estáticos
+│   ├── 📄 status.html
+│   ├── 📄 tutorial.html
+│   └── 📄 about.html
+│
+├── 🎮 input/                          Input Manager (Portátil)
+│   ├── 📂 Xpadder v2015/
+│   │   ├── 📦 Xpadder.exe
+│   │   ├── 📄 p1.xpadderprofile
+│   │   ├── 📄 p2.xpadderprofile
+│   │   ├── 📄 p3.xpadderprofile
+│   │   ├── 📄 p4.xpadderprofile
+│   │   └── ... (outros)
+│   └── 📂 Xoutput v3.31/
+│       ├── 📦 XOutput.exe             (Recurso futuro)
+│       └── 📦 settings.json
+│
+└���─ 📂 notes/                          Documentação
+     ├── 📂 scheme/
+     │    ├── 📄 Checklist_de_Implementação.txt
+     │    ├── 📄 Como_Usar.txt
+     │    ├── 📄 Estrutura_Completa_e_Unificada.txt
+     │    ├── 📄 Fluxo_de_Execução_Completo.txt
+     │    ├── 📄 Funcionalidades_Principais.txt
+     │    ├── 📄 Localização_de_Cada_DLL.txt
+     │    ├── 📄 Mapa_de_Dependências_de_Imports.txt
+     │    ├── 📄 Notas_Importantes.txt
+     │    └── 📄 Window_Force_Batch_Integration.txt
+     ├── 📂 outras pastas e textos importantes para o desenvolvedor...
+     ├── 📄 requesitos.html               Requisitos de Sistema
+     └── 📄 suport.html                   Ajuda
+
+═══════════════════════════════════════════════════════════════════════════
+
+© 2026 Lorde Raveno - Splitbox Pro 1.7.0

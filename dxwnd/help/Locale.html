@@ -1,0 +1,185 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE>Locale</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice 4.1.3  (Win32)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="0;0">
+	<SCRIPT SRC="js/jquery.min.js"></SCRIPT>
+	<SCRIPT>
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "DxWnd.html?" + sTopicUrl;
+			}
+		});
+	
+	</SCRIPT>
+	<STYLE TYPE="text/css">
+	<!--
+		P { margin-bottom: 0cm; border: none; padding: 0cm; color: #000000; font-family: "Arial", "Helvetica", sans-serif; font-size: 10pt; font-style: normal; font-weight: normal; text-align: left; text-decoration: none }
+		TD P { margin-bottom: 0cm; border: none; padding: 0cm; color: #000000; font-family: "Arial", "Helvetica", sans-serif; font-size: 10pt; font-style: normal; font-weight: normal; text-align: left; text-decoration: none }
+		H1 { color: #000000; font-style: normal; text-decoration: none }
+		P.rvps2 { font-family: "Arial", "Helvetica", sans-serif; font-size: 10pt; font-style: normal; font-weight: normal }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR" STYLE="border: none; padding: 0cm">
+<P></P>
+<DIV ID="topic_content" DIR="LTR">
+	<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm">
+	<IMG SRC="lib/dxwnd_configuration_locale.png" NAME="grafiikka4" ALIGN=LEFT BORDER=0></P>
+	<IMG SRC="lib/dxwnd_configuration_locale2.png" NAME="grafiikka4" BORDER=0></P>
+	<TABLE WIDTH=100% BORDER=1 CELLPADDING=2 CELLSPACING=2>
+		<TR VALIGN=TOP>
+			<TD WIDTH=168>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Customize Locale</P>
+			</TD>
+			<TD WIDTH=141>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">HOOKLOCALE</P>
+			</TD>
+			<TD WIDTH=1228>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Enables
+				locale API hooking.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=168>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Presets</P>
+			</TD>
+			<TD WIDTH=141>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm"></P>
+			</TD>
+			<TD WIDTH=1228>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+				To simplify the choice of proper values for the "Locale" and "CodePage" values,
+				it is possible to take advantage of presets defined inside the file presets.ini,
+				located in the DxWnd folder.
+				The file is a text file and can be easily edited to add other commonly used presets.
+			</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=168>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Country</P>
+			</TD>
+			<TD WIDTH=141>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm"></P>
+			</TD>
+			<TD WIDTH=1228>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+				Placeholder for country ID, currently unused. For a list of country IDs, 
+				see WinNls.h.
+			</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=168>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Locale</P>
+			</TD>
+			<TD WIDTH=141>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm"></P>
+			</TD>
+			<TD WIDTH=1228>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+				System Language ID. DxWnd pretends that the program is running in the context of the
+				selected language. For a list of valid language IDs, refer 
+	<A HREF="https://docs.microsoft.com/en-us/windows/win32/intl/language-identifier-constants-and-strings"
+	target="_blank">here</A>.
+			</P>
+			<P>NOTE: The question marked button to the left of the field opens a panel with the list of the available locale IDs.
+			</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=168>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">CodePage</P>
+			</TD>
+			<TD WIDTH=141>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm"></P>
+			</TD>
+			<TD WIDTH=1228>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+				Code Page ID. DxWnd pretends that the program is running in the context of the
+				selected code page. For a list of code page IDs supported in the current
+				machine, use the CodePage.exe tool or refer 
+	<A HREF="https://docs.microsoft.com/en-us/windows/win32/intl/code-page-identifiers"
+	target="_blank">here</A>.
+			</P>
+			<P>NOTE: The question marked button to the left of the field opens a panel with the list of the available code page IDs.
+			</P>
+			</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=168>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Win class locale</P>
+			</TD>
+			<TD WIDTH=141>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">CLASSLOCALE</P>
+			</TD>
+			<TD WIDTH=1228>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+				This flag enables code page transformation on window class data. 
+				Depending on the situation, it may be better to set this flag rather than not.
+				It essentially impacts the program's window's title bar.
+				</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=168>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Pathnames locale</P>
+			</TD>
+			<TD WIDTH=141>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">PATHLOCALE</P>
+			</TD>
+			<TD WIDTH=1228>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+				This flag enables code page transformation on ASCII pathnames. 
+				Depending on the situation, it may be better to set this flag rather than not.
+				It may condition the ability of the game to locate and use the files on your file system.
+				</P>
+			</TD>
+		</TR>
+
+		<TR VALIGN=TOP>
+			<TD WIDTH=168>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">No window text</P>
+			</TD>
+			<TD WIDTH=141>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">NOSETTEXT</P>
+			</TD>
+			<TD WIDTH=1228>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+				This flag disables the programmatic setting of the localized window title.
+				Translating the text to ASCII/WIDE formats proved to be a complex and dangerous operation
+				that may crash the program. In this case, a void window title could be preferred to a crashed
+				program.
+				</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=168>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Fix keyboard type</P>
+			</TD>
+			<TD WIDTH=141>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">FIXKEYBOARDTYPE</P>
+			</TD>
+			<TD WIDTH=1228>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+				This flag adapts the keyboard type to the emulated locale (see GetKeyboardType system call).
+				</P>
+			</TD>
+		</TR>
+
+	</TABLE>
+</DIV>
+<DIV ID="topic_footer" DIR="LTR">
+	<P><BR>
+	</P>
+</DIV>
+</BODY>
+</HTML>

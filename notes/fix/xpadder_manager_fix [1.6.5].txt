@@ -1,0 +1,69 @@
+import subprocess
+import os
+import sys
+import shutil
+import time  # Importado para suportar o delay de segurança
+
+class XpadderManager:
+    """
+    Gerencia o mapeamento para até 4 players com delay de estabilidade.
+    Copia os perfis da pasta de backup para a raiz do Xpadder antes de iniciar.
+    """
+    
+    BASE_DIR = os.path.dirname(os.path.abspath(sys.argv[0]))
+    XPADDER_DIR = os.path.join(BASE_DIR, "input", "Xpadder v2015")
+    XPADDER_EXE = os.path.join(XPADDER_DIR, "Xpadder.exe")
+
+    @staticmethod
+    def start_mapping(player_count):
+        """
+        player_count: quantidade de janelas detectadas pelo AlignManager (max 4).
+        """
+        if not os.path.exists(XpadderManager.XPADDER_EXE):
+            print(f" [ERRO] Xpadder não encontrado em: {XpadderManager.XPADDER_EXE}")
+            return
+
+        # Garante que não ultrapasse 4 players
+        active_players = min(player_count, 4)
+
+        for i in range(active_players):
+            player_id = i + 1
+            profile_name = f"p{player_id}.xpadderprofile"
+            
+            # O comando /M associa o perfil ao slot do controle físico
+            # O comando /C carrega o arquivo de mapeamento de teclas
+            cmd = [XpadderManager.XPADDER_EXE, "/C", profile_name, "/M", str(player_id)]
+            
+            try:
+                # Executa o Xpadder usando o diretório do EXE como base (cwd)
+                subprocess.Popen(cmd, cwd=XpadderManager.XPADDER_DIR)
+                print(f" [XPADDER] Slot {player_id} carregado com {profile_name}")
+                
+                # Delay de 0.3s: Essencial para evitar falha na thread de input do Xpadder
+                time.sleep(0.3) 
+                
+            except Exception as e:
+                print(f" [ERRO XPADDER] Player {player_id}: {e}")
+
+    @staticmethod
+    def close_all():
+        """Finaliza todas as instâncias para resetar o input."""
+        try:
+            os.system("taskkill /f /im Xpadder.exe >nul 2>&1")
+            print(" [XPADDER] Mapeamento encerrado com sucesso.")
+        except:
+            pass
+
+# import time: Adicionado ao topo para permitir o uso da função sleep.
+# time.sleep(0.3): Colocado logo após o subprocess.Popen. Isso dá tempo ao Xpadder para "respirar" entre a ativação de cada controle.
+# Estabilidade de Thread: Com esse tempo, o erro de "AutoProfileScan thread failed to stop" deve desaparecer, pois os comandos não chegam mais atropelados ao executável.
+# A Rota de Dados Correta deve ser:
+# GUI: Botão Iniciar.
+# AlignManager: Captura HWNDs.
+# IdentityManager: Chama o XpadderManager.start_mapping antes de qualquer coisa.
+# XpadderManager: Copia os perfis e abre o EXE.
+# InputPatch: Envia o PostMessage para o jogo.
+# Resumo da Solução:
+# Desative o AutoProfile2Activated no seu Xpadder.ini.
+# Adicione time.sleep(0.3) no loop do xpadder_manager.py.
+# Certifique-se de que os arquivos p1.xpadderprofile até p4 existam fisicamente na pasta Xpadder v2015.

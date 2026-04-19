@@ -1,0 +1,10 @@
+Crie seus xpaddercontroller e xpadderprofile (ou use o que já tem), copie e renomeie os xpadderprofile para:
+
+p1.xpadderprofile
+p2.xpadderprofile
+p3.xpadderprofile
+p4.xpadderprofile
+
+Deixe junto do Xpadder.exe nesse diretorio.
+
+Você pode usar o msm mapa de teclas e mouse para seu controle, bastando adicionar outros botões se não tiver ou subestituindo aqueles que não são os msm dependendo de qual é seu input: ds2, ds3, ds4, xbox, xbox360, xbox one, twin wireless, controles piratas, etc! Se usar emuladores para os msms controles irá duplicar para um novo driver, por exemplo um ds2 generico para um x360 - ambos aparecerão no menu.

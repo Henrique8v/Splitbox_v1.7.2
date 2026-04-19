@@ -1,0 +1,40 @@
+Para transformar seus scripts Python (como o splitscreen_gui.py) em um executável (EXE) e criar um Instalador, você pode usar ferramentas integradas ao ecossistema Python. Não é necessário um "compilador" externo como o GCC, mas sim um "congelador" (freezer) de scripts.
+
+Como o seu projeto Splitbox Alpha é complexo e possui dependências específicas como o tkinterweb e pastas externas (/dxwnd), aqui estão as melhores opções:
+
+1. Para gerar o EXE (O "Congelador")
+O padrão da indústria para isso é o PyInstaller. Ele empacota o interpretador Python e todas as bibliotecas (como customtkinter e pywin32) em um único arquivo ou pasta.
+
+Como instalar:
+
+DOS
+pip install pyinstaller
+Comando para gerar o EXE:
+No terminal, dentro da pasta do projeto, use:
+
+DOS
+pyinstaller --noconsole --onefile --add-data "tutorial.html;." --add-data "dxwnd;dxwnd" splitscreen_gui.py
+--noconsole: Impede que uma janela de comando preta abra junto com a sua interface.
+
+--onefile: Compacta tudo em um único .exe (útil, mas pode ser mais lento para abrir em projetos grandes).
+
+--add-data: Crítico para o seu projeto. Isso garante que o tutorial.html e a pasta dxwnd sejam incluídos dentro do executável.
+
+2. Para gerar o INSTALADOR (Setup.exe)
+O PyInstaller gera apenas o executável solto. Para criar aquele instalador profissional que coloca o ícone na área de trabalho e cria uma pasta em Program Files, você precisará de um software externo (gratuito):
+
+Inno Setup (Recomendado): É o mais usado. Você cria um script simples informando onde está o seu .exe e ele gera o instalador.
+
+NSIS: Muito poderoso, usado por grandes empresas, mas a curva de aprendizado é um pouco maior.
+
+3. Alternativa "All-in-One": Auto-py-to-exe
+Se você prefere não usar linhas de comando complexas, existe uma interface gráfica para o PyInstaller:
+
+Instale: pip install auto-py-to-exe
+
+Execute: auto-py-to-exe no terminal.
+
+Ele abrirá uma janela no navegador onde você seleciona o script, adiciona o ícone e marca as pastas que devem ser incluídas (como a /dxwnd).
+
+⚠️ Aviso Importante para o Splitbox
+Como você usa privilégios de Administrador (ctypes.windll.shell32.IsUserAnAdmin()), ao gerar o EXE, é recomendável adicionar a flag --uac-admin no PyInstaller. Isso fará com que o Windows exiba o escudo de administrador automaticamente no ícone do programa.

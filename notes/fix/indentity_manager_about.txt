@@ -1,0 +1,44 @@
+LÓGICA ATUALIZADA (v1.6.5.1)
+O identity_manager.py é o componente do CORE KORVADO PRO responsável pela Identidade Digital de cada instância do jogo. Ele resolve o conflito de múltiplas janelas, garantindo que o sistema saiba exatamente quem é o Player 1, Player 2, Player 3 e Player 4.
+
+Por que essa lógica é "100%"?
+Adeus ao Conflito de Bits (x86 vs x64)
+
+O Python não carrega DLLs internamente, evitando erros de arquitetura (ex: Python 64-bit com jogo 32-bit).
+
+A Solução: O IdentityManager usa o InputPatch para enviar um PostMessage diretamente para a janela do jogo. É um "toque no ombro" digital que atribui o ID do jogador sem risco de crash.
+
+Atribuição Híbrida (Software + Hardware)
+
+
+Sinalização Digital: O loop enumerate(hwnds) percorre as janelas e usa o índice i para numerá-las (Janela 0 = Player 1, etc.).
+
+Mapeamento Físico: Agora, o sistema aciona o XpadderManager, que carrega perfis de hardware (p1.xpadderprofile até p4) para traduzir controles DirectInput/Twin USB em comandos de teclado.
+
+Comunicação Segura e Silenciosa
+
+Intervalo de Barramento: O time.sleep(0.1) garante que o Windows processe cada identidade individualmente, evitando perda de pacotes no sistema.
+
+
+Independência: O trabalho pesado de interceptar o input fica com a DLL injetada pelo CoreInjector, enquanto o Python apenas coordena os sinais.
+
+DEPENDÊNCIAS E LIGAÇÕES
+1. O Orquestrador: align_manager.py
+O AlignManager é o "chefe" que decide o momento exato de aplicar a identidade. Ele segue este fluxo rigoroso:
+
+Launch: O SplitscreenManager abre os jogos via Sandboxie-Plus ou DXWnd.
+Wait: Aguarda o delay configurado na GUI para a inicialização das janelas.
+Capture: O WindowUtils captura os IDs das janelas (hwnds).
+Xpadder Activation: O XpadderManager dispara o executável na pasta input/Xpadder v2015 com os perfis de 1 a 4.
+Identity (O Carimbo): O IdentityManager.apply_identity(hwnds) sinaliza as janelas via PostMessage.
+Align: O LayoutEngine organiza as janelas na tela seguindo a ordem dos players definida.
+
+2. Por que no AlignManager?
+Ele garante a ordem visual e funcional. Se você quer o Player 1 no canto superior esquerdo, o IdentityManager avisa a essa janela específica que ela é a "0" antes de o layout ser fixado, evitando que os controles fiquem invertidos.
+
+3. Conexão com a GUI e Portabilidade
+Caminho Dinâmico: O sistema utiliza os.path para localizar o Xpadder na raiz do projeto, garantindo que o Lorde Raveno possa mover a pasta sem quebrar os links.
+
+Rota de Dados: GUI (Botão Iniciar) ➔ AlignManager ➔ XpadderManager (Hardware) ➔ IdentityManager (ID Digital) ➔ InputPatch (Sinal Real).
+
+Dica de Elite: Se o jogo abrir mas o controle não responder, verifique se os perfis p1.xpadderprofile a p4 estão na pasta do Xpadder e se o AlignManager capturou a lista correta de hwnds.

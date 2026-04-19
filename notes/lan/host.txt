@@ -1,0 +1,11 @@
+1. A Porta do Host (Listening Port)
+O computador que está agindo como Host abre uma porta específica (ex: :8080). Ele fica "ouvindo" qualquer pacote que chegue endereçado a essa porta.
+
+Se você configurou o jogo ou aplicação para ser o servidor na porta 8080, todos os outros computadores da rede (os Clientes) devem tentar se conectar exatamente ao IP_DO_HOST:8080.
+
+2. A Porta do Cliente (Ephemeral Port)
+O Windows gerencia isso de forma automática e "invisível". Quando um Cliente se conecta ao Host, o sistema operacional do Cliente escolhe uma porta aleatória e temporária (geralmente entre 49152 e 65535) para enviar e receber os dados.
+
+Você não precisa configurar isso. Para você, como desenvolvedor ou usuário, o único número que importa é a porta do Host.
+
+Exemplo Prático no seu Cenário (Splitbox + LAN)Imagine que você tem dois computadores (ou duas instâncias em boxes diferentes) tentando se comunicar via Radmin VPN ou ZeroTier:DispositivoIP VirtualPorta de ConexãoComputador A (Host)26.10.10.1:8080 (Aberta para receber)Computador B (Cliente)26.10.10.2Conecta em 26.10.10.1:8080Computador C (Cliente)26.10.10.3Conecta em 26.10.10.1:8080

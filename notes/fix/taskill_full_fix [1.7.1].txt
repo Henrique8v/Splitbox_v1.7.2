@@ -1,0 +1,80 @@
+splitscreen_gui.py
+class SPLITBOX_GUI(ctk.CTk):
+
+    def cleanup(self):
+        self.manager.cleanup()
+
+window_utils.py
+class WindowUtils:
+
+    @staticmethod
+    def terminate_slots(processes, sbie_path):
+        """Limpa processos ativos"""
+        for proc in processes:
+            try:
+                subprocess.call(['taskkill', '/F', '/T', '/PID', str(proc.pid)], 
+                                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            except: pass
+        
+        try:
+            if os.path.exists(sbie_path):
+                subprocess.run([sbie_path, "/box:DefaultBox", "/terminate"], capture_output=True)
+        except: pass
+
+gui_tabs.py
+def show_motor_content(master):
+
+    # Botão de Emergência
+    ctk.CTkButton(c3, text="TERMINATE ALL", fg_color="transparent", border_width=1, border_color="#A51F1F", 
+                  text_color="#A51F1F", command=master.cleanup).pack(fill="x", padx=10, pady=10)
+
+splitscreen_manager
+
+def cleanup(self):
+        """Limpa tudo: Sandboxie, DXWnd e Processos Nativos via Nome e PID"""
+        print("\n[CLEANUP] Iniciando varredura de encerramento...")
+        self.forcer_active = False
+        
+        sbie_path = r"C:\Program Files\Sandboxie-Plus\Start.exe"
+
+        # 1. Mata via Objetos Popen (Sandboxie/DXWnd)
+        from modules.window_engine.window_utils import WindowUtils
+        WindowUtils.terminate_slots(self.processes, sbie_path)
+
+        # 2. Mata via Nome do Executável (Resolve o problema da Janela Padrão)
+        # Usamos o pids_to_paths_map para saber EXATAMENTE quais nomes de .exe fechar
+        import subprocess
+        target_names = set(os.path.basename(path).lower() for path in self.pids_to_paths_map)
+        
+        for exe_name in target_names:
+            try:
+                # O comando /IM mata pelo nome da imagem, /F força e /T mata processos filhos
+                subprocess.call(['taskkill', '/F', '/T', '/IM', exe_name], 
+                                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                print(f" [CLEANUP] Processos '{exe_name}' encerrados.")
+            except:
+                pass
+
+        # 3. Limpeza Residual via PID (Caso algo tenha sobrado)
+        for pid in self.pids:
+            try:
+                subprocess.call(['taskkill', '/F', '/T', '/PID', str(pid)], 
+                                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            except:
+                pass
+
+        # 4. Reset Total das Listas
+        self.pids.clear()
+        self.processes.clear()
+        self.pids_to_paths_map.clear()
+        
+        # 5. Garantia de limpeza do Sandboxie (comando específico)
+        try:
+            subprocess.call([sbie_path, "/terminate_all"], 
+                            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        except:
+            pass
+            
+        time.sleep(1.0) # Aumentado para 1s para o Windows liberar os arquivos
+        self.forcer_active = True
+        print("[CLEANUP] Ambiente limpo e pronto.")

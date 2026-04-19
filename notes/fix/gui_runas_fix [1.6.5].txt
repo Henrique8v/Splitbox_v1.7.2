@@ -1,0 +1,31 @@
+splitscreen_gui.py
+
+# importações 
+
+class SPLITBOX_GUI(ctk.CTk):
+    def __init__(self):
+        super().__init__()
+
+        setup_app_variables(self)
+        self.title("Splitbox Alpha 1.6.5 - Lorde Raveno")
+        self.geometry("900x650")
+        
+        try:
+            self.manager = SplitscreenManager()
+            self.workflow = AlignManager(self, self.manager)
+            print(" [OK] Motores sincronizados e DLLs injetadas.")
+        except Exception as e:
+            print(f"[ERRO] Falha crítica ao iniciar motores: {e}")
+
+        self._setup_main_layout()
+
+    # outras defs
+
+if __name__ == "__main__":
+    if ctypes.windll.shell32.IsUserAnAdmin():
+        app = SPLITBOX_GUI()
+        app.mainloop()
+    else:
+        ctk_path = sys.executable
+        params = " ".join(sys.argv)
+        ctypes.windll.shell32.ShellExecuteW(None, "runas", ctk_path, params, None, 1)

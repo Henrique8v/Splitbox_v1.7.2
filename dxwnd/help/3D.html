@@ -1,0 +1,226 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE>3D</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice 4.1.3  (Win32)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGED" CONTENT="0;0">
+	<SCRIPT SRC="js/jquery.min.js"></SCRIPT>
+	<SCRIPT>
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "DxWnd.html?" + sTopicUrl;
+			}
+		});
+	
+	</SCRIPT>
+	<STYLE TYPE="text/css">
+	<!--
+		P { margin-bottom: 0cm; border: none; padding: 0cm; color: #000000; font-family: "Arial", "Helvetica", sans-serif; font-size: 10pt; font-style: normal; font-weight: normal; text-align: left; text-decoration: none }
+		TD P { margin-bottom: 0cm; border: none; padding: 0cm; color: #000000; font-family: "Arial", "Helvetica", sans-serif; font-size: 10pt; font-style: normal; font-weight: normal; text-align: left; text-decoration: none }
+		P.rvps2 { font-family: "Arial", "Helvetica", sans-serif; font-size: 10pt; font-style: normal; font-weight: normal }
+		H3 { color: #000000 }
+		H3.cjk { font-family: "SimSun" }
+		H3.ctl { font-family: "Mangal" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR" STYLE="border: none; padding: 0cm">
+<DIV ID="topic_content" DIR="LTR">
+	<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm"><IMG SRC="lib/dxwnd_configuration_3d.png" NAME="grafiikka4" ALIGN=BOTTOM BORDER=0></P>
+	<H3 CLASS="western">3D effects</H3>
+	<TABLE WIDTH=100% BORDER=1 CELLPADDING=2 CELLSPACING=2>
+		<TR VALIGN=TOP>
+			<TD WIDTH=126>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Disable
+				Textures</P>
+			</TD>
+			<TD WIDTH=116>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">NOTEXTURES</P>
+			</TD>
+			<TD WIDTH=1295>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Remaps all
+				textures with a white texture (Direct3D only).</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=126>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">3D wireframe</P>
+			</TD>
+			<TD WIDTH=116>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">WIREFRAME</P>
+			</TD>
+			<TD WIDTH=1295>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Shows graphics
+				in wireframe mode. This option works with Direct3D and OpenGL
+				programs, but not with DirectDraw programs.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=126>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Disable
+				Fogging</P>
+			</TD>
+			<TD WIDTH=116>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">DISABLEFOGGING</P>
+			</TD>
+			<TD WIDTH=1295>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Disables the
+				fogging effect (Direct3D only).</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=126>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Control fogging</P>
+			</TD>
+			<TD WIDTH=116>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">CONTROLFOGGING</P>
+			</TD>
+			<TD WIDTH=1295>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Enables the effects on 
+				generic 3D rendering that can be controlled from the 3D effects panel.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=126>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Set fog color</P>
+			</TD>
+			<TD WIDTH=116>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">SETFOGCOLOR</P>
+			</TD>
+			<TD WIDTH=1295>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Where it is possible, the flag forces the fog color to a custom value.
+				The custom fog color is defined in the "Defaults" tab in <A HREF="GlobalSettings.html" >Global settings</A>.</P>
+			</TD>
+		</TR>
+	</TABLE>
+	<HR>
+	<DIV ID="topic_footer" DIR="LTR">
+		<P STYLE="margin-bottom: 0.5cm"><BR><BR>
+		</P>
+	</DIV>
+	<H3 CLASS="western">Texture handling</H3>
+	<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm">These flags help
+	modders manage game textures. In particular, they can highlight
+	where textures should be used, extracting them as bitmaps, or
+	replacing textures with custom ones. Use the Dump flag to extract
+	textures, or the Hack flag if you plan on using a graphics editor to
+	create customized replacement textures.</P>
+	<TABLE WIDTH=100% BORDER=1 CELLPADDING=2 CELLSPACING=2>
+		<TR VALIGN=TOP>
+			<TD WIDTH=56>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">None</P>
+			</TD>
+			<TD WIDTH=134></TD>
+			<TD WIDTH=1347>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">The default
+				behavior. Does not apply special handling to textures.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=56>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Dump</P>
+			</TD>
+			<TD WIDTH=134>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">TEXTUREDUMP</P>
+			</TD>
+			<TD WIDTH=1347>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">All the hooked
+				textures that match the criteria in the Texture section of your
+				"dxwnd.ini" configuration file are extracted as bitmap files and
+				dumped into DxWnd's &quot;texture.out&quot; subfolder. The
+				automatic filenames include a hash of the file's graphical
+				content to make it easier to uniquely identify each texture.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=56>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Transp.</P>
+			</TD>
+			<TD WIDTH=134>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">TEXTURETRANSP</P>
+			</TD>
+			<TD WIDTH=1347>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+				Flag reserved for making textures partially transparent (e.g., transparent walls).
+				It is currently unimplemented, so DO NOT USE it.
+				</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=56>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Highlight</P>
+			</TD>
+			<TD WIDTH=134>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">TEXTUREHIGHLIGHT</P>
+			</TD>
+			<TD WIDTH=1347>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">All hooked
+				textures are replaced with a randomly-generated solid color. This
+				makes it easier to see texel boundaries and texture usage.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=56>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Hack</P>
+			</TD>
+			<TD WIDTH=134>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">TEXTUREHACK</P>
+			</TD>
+			<TD WIDTH=1347>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">This option
+				replaces all the hooked textures by calculating hashed filenames,
+				looking for those names in DxWnd's &quot;texture.in&quot;
+				subfolder, and using any matching texture that it finds there.</P>
+			</TD>
+		</TR>
+	</TABLE>
+	<HR>
+	<DIV ID="topic_footer" DIR="LTR">
+		<P STYLE="margin-bottom: 0.5cm"><BR><BR>
+		</P>
+	</DIV>
+	<H3 CLASS="western">file format</H3>
+	<TABLE WIDTH=100% BORDER=1 CELLPADDING=2 CELLSPACING=2>
+		<TR VALIGN=TOP>
+			<TD WIDTH=56>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">BMP</P>
+			</TD>
+			<TD WIDTH=1347>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Textures are saved to/loaded from bitmap files. 
+				These files can be viewed or edited, though the bitmap header characteristics must be preserved (color depth, palette, etc.).
+				</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=56>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">RAW</P>
+			</TD>
+			<TD WIDTH=1347>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Textures are saved to/loaded from raw files. These files are more compact, but they can't be viewed or edited unless the bitmap format is known.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=56>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">DDS</P>
+			</TD>
+			<TD WIDTH=1347>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Textures are saved to/loaded from files in DDS format.</P>
+			</TD>
+		</TR>
+	</TABLE>	
+	<P><BR>
+	</P>
+	<HR>
+	<DIV ID="topic_footer" DIR="LTR">
+		<P STYLE="margin-bottom: 0.5cm"><BR><BR>
+		</P>
+	</DIV>
+</DIV>
+</BODY>
+</HTML>

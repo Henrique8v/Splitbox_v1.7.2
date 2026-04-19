@@ -1,0 +1,45 @@
+gui_tabs.py
+
+import os
+import sys
+import customtkinter as ctk
+from tkinterweb import HtmlFrame
+from gui_configs import render_config_tab
+from gui_events import GUIEvents as events
+
+def show_motor_content(master):
+  # ---- codigo 
+def _create_card(parent, col, title):
+  # ---- codigo 
+def show_config_content(master):
+    master.clear_main_content()
+    render_config_tab(master)
+
+def show_status_content(master):
+    master.clear_main_content()
+    render_html_tab(master.main_content, "status.html")
+
+def show_help_content(master):
+    master.clear_main_content()
+    render_html_tab(master.main_content, "tutorial.html")
+
+def show_about_content(master):
+    master.clear_main_content()
+    render_html_tab(master.main_content, "about.html")
+
+def render_html_tab(parent_frame, file_name):
+    container = ctk.CTkFrame(parent_frame, corner_radius=10)
+    container.pack(expand=True, fill="both", padx=5, pady=5)
+    
+    # Prevenção de erro caso tkinterweb não esteja disponível
+    try:
+        browser = HtmlFrame(container, messages_enabled=False)
+        browser.pack(expand=True, fill="both")
+        path = os.path.join(os.path.dirname(__file__), "html", file_name)
+        if os.path.exists(path):
+            with open(path, "r", encoding="utf-8") as f: 
+                browser.load_html(f.read())
+        else:
+            browser.load_html("<body style='background:#1a1a1a;color:white;'><h2>HTML não encontrado.</h2></body>")
+    except Exception as e:
+        ctk.CTkLabel(container, text=f"Erro ao carregar aba: {file_name}").pack(pady=20)

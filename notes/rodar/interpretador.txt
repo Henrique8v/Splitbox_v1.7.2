@@ -1,0 +1,21 @@
+Se precisar usar a instalação ao lado de outra versão:
+
+Splitscreen_gui:
+
+#caminho para sua versão do python
+PYTHON_313 = r"C:\Users\lorde\AppData\Local\Programs\Python\Python313\python.exe"
+
+# Verifica se o script está rodando no interpretador correto
+if sys.executable.lower() != PYTHON_313.lower() and not hasattr(sys, '_MEIPASS'):
+    print(f"[AVISO] Interpretador divergente detectado. O Splitbox exige o Python 3.13.")
+
+#Como o splitscreen_gui.py e o gui_core.py já estabelecem a assinatura do interpretador e o isolamento de ambiente no topo da execução, os módulos secundários (que são importados por eles) herdam esse contexto.
+
+Gui_core: 
+
+PYTHON_313 = r"C:\Users\lorde\AppData\Local\Programs\Python\Python313\python.exe"
+
+Dependencias:
+
+:: Definindo o caminho do regente Python 3.13
+set PY_PATH="C:\Users\lorde\AppData\Local\Programs\Python\Python313\python.exe"

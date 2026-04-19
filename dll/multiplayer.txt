@@ -1,0 +1,21 @@
+A multiplayer.dll precisa estar em dois lugares, pois ela tem duas funções diferentes:
+
+Na pasta modules/core/bin/ do Splitbox: * Por que? Para que o Python consiga carregá-la via DLLBridge. O script multiplayer_logic.py precisa dela ali para chamar a função SetPlayerIdentity e enviar os dados para a memória.
+
+Solução: Copie a versão x64 (ou a que for compatível com o seu Python, geralmente x64) para dentro de modules/core/bin/.
+
+Na pasta do Jogo (ao lado do executável):
+
+Por que? Para que as outras DLLs injetadas (xinput1_3.dll, dinput8.dll) consigam encontrá-la e perguntar: "Quem sou eu?".
+
+Solução: O seu injector_manager.py cuidará disso automaticamente durante o deploy, desde que você tenha adicionado a linha que discutimos antes.
+
+O "Pack" de Dependências na pasta Bin:
+
+Para o Python carregar a multiplayer.dll com sucesso, ele precisa que as dependências dela estejam ao lado.
+
+Vá na sua pasta modules/core/bin/.
+
+Certifique-se de que, além da multiplayer.dll, você também copiou a dinputhook.dll (versão x64) para lá.
+
+Dica: Se você usa funções de multimídia, certifique-se de que a winmm.dll (que é do sistema) não está sendo bloqueada, mas geralmente apenas ter a dinputhook.dll e a multiplayer.dll na mesma pasta bin resolve.

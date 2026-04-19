@@ -1,0 +1,9 @@
+Status: Sem alterações físicas nas DLLs, mas atualizado o propósito de carregamento.
+
+window_cleaner.dll → modules/core/bin/ (Remoção de bordas)
+
+window_forcer.dll → modules/core/bin/ (Foco simultâneo)
+
+snap_dwm.dll → modules/core/bin/ (Posicionamento DWM)
+
+dinputhook.dll → dll/core (x86/x64) (Injeção via injector_manager.py)

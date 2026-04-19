@@ -1,0 +1,363 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+<TITLE>Direct3D</TITLE>
+<META NAME="GENERATOR" CONTENT="OpenOffice 4.1.3  (Win32)">
+<META NAME="CREATED" CONTENT="0;0">
+<META NAME="CHANGED" CONTENT="0;0">
+<SCRIPT SRC="js/jquery.min.js"></SCRIPT>
+<SCRIPT>
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "DxWnd.html?" + sTopicUrl;
+			}
+		});
+	
+	</SCRIPT>
+<STYLE TYPE="text/css">
+	<!--
+		P { margin-bottom: 0cm; border: none; padding: 0cm; color: #000000; font-family: "Arial", "Helvetica", sans-serif; font-size: 10pt; font-style: normal; font-weight: normal; text-align: left; text-decoration: none }
+		TD P { margin-bottom: 0cm; border: none; padding: 0cm; color: #000000; font-family: "Arial", "Helvetica", sans-serif; font-size: 10pt; font-style: normal; font-weight: normal; text-align: left; text-decoration: none }
+		P.rvps2 { font-family: "Arial", "Helvetica", sans-serif; font-size: 10pt; font-style: normal; font-weight: normal }
+		H3 { color: #000000 }
+		H3.cjk { font-family: "SimSun" }
+		H3.ctl { font-family: "Mangal" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" BGCOLOR="#ffffff" DIR="LTR" STYLE="border: none; padding: 0cm">
+<DIV ID="topic_content" DIR="LTR">
+<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm"><IMG SRC="lib/dxwnd_configuration_direct3d24.png" NAME="grafiikka4" ALIGN=BOTTOM BORDER=0></P>
+<HR>
+<H3 CLASS="western">Force Vertex Processing / Execute buffer</H3>
+<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm">This option has a dual usage: it allows you
+to make experiments with different vertex processing settings for
+D3D8/9, or change the execute buffer creation flags. 
+<P>
+When setting D3DCREATE_MIXED_VERTEXPROCESSING or
+D3DCREATE_SOFTWARE_VERTEXPROCESSING, it also trims down the
+D3DCREATE_PUREDEVICE flag that is incompatible with these two and
+causes a Direct3D error.</P>
+<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm">NOTE: Changing this
+option to software or mixed may help with rendering problems, such as in
+"Virtual Skipper 5".</P>
+<TABLE WIDTH=100% BORDER=1 CELLPADDING=2 CELLSPACING=2>
+<TR VALIGN=TOP>
+<TD WIDTH=200>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Default</P>
+</TD>
+<TD WIDTH=112></TD>
+<TD WIDTH=1225></TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=200>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">hardware video</P>
+</TD>
+<TD WIDTH=112>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">FORCEHWVERTEXPROC</P>
+</TD>
+<TD WIDTH=1225>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">This
+setting uses the video card (GPU).</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=200>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">software system</P>
+</TD>
+<TD WIDTH=112>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">FORCESWVERTEXPROC</P>
+</TD>
+<TD WIDTH=1225>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">This
+setting uses the system (CPU). Windows 10 Anniversary Update seems
+to default to software mode which can cause performance issues.</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=200>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">mixed</P>
+</TD>
+<TD WIDTH=112>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">FORCEMXVERTEXPROC</P>
+</TD>
+<TD WIDTH=1225>
+This setting forces the mixed mode for the vertex processing.
+</TD>
+</P>
+</TR>
+<P></P>
+</TABLE>
+<br>
+The flags also have the following effects on the execute buffers.</br></P>
+
+<TABLE WIDTH=100% BORDER=1 CELLPADDING=2 CELLSPACING=2>
+<TR VALIGN=TOP>
+<TD WIDTH=200>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Default</P>
+</TD>
+<TD WIDTH=112></TD>
+<TD WIDTH=1225></TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=200>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">hardware video</P>
+</TD>
+<TD WIDTH=112>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">FORCEHWVERTEXPROC</P>
+</TD>
+<TD WIDTH=1225>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+The execute buffers are created in video memory.
+</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=200>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">software system</P>
+</TD>
+<TD WIDTH=112>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">FORCESWVERTEXPROC</P>
+</TD>
+<TD WIDTH=1225>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+The execute buffers are created in system memory.
+</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=200>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">mixed</P>
+</TD>
+<TD WIDTH=112>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">FORCEMXVERTEXPROC</P>
+</TD>
+<TD WIDTH=1225>
+The execute buffers are enabled for creation in both the video and system memory.
+</TD>
+</P>
+</TR>
+</TABLE>
+<P><BR>
+</P>
+<HR>
+<H3 CLASS="western">Swap Effect</H3>
+<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm">Forces Swap Effect</P>
+<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm">FORCESWAPEFFECT</P>
+<P CLASS="rvps2" STYLE="margin-bottom: 0.5cm">This experimental flag
+forces the selected SwapEffect mode during the CreateDevice/Reset
+methods. In some cases, it may improve compatibility or performance.
+You can choose from the following modes:</P>
+<UL>
+<LI><P>Discard
+</P>
+<LI><P>Flip
+</P>
+<LI><P>Copy
+</P>
+<LI><P>Overlay
+</P>
+<LI><P STYLE="margin-bottom: 0.5cm">FlipEx
+</P>
+</UL>
+<P><BR>
+</P>
+<DIV ID="topic_footer" DIR="LTR">
+<P STYLE="margin-bottom: 0.5cm"><BR><BR>
+</P>
+</DIV>
+<P><BR>
+</P>
+<HR>
+<H3 CLASS="western">Capabilities</H3>
+<TABLE WIDTH=100% BORDER=1 CELLPADDING=2 CELLSPACING=2>
+<TR VALIGN=TOP>
+<TD WIDTH=171>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">No Ramp Device</P>
+</TD>
+<TD WIDTH=138>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">NORAMPDEVICE</P>
+</TD>
+<TD WIDTH=1228>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+Suppresses the IID_IDirect3DRampDevice device type in device enumeration (see EnumDevices method).
+</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=171>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">No RGB Device</P>
+</TD>
+<TD WIDTH=138>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">NORGBDEVICE</P>
+</TD>
+<TD WIDTH=1228>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+Suppresses the IID_IDirect3DRGBDevice device type in device enumeration (see EnumDevices method).
+</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=171>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">No MMX Device</P>
+</TD>
+<TD WIDTH=138>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">NOMMXDEVICE</P>
+</TD>
+<TD WIDTH=1228>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+Suppresses the IID_IDirect3DMMXDevice device type in device enumeration (see EnumDevices method).
+</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=171>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">No HAL Device</P>
+</TD>
+<TD WIDTH=138>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">NOHALDEVICE</P>
+</TD>
+<TD WIDTH=1228>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+Suppresses the IID_IDirect3DHALDevice device type in device enumeration (see EnumDevices method).
+</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=171>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">No TnL HAL Device</P>
+</TD>
+<TD WIDTH=138>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">NOTNLDEVICE</P>
+</TD>
+<TD WIDTH=1228>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+Suppresses the IID_IDirect3DTnLHalDevice device type in device enumeration (see EnumDevices method).
+</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=171>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Fog vertex capability</P>
+</TD>
+<TD WIDTH=138>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">FOGVERTEXCAP</P>
+</TD>
+<TD WIDTH=1228>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+Forces the usage of vertex fog by pretending that the device owns the D3DPRASTERCAPS_FOGVERTEX capability and misses the D3DPRASTERCAPS_FOGTABLE capability.
+</P>
+</TD>
+</TR>
+<TR VALIGN=TOP>
+<TD WIDTH=171>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Fog table capability</P>
+</TD>
+<TD WIDTH=138>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">FOGTABLECAP</P>
+</TD>
+<TD WIDTH=1228>
+<P CLASS="rvps2" STYLE="border: none; padding: 0cm">
+Forces the usage of table fog by pretending that the device owns the D3DPRASTERCAPS_FOGTABLE capability and misses the D3DPRASTERCAPS_FOGVERTEX capability.
+</P>
+</TD>
+</TR>
+</TABLE>
+
+<HR>
+<H3 CLASS="western">Device type</H3>
+<TABLE WIDTH=100% BORDER=1 CELLPADDING=2 CELLSPACING=2>
+When set to a selection different from "default", it forces the device type in the D3D CreateDevice methods.
+Available values are the following:
+<UL>
+<LI><P>D3DDEVTYPE_HAL
+</P>
+<LI><P>D3DDEVTYPE_REF
+</P>
+<LI><P>D3DDEVTYPE_SW
+</P>
+<LI><P>D3DDEVTYPE_NULLREF
+</P>
+</HR>
+</DIV>
+<P><BR>
+</P>
+</UL>
+
+	<HR>
+	<H3 CLASS="western">D3D tweaks</H3>
+	<TABLE WIDTH=100% BORDER=1 CELLPADDING=2 CELLSPACING=2>
+		<TR VALIGN=TOP>
+			<TD WIDTH=204>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Patch execute buffer</P>
+			</TD>
+			<TD WIDTH=133>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">PATCHEXECUTEBUFFER</P>
+			</TD>
+			<TD WIDTH=1160>
+			This flag patches only the D3D version 1 ExecuteBuffer method. 
+			It adds an initial execute buffer to force ZBuffer initialization to the D3DCMP_LESSEQUAL value.
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=204>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Force ZBuffer ON</P>
+			</TD>
+			<TD WIDTH=133>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">FORCEZBUFFERON</P>
+			</TD>
+			<TD WIDTH=1160>
+			This flag patches only the D3D version 1 ExecuteBuffer method. 
+			Forces the D3DRENDERSTATE_ZENABLE specification to TRUE
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=204>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Force ZBuffer OFF</P>
+			</TD>
+			<TD WIDTH=133>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">FORCEZBUFFEROFF</P>
+			</TD>
+			<TD WIDTH=1160>
+			This flag patches only the D3D version 1 ExecuteBuffer method. 
+			Forces the D3DRENDERSTATE_ZENABLE specification to FALSE
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=204>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Force Dithering ON</P>
+			</TD>
+			<TD WIDTH=133>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">FORCEDITHERING</P>
+			</TD>
+			<TD WIDTH=1160>
+			This flag patches the D3D version 1 to 7 SetRenderState method. 
+			In the SetRenderState method, it forces the D3DRENDERSTATE_DITHERENABLE specification to TRUE
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=204>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">Force Dithering OFF</P>
+			</TD>
+			<TD WIDTH=133>
+				<P CLASS="rvps2" STYLE="border: none; padding: 0cm">CLEARDITHERING</P>
+			</TD>
+			<TD WIDTH=1160>
+			This flag patches the D3D version 1 to 7 SetRenderState method. 
+			In the SetRenderState method, it forces the D3DRENDERSTATE_DITHERENABLE specification to FALSE
+			</TD>
+		</TR>
+	</TABLE>
+	<DIV ID="topic_footer" DIR="LTR">
+		<P STYLE="margin-bottom: 0.5cm"><BR><BR>
+		</P>
+	</DIV>
+
+</DIV>
+</BODY>
+</HTML>

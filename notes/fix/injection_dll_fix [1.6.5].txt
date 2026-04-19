@@ -1,0 +1,129 @@
+injection_dll.py
+
+import os
+import shutil
+import struct
+
+class CoreInjector:
+    def __init__(self):
+        self.script_dir = os.path.dirname(os.path.abspath(__file__))
+        # A pasta 'dll' que contém as subpastas específicas
+        self.base_dll_path = os.path.join(self.script_dir, "dll")
+        
+    def get_exe_arch(self, exe_path):
+        """Detecta se o jogo é x86 ou x64."""
+        try:
+            with open(exe_path, 'rb') as f:
+                f.seek(60)
+                pe_offset = struct.unpack('<I', f.read(4))[0]
+                f.seek(pe_offset + 4)
+                machine = struct.unpack('<H', f.read(2))[0]
+                return "x86" if machine == 332 else "x64"
+        except:
+            return "x64"
+
+    def injetar(self, game_exe_path):
+        """Injeta baseada na estrutura exata: 'nome_dll arquitetura'."""
+        if not game_exe_path: return
+        
+        game_dir = os.path.dirname(game_exe_path)
+        arch = self.get_exe_arch(game_exe_path)
+        
+        # Mapeamento exato conforme sua imagem
+        # dinput8 x64, dinput8 x86, xinput1_3 x64, xinput1_3 x86
+        dlls_config = [
+            {"file": "xinput1_3.dll", "folder": f"xinput1_3 {arch}"},
+            {"file": "dinput8.dll", "folder": f"dinput8 {arch}"}
+        ]
+        
+        print(f"\n[SPLITBOX] Deploy de Elite ({arch})")
+        
+        for item in dlls_config:
+            # Monta o caminho: dll / xinput1_3 x64 / xinput1_3.dll
+            source = os.path.join(self.base_dll_path, item["folder"], item["file"])
+            target = os.path.join(game_dir, item["file"])
+            
+            if os.path.exists(source):
+                try:
+                    shutil.copy2(source, target)
+                    print(f"  [+] Injetado: {item['folder']} -> Sucesso.")
+                except Exception as e:
+                    print(f"  [X] Erro de acesso em {item['file']}: {e}")
+            else:
+                print(f"  [!] Pasta ou DLL ausente: {source}")
+
+    def limpar(self, game_exe_path):
+        """Remove os rastros após a jogatina."""
+        game_dir = os.path.dirname(game_exe_path)
+        for dll in ["xinput1_3.dll", "dinput8.dll"]:
+            target = os.path.join(game_dir, dll)
+            if os.path.exists(target):
+                try:
+                    os.remove(target)
+                    print(f"  [-] Removido: {dll}")
+                except:
+                    pass
+
+splitscreen_manager.py
+
+from dll_bridge import DLLBridge
+from injector_manager import CoreInjector
+
+class SplitscreenManager:
+    def __init__(self):
+
+        self.injector = CoreInjector()  # ... ADICIONE
+
+
+    def launch_game(self, exe_path, use_sandbox=False):
+        """Foco: Injeção e Disparo com CWD corrigido."""
+        if not exe_path or not os.path.exists(exe_path): return
+        
+        # 1. Injeção (Obrigatória)
+        self.injector.injetar(exe_path)
+        
+        if exe_path not in self.pids_to_paths_map:
+            self.pids_to_paths_map.append(exe_path)
+
+        if use_sandbox:
+            sbie_start = r"C:\Program Files\Sandboxie-Plus\Start.exe"
+            game_dir = os.path.dirname(exe_path) # Pasta do Sonic
+            game_exe = os.path.basename(exe_path) # Apenas "SonicMania.exe"
+            
+            if os.path.exists(sbie_start):
+                # COMANDO LIMPO: Sem caminhos longos, apenas o nome do EXE
+                comando = f'"{sbie_start}" /box:DefaultBox "{game_exe}"'
+                
+                print(f" [MOTOR] Iniciando SBIE em: {game_dir}")
+                
+                # O SEGREDO: 'cwd=game_dir' faz o Windows achar os arquivos do jogo
+                subprocess.Popen(comando, shell=True, cwd=game_dir, creationflags=0x08000000)
+            else:
+                print(r" [ERRO] Start.exe não encontrado em C:\Program Files\Sandboxie-Plus\\")
+        else:
+            # Lógica Normal
+            proc = GL.start_process([exe_path], os.path.dirname(exe_path))
+            if proc:
+                self.processes.append(proc)
+                self.pids.append(proc.pid)
+                
+    def launch_game_with_dxw(self, exe_path, dxwnd_exe):
+        """Modo DXWnd: Limpa injeções para evitar conflito."""
+        if not os.path.exists(dxwnd_exe): return
+        
+        game_dir = os.path.dirname(exe_path)
+        for dll in ["xinput1_3.dll", "dinput8.dll"]:
+            target = os.path.join(game_dir, dll)
+            if os.path.exists(target):
+                try: os.remove(target)
+                except: pass
+
+        if exe_path not in self.pids_to_paths_map:
+            self.pids_to_paths_map.append(exe_path)
+
+        dx_dir = os.path.dirname(dxwnd_exe)
+        if GL.inject_dxwnd_ini(exe_path, dx_dir):
+            proc = GL.start_process([dxwnd_exe, "/R:0"], dx_dir)
+            if proc:
+                self.processes.append(proc)
+                self.pids.append(proc.pid)

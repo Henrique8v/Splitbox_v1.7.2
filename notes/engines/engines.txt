@@ -1,0 +1,108 @@
+O mercado de desenvolvimento de jogos é vasto, dividindo-se entre engines focadas em fotorrealismo (modernos) e engines especializadas em 2D/pixel art (retrô ou indie retrô). A escolha depende do escopo, plataforma e estilo visual. 
+
+Aqui está uma lista abrangente, dividida por categorias principais:
+
+1. As "Gigantes" do Mercado (Modernos e 3D)
+Unreal Engine (Epic Games): Líder para jogos 3D de alta qualidade (AAA), conhecida por fotorrealismo, Lumen e Nanite. Usa C++ e Blueprints (visual).
+Unity: A mais versátil, amplamente usada para jogos 2D e 3D, mobile e indies. Usa C#.
+Godot Engine: Engine open-source que cresce rapidamente. Excelente para 2D e muito capaz no 3D, com uma arquitetura baseada em cenas/nós.
+CryEngine: Focada em visuais de ponta e ambientes imersivos (usada em Crysis).
+O3DE (Open 3D Engine): Sucessora de código aberto da Amazon Lumberyard. 
+
+Engines para Jogos 2D, Retrô e Pixel Art
+
+GameMaker (YoYo Games): Provavelmente a mais popular para 2D retrô. Usada em Undertale, Hotline Miami e Hyper Light Drifter.
+Construct 3: Engine baseada em navegador que usa sistema de eventos (sem código), ideal para prototipagem rápida e 2D.
+PICO-8: "Fantasy Console". Limita intencionalmente gráficos e som para simular a era de 8-bits, com editor embutido.
+RPG Maker (MV/MZ/XP): Focada especificamente em JRPGs com visuais retrô. Muito amigável para iniciantes.
+Clickteam Fusion 2.5: Famosa por Five Nights at Freddy's, ótima para jogos baseados em cliques e 2D.
+Defold: Engine 2D focada em alta performance para mobile e web.
+GB Studio: Especializada em criar jogos reais para o Game Boy original.
+Bitsy: Engine para jogos narrativos e "world-building" minimalista em 2D. 
+Reddit
+
+Frameworks e Engines baseadas em Código (Indie/Programadores)
+
+MonoGame: Framework C# usado para criar Stardew Valley e Celeste. Foco total em controle de código.
+LÖVE (Love2D): Framework 2D gratuito e leve usando a linguagem Lua.
+Phaser: Engine HTML5 muito rápida, popular para jogos de navegador e mobile.
+Raylib: Biblioteca de programação simples para aprender desenvolvimento de jogos.
+Bevy/Fyrox: Engines modernas escritas em Rust, com foco em segurança e performance.
+Pygame (e Pygame CE): Biblioteca popular para fazer jogos com Python. 
+
+4. Engines Proprietárias (In-House)
+
+RAGE (Rockstar): Rockstar Games (GTA, Red Dead Redemption).
+Frostbite (EA): EA (Battlefield, Dragon Age).
+RE Engine (Capcom): Resident Evil moderno, Devil May Cry 5.
+IW Engine: Call of Duty. 
+
+Outras Engines de nicho
+
+Ren'Py: A engine líder para Visual Novels.
+Twine: Focada em histórias interativas baseadas em texto.
+Solar2D (antigo Corona SDK): Focado em apps e jogos 2D mobile.
+GDevelop: Engine 2D open-source baseada em eventos. 
+
+Resumo de Uso:
+3D Moderno/AAA: Unreal.
+2D/3D Indie: Unity, Godot.
+Pixel Art/2D Puro: GameMaker, Godot, PICO-8.
+RPG Clássico: RPG Maker. 
+
+AAA/AAA+ Proprietarias
+
+As grandes desenvolvedoras e publicadoras de jogos (AAA/AAA+) geralmente utilizam engines proprietárias (próprias) para maximizar o desempenho de seus títulos, embora a Unreal Engine esteja se tornando mais comum. 
+
+Aqui estão as engines das principais empresas mencionadas:
+
+1. Ubisoft 
+Anvil (antiga AnvilNext/Scimitar): Principal engine usada na série Assassin's Creed e jogos de ação em mundo aberto, como Ghost Recon Wildlands.
+Snowdrop: Engine flexível usada em The Division, Mario + Rabbids, Avatar: Frontiers of Pandora e no jogo de Star Wars Outlaws.
+Dunia Engine: Baseada em versões antigas da CryEngine, usada na série Far Cry.
+UbiArt Framework: Engine especializada em jogos 2D de alta arte, como Rayman Origins e Child of Light. 
+
+2. EA (Electronic Arts)
+Frostbite: A principal engine da EA, desenvolvida pela DICE. Usada em Battlefield, EA Sports FC (antigo FIFA), Madden, UFC e Dead Space Remake.
+EA Sports Engine (EA Ignite - descontinuada): Antigamente usada em esportes, agora quase totalmente substituída pela Frostbite. 
+
+3. Rockstar Games
+RAGE (Rockstar Advanced Game Engine): Engine proprietária usada em todos os jogos modernos, incluindo GTA IV, V, VI, Red Dead Redemption e Max Payne 3.
+Euphoria: Middleware de física de animação frequentemente integrado à RAGE para criar movimentos realistas de personagens. 
+
+Outras Desenvolvedoras AAA / AAA+
+____________________________________________________________________________________________________________________
+Empresa            |	       Engine Principal              |	     Exemplos
+____________________________________________________________________________________________________________________
+Epic Games	   |           Unreal Engine 5/4	     | Fortnite, Gears of War (também licenciada para muitos outros)
+Sony (SIE)	   |           Decima	                     | Death Stranding, Horizon Zero Dawn
+Sony (Santa Monica)|	Proprietária (Santa Monica Engine)   | God of War / God of War Ragnarök
+Naughty Dog	   |    Proprietária (ND Engine)	     | The Last of Us, Uncharted
+Insomniac Games	   |    Proprietária (Insomniac Engine)	     | Marvel's Spider-Man, Ratchet & Clank
+Capcom	           |    RE Engine                            | Resident Evil, Devil May Cry 5, Monster Hunter Rise
+CD Projekt Red	   |    Unreal Engine 5 (Mudou)	             | Próximos jogos do Witcher/Cyberpunk
+Bethesda (MS)	   |    Creation Engine 2	             | Starfield, Elder Scrolls VI
+Square Enix	   |    Luminous Engine / Unreal Engine	     | Final Fantasy XV (Luminous), FFVII Remake (UE)
+Konami	           |    Unreal Engine (Mudou)	             | Metal Gear Solid Delta
+--------------------------------------------------------------------------------------------------------------------
+
+CryEngine (Crytek): Conhecida pelos gráficos de Crysis.
+Estas engines definem o visual de grandes franquias:
+RAGE (Rockstar Advanced Game Engine): Rockstar Games (GTA V, Red Dead Redemption 2, Max Payne 3).
+Anvil (anteriormente AnvilNext): Ubisoft (Assassin's Creed, Ghost Recon Wildlands, For Honor).
+RE Engine: Capcom (Resident Evil 7/2/3/4 Remake, Devil May Cry 5, Monster Hunter Rise).
+Decima Engine: Guerrilla Games / Sony (Horizon Zero Dawn, Horizon Forbidden West, Death Stranding).
+Frostbite: EA / DICE (Battlefield, EA Sports FC/FIFA, Dragon Age, Mass Effect).
+IW Engine: Infinity Ward / Activision (Call of Duty).
+REDengine (e futuramente Unreal): CD Projekt Red (The Witcher 3, Cyberpunk 2077).
+Northlight Engine: Remedy Entertainment (Control, Alan Wake 2).
+Slipspace Engine: 343 Industries (Halo Infinite).
+Naughty Dog Engine: Naughty Dog / Sony (The Last of Us, Uncharted).
+Id Tech: id Software (DOOM Eternal, Quake).
+Snowdrop: Massive Entertainment / Ubisoft (The Division, Mario + Rabbids, Avatar).
+Creation Engine / CE 2: Bethesda Game Studios (Skyrim, Fallout 4, Starfield).
+Fox Engine: Konami (Metal Gear Solid V, Pro Evolution Soccer - antiga, ainda usada). 
+
+Engine de Plataforma (First-Party)
+Nintendo: Utiliza motores proprietários internos para cada franquia (ex: The Legend of Zelda, Super Mario). - relevante apenas para informação.
+

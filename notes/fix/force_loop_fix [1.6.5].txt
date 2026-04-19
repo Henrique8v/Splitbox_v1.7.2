@@ -1,0 +1,74 @@
+splitscreen_gui.py
+
+class SPLITBOX_GUI(ctk.CTk):
+    def __init__(self):
+    # ...
+
+    def _setup_main_layout(self):
+        self.grid_columnconfigure(1, weight=1)
+        self.grid_rowconfigure(0, weight=1)
+
+        self.sidebar = ctk.CTkFrame(self, width=180, corner_radius=0)
+        self.sidebar.grid(row=0, column=0, sticky="nsew")
+        
+        ctk.CTkLabel(self.sidebar, text="SPLITBOX", font=("Segoe UI", 18, "bold")).pack(pady=20)
+
+        btns = [
+            ("Motor", self.show_motor), 
+            ("Config", lambda: show_config_content(self)),
+            ("Status", lambda: show_status_content(self)), 
+            ("Help", lambda: show_help_content(self)),
+            ("About", lambda: show_about_content(self))
+        ]
+        for txt, cmd in btns:
+            ctk.CTkButton(
+                self.sidebar, 
+                text=txt, 
+                fg_color="transparent", 
+                anchor="w", 
+                command=cmd
+            ).pack(padx=10, pady=5, fill="x")
+
+        self.main_content = ctk.CTkFrame(self, corner_radius=0, fg_color="transparent")
+        self.main_content.grid(row=0, column=1, sticky="nsew", padx=15, pady=15)
+        
+        self.show_motor()
+
+    def clear_main_content(self):
+        for child in self.main_content.winfo_children():
+            child.destroy()
+
+    def show_motor(self):
+        show_motor_content(self)
+
+    def update_listbox(self):
+        # Limpa widgets antigos do frame
+        for widget in self.exe_listbox.winfo_children():
+            widget.destroy()
+        
+        self.exe_check_vars = [] # Limpa a lista de referências
+        
+        for exe in self.executables:
+            var = ctk.BooleanVar(value=False)
+            cb = ctk.CTkCheckBox(self.exe_listbox, text=os.path.basename(exe), variable=var)
+            cb.pack(anchor="w", padx=5, pady=2)
+            self.exe_check_vars.append({"path": exe, "var": var})
+
+window_utils.py
+
+import psutil
+
+class WindowUtils:
+
+    @staticmethod
+    def forcer_loop(manager):
+        """Loop de foco em thread separada."""
+        while True:
+            if manager.forcer_active and manager.pids_to_paths_map:
+                hwnds = WindowUtils.get_managed_hwnds(manager.pids, manager.pids_to_paths_map)
+                for hwnd in hwnds:
+                    try: manager.bridge.apply_forcer(hwnd)
+                    except: pass
+                time.sleep(0.8)
+            else:
+                time.sleep(2.0)

@@ -1,0 +1,9 @@
+✅ main_.py - Ponto de entrada (Bootloader)
+✅ splitscreen_gui.py - Dashboard Orquestrador (Reduzido para ~91 linhas)
+✅ modules/gui/mixins/network_mixin.py - NOVO: Lógica ZeroTier/Rede
+✅ modules/gui/mixins/tools_mixin.py - NOVO: Lógica Sandboxie/DXWnd
+✅ modules/gui/mixins/list_mixin.py - NOVO: Gestão de UI de Listas e Cleanup
+✅ modules/gui/gui_network.py - NOVO: Interface de Rede independente
+✅ modules/gui/gui_tabs.py - Interface de abas (Motor, Config, etc.)
+✅ modules/window_engine/align_manager.py - Integração com workflow
+✅ network_settings.json - Persistência de dados de rede

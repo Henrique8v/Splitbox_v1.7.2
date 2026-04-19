@@ -1,0 +1,26 @@
+import win32gui
+import win32con
+
+class InputPatch:
+    def __init__(self):
+        # TAREFA 100%: Removido carregamento de DLL. 
+        # O Python não precisa da DLL, quem precisa é o Jogo.
+        pass
+
+    def assign_controller(self, hwnd, controller_index):
+        """
+        LÓGICA 100%: Envia um sinal (Mensagem) diretamente para a janela.
+        O Windows cuida da entrega entre 64-bit (Python) e 32-bit (Jogo).
+        """
+        try:
+            # 0x0400 + 777 é o nosso código de comunicação seguro
+            WM_SET_GAMEPAD = win32con.WM_USER + 777
+            
+            # Envia o índice do controle (0, 1, 2 ou 3) para a janela alvo
+            win32gui.PostMessage(hwnd, WM_SET_GAMEPAD, controller_index, 0)
+            
+            print(f" [PATCH] Identidade enviada: Janela {hwnd} -> Player {controller_index + 1}")
+            return True
+        except Exception as e:
+            print(f" [ERRO PATCH] Falha ao comunicar com a janela: {e}")
+            return False

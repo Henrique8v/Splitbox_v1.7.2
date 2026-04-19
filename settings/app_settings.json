@@ -1,0 +1,9 @@
+{
+    "sbie_path": "C:\\Program Files\\Sandboxie-Plus\\SandMan.exe",
+    "dxwnd_path": "dxwnd/dxwnd.exe",
+    "auto_focus": true,
+    "launch_delay": 3.0,
+    "sidebar_opacity": 1.0,
+    "show_logs": true,
+    "default_layout": "Horizontal"
+}

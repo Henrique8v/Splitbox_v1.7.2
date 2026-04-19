@@ -1,0 +1,12 @@
+Não existe uma única DLL do DirectX que controle exclusivamente as janelas dos jogos, mas sim um conjunto de bibliotecas (.dll) que gerenciam a interface gráfica, renderização e a interação entre o jogo e o sistema operacional (Windows) para criar e gerenciar a janela de exibição. 
+
+As DLLs mais importantes relacionadas a essa função incluem:
+d3d9.dll, d3d10.dll, d3d11.dll, d3d12.dll: São as principais bibliotecas do Direct3D (DirectX 9 a 12), responsáveis por renderizar os gráficos e gerenciar o contexto da janela de exibição do jogo.
+dxgi.dll (DirectX Graphics Infrastructure): Gerencia tarefas de baixo nível, como a criação de swap chains (os buffers que alternam as imagens mostradas na janela), modos de exibição (tela cheia, modo janela, borda infinita) e sincronização vertical (V-Sync).
+
+d3dx9_xx.dll, d3dx10_xx.dll, d3dx11_xx.dll: São bibliotecas auxiliares (D3DX) mais antigas, frequentemente exigidas por jogos da era DirectX 9 a 11 para compilação e execução correta. 
+
+O que fazer em caso de erros:
+Se um jogo não abre ou dá erro de DLL, geralmente falta o DirectX End-User Runtime, que instala as versões legatas (d3dx, d3d9) necessárias para jogos antigos.
+Para jogos mais novos (DirectX 12), o problema geralmente está relacionado a drivers de vídeo desatualizados da NVIDIA, AMD ou Intel.
+Dica: Evite baixar DLLs individualmente da internet. Use o instalador oficial da Microsoft para reparar a instalação do DirectX. 
